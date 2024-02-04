@@ -32,7 +32,7 @@ private:
 	//テクスチャのパスのcsv
 	std::vector <std::vector<tnl::CsvCell>> texture_csv_;
 	//テクスチャを保存するmap
-	std::unordered_map <std::string, std::shared_ptr<dxe::Texture>> texture_map_;
+	std::unordered_map <std::string, Shared<dxe::Texture>> texture_map_;
 	
 //-----------------------------------------------------------------------------------------------
 	//コンストラクタ
@@ -56,6 +56,6 @@ public:
 //-----------------------------------------------------------------------------------------------
 
 	//テクスチャを読み込む関数
-	std::shared_ptr<dxe::Texture> LoadTexture_(std::string texture_name);
+	Shared<dxe::Texture > LoadTexture_(std::string texture_name);
 
 };

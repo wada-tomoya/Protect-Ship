@@ -3,10 +3,6 @@
 PlayScene::PlayScene() {
 	srand(time(0));
 
-	//背景画像読み込み
-	background_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadGraph_("PlayScene_BackGround");
-
-
 	//オブジェクトインスタンス
 	//block_ = std::make_shared<Block>();
 	camera_ = std::make_shared<Camera>();
@@ -26,7 +22,7 @@ void PlayScene::Update(float delta_time) {
 
 void PlayScene::Draw(float delta_time) {
 	//背景
-	//DrawExtendGraph(0, 0, 50, 50, background_hdl_, false);
+	//DrawExtendGraph(0, 0, 100, 100, background_hdl_, false);
 
 	//足場ブロック
 	//block_->Draw(*camera_);
@@ -36,5 +32,4 @@ void PlayScene::Draw(float delta_time) {
 	//enemy_->Draw(delta_time, *camera_);
 	//プレイヤー表示
 	player_->Draw(delta_time, camera_);
-
 }

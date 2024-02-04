@@ -18,7 +18,8 @@ Player::Player(float up_edge, float down_edge, float right_edge, float left_edge
 	texture_hdl_left_ = ResourceManager::GetInstance_ResourceManager()->LoadTexture_("PLAYER_LEFT");
 
 	//テクスチャの分割位置
-	float dir = 1 / texture_dir;
+	float dir = 1.0f / texture_dir;
+	tnl::DebugTrace("%f", dir);
 
 	for (int i = 0; i < mesh_index_; ++i) {
 		//テクスチャの切り取る位置計算
@@ -27,16 +28,16 @@ Player::Player(float up_edge, float down_edge, float right_edge, float left_edge
 		
 		if (i < mesh_index_) {
 			//右向き
-			mesh_right_[i] = dxe::Mesh::CreatePlaneMV({ size_.x, size_.y,0 }, 1, 1, false, { ltop_x,0,0 }, { rbottom_x,1,0 });
+			mesh_right_[i] = dxe::Mesh::CreatePlaneMV(size_, 10, 10, false, { ltop_x,0,0 }, { rbottom_x,1,0 });
 			mesh_right_[i]->setTexture(texture_hdl_right_);
-			//mesh_right_[i]->dxe::Mesh::setBlendMode();
-			//mesh_right_[i]->dxe::Mesh::setSampleFilterMode();
+			mesh_right_[i]->dxe::Mesh::setBlendMode(DX_BLENDMODE_ALPHA);
+			mesh_right_[i]->dxe::Mesh::setSampleFilterMode(DX_DRAWMODE_NEAREST);
 
 			//左向き
-			mesh_left_[i] = dxe::Mesh::CreatePlaneMV({ size_.x, size_.y,0 }, 1, 1, false, { ltop_x,0,0 }, { rbottom_x,1,0 });
+			mesh_left_[i] = dxe::Mesh::CreatePlaneMV(size_, 10, 10, false, { ltop_x,0,0 }, { rbottom_x,1,0 });
 			mesh_left_[i]->setTexture(texture_hdl_left_);
-			//mesh_left_[i]->dxe::Mesh::setBlendMode();
-			//mesh_left_[i]->dxe::Mesh::setSampleFilterMode();
+			mesh_left_[i]->dxe::Mesh::setBlendMode(DX_BLENDMODE_ALPHA);
+			mesh_left_[i]->dxe::Mesh::setSampleFilterMode(DX_DRAWMODE_NEAREST);
 		}
 	}
 }
@@ -51,8 +52,7 @@ void Player::Update(float delta_time) {
 	Move(delta_time, up_edge_, down_edge_, right_edge_, left_edge_);
 	//Attack(delta_time);
 
-	DrawStringEx(10, 10, -1, "%d", render_);
-	DrawStringEx(10, 30, -1, "%d", chara_dir_);
+	
 }
 
 void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
@@ -126,7 +126,7 @@ void Player::Move(float delta_time, float up_edge, float down_edge, float right_
 		//移動
 		pos_.x -= speed_;
 		//左端以上に行かない
-		if (pos_.x < left_edge) pos_.x = left_edge;
+		//if (pos_.x < left_edge) pos_.x = left_edge;
 		//アニメーション再生
 		anim_time_ += delta_time;
 		for (; anim_time_ > anim_speed_;) {

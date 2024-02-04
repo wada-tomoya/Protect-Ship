@@ -90,7 +90,7 @@ std::shared_ptr<std::vector<int>> ResourceManager::LoadAnim_(std::string animati
 	}
 }
 
-std::shared_ptr <dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
+Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
 	auto it = texture_map_.find(texture_name);
 	
 	//すでにロードしている場合
@@ -102,7 +102,7 @@ std::shared_ptr <dxe::Texture> ResourceManager::LoadTexture_(std::string texture
 	for (int y = 0; y < texture_csv_.size(); ++y) {
 		if (texture_csv_[y][0].getString().c_str() == texture_name) {
 			
-			std::shared_ptr<dxe::Texture> texture_hdl
+			Shared<dxe::Texture> texture_hdl
 				= dxe::Texture::CreateFromFile(texture_csv_[y][1].getString().c_str());
 
 			//ロードしたテクスチャをマップに保存

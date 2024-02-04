@@ -57,6 +57,9 @@
     <Filter Include="program\[003] game\Object\Attack">
       <UniqueIdentifier>{10b2a409-1870-4fc4-bf51-a2b5c338102c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="program\[003] game\Object\Map">
+      <UniqueIdentifier>{daa78b73-6e4b-498b-9f1a-5574d49d6477}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ManagedDxlGame.cpp">
@@ -233,9 +236,6 @@
     <ClCompile Include="program\game\Manager\Spawner.cpp">
       <Filter>program\[003] game\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\Object\Block.cpp">
-      <Filter>program\[003] game\Object</Filter>
-    </ClCompile>
     <ClCompile Include="program\game\Object\Camera.cpp">
       <Filter>program\[003] game\Object</Filter>
     </ClCompile>
@@ -253,6 +253,12 @@
     </ClCompile>
     <ClCompile Include="program\game\Scene\SceneBace.cpp">
       <Filter>program\[003] game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\Object\Map\Play_Map.cpp">
+      <Filter>program\[003] game\Object\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\Object\Map\Block.cpp">
+      <Filter>program\[003] game\Object\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -491,9 +497,6 @@
     <ClInclude Include="program\game\Manager\Sspawner.h">
       <Filter>program\[003] game\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="program\game\Object\Block.h">
-      <Filter>program\[003] game\Object</Filter>
-    </ClInclude>
     <ClInclude Include="program\game\Object\Camera.h">
       <Filter>program\[003] game\Object</Filter>
     </ClInclude>
@@ -511,6 +514,12 @@
     </ClInclude>
     <ClInclude Include="program\game\Scene\SceneBace.h">
       <Filter>program\[003] game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\Object\Map\Play_Map.h">
+      <Filter>program\[003] game\Object\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\Object\Map\Block.h">
+      <Filter>program\[003] game\Object\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

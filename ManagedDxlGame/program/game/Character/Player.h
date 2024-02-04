@@ -16,15 +16,15 @@ private:
 	float up_edge_, down_edge_, right_edge_, left_edge_;
 //----------------------------------------------------------------------------
 	//アニメーション画像ハンドル
-	std::shared_ptr<dxe::Texture> texture_hdl_right_;
-	std::shared_ptr<dxe::Texture> texture_hdl_left_;
+	Shared<dxe::Texture> texture_hdl_right_;
+	Shared<dxe::Texture> texture_hdl_left_;
 	//メッシュ配列の要素数
 	static const int mesh_index_ = 3;
 	//メッシュ
 	Shared<dxe::Mesh> mesh_right_[mesh_index_];
 	Shared<dxe::Mesh> mesh_left_[mesh_index_];
 	//テクスタ分割数
-	int texture_dir = 3; 
+	const int texture_dir = 3; 
 
 public:
 	Player(float up_edge, float down_edge, float right_edge, float left_edge);

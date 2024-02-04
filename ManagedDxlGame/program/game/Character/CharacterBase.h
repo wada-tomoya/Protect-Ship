@@ -18,7 +18,7 @@ protected:
 		RIGHT,
 		LEFT
 	};
-	DIRECTION chara_dir_;
+	DIRECTION chara_dir_ = DIRECTION::RIGHT;
 	//アニメーション再生のカウント
 	float anim_time_ = 0.0f;
 	//再生するフレーム

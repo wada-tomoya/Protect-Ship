@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+#除外フォルダ
+x64/Debug/
+.vs
+ManagedDxlGame/graphics/
+ManagedDxlGame/mesh/
+ManagedDxlGame/sound/
+ManagedDxlGame/x64/Debug/
+ManagedDxlGame/x64/Debug/ManagedDxlGame.tlog
+ManagedDxlGame/.txt
