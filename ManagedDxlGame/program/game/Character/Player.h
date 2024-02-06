@@ -7,7 +7,6 @@
 
 class Player : public CharacterBase{
 private:
-	
  	//攻撃方向の座標（マウス座標）
 	int mposx = 0, mposy = 0;
 	//攻撃の移動速度
@@ -27,12 +26,14 @@ private:
 	const int texture_dir = 3; 
 
 public:
-	Player(float up_edge, float down_edge, float right_edge, float left_edge);
+	//引数（マップの端の座標を取得、地面の座標取得）
+	Player(tnl::Vector3 upleft, tnl::Vector3 downright, float ground);
 	//実行関数
 	void Update(float delta_time) override;
 	//表示関数
 	void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
 	//移動
+	//引数（delta_time, 移動出来るマップの左上、右下）
 	void Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge);
 	//攻撃
 	//void Attack(float delta_time);

@@ -13,6 +13,13 @@ void CharacterBase::Anim_Play(std::shared_ptr<std::vector<int>> animhdl, float d
 	}
 }
 
-void CharacterBase::Texture_Anim_Play(int texture_dir, float delta_time) {
-	
+void CharacterBase::Texture_Anim_Play(int mesharray_index, float delta_time) {
+	if (is_move_) {
+		anim_time_ += delta_time;
+		for (; anim_time_ > anim_speed_;) {
+			render_++;
+			render_ %= mesharray_index;
+			anim_time_ = 0;
+		}
+	}
 }

@@ -19,6 +19,8 @@ protected:
 		LEFT
 	};
 	DIRECTION chara_dir_ = DIRECTION::RIGHT;
+	//移動フラグ
+	bool is_move_ = false;
 	//アニメーション再生のカウント
 	float anim_time_ = 0.0f;
 	//再生するフレーム
@@ -37,5 +39,5 @@ public:
 	//アニメーション再生関数
 	virtual void Anim_Play(std::shared_ptr<std::vector<int>> animhdl, float delta_time);
 	//meshテクスチャ　アニメーション
-	virtual void Texture_Anim_Play(int texture_dir, float delta_time);
+	virtual void Texture_Anim_Play(int mesharray_index, float delta_time);
 };
