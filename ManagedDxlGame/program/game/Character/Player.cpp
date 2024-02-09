@@ -12,14 +12,16 @@ Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright, float ground) {
 	down_edge_ = ground - size_.y;
 	right_edge_ = downright.x - size_.x;
 	left_edge_ = upleft.x + size_.x;
-//------------------------------------------------------------------------------------------
+
+	//AttackManagerインスタンス
+	attack_manager_ = std::make_shared<AttackManager>();
+
 	//右向きと左向きのテクスチャをロード
 	texture_hdl_right_ = ResourceManager::GetInstance_ResourceManager()->LoadTexture_("PLAYER_RIGHT");
 	texture_hdl_left_ = ResourceManager::GetInstance_ResourceManager()->LoadTexture_("PLAYER_LEFT");
 
 	//テクスチャの分割位置
 	float dir = 1.0f / texture_dir;
-	tnl::DebugTrace("%f", dir);
 
 	for (int i = 0; i < mesh_index_; ++i) {
 		//テクスチャの切り取る位置計算
@@ -45,17 +47,22 @@ Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright, float ground) {
 void Player::Update(float delta_time) {
 	Move(delta_time, up_edge_, down_edge_, right_edge_, left_edge_);
 	
-
-	//Attack(delta_time);
-
 	//メッシュの座標を合わせる
 	for (int i = 0; i < mesh_index_; ++i) {
 		mesh_right_[i]->pos_ = pos_;
 		mesh_left_[i]->pos_ = pos_;
 	}
+	
+	//Normal_Attack生成
+	Normal_Attack();
+	//各攻撃実行
+	attack_manager_->Update(delta_time);
 }
 
 void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
+	//各攻撃表示
+	attack_manager_->Draw(delta_time, camera);
+
 	//プレイヤー表示
 	//右向き
 	if (chara_dir_ == DIRECTION::RIGHT) {
@@ -65,16 +72,10 @@ void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
 	else if (chara_dir_ == DIRECTION::LEFT) {
 		mesh_left_[render_]->render(camera);
 	}	
-	
-	//弾の表示
-	/*auto it = normal_attacks_.begin();
-	while (it != normal_attacks_.end()) {
-		(*it)->Draw(delta_time);
-		it++;
-	}*/
 
 	DrawStringEx(10, 10, -1, "Player %f, %f", pos_.x, pos_.y);
-	DrawStringEx(10, 50, -1, "mpos %f %f", mesh_right_[1]->pos_.x, mesh_right_[1]->pos_.y);
+	DrawStringEx(10, 50, -1, "mesh %f %f", mesh_right_[1]->pos_.x, mesh_right_[1]->pos_.y);
+	
 }
 
 void Player::Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge) {	
@@ -120,30 +121,16 @@ void Player::Move(float delta_time, float up_edge, float down_edge, float right_
 	is_move_ = false;
 }
 
-//void Player::Attack(float delta_time) {
-//	//マウスの座標
-//	int mouse_pos_x = 0;
-//	int mouse_pos_y = 0;
-//
-//	//クリックで攻撃
-//	if (tnl::Input::IsMouseTrigger(eMouseTrigger::IN_LEFT)) {
-//		//マウスの座標を取得
-//		GetMousePoint(&mouse_pos_x, &mouse_pos_y);
-//		mposx = mouse_pos_x;
-//		mposy = mouse_pos_y;
-//		//攻撃生成
-//		normal_attacks_.emplace_back(std::make_shared<NormalAttack>(pos_, mouse_pos_x,mouse_pos_y, attack_speed_));
-//	}
-//
-//	//弾のUpdate実行、
-//	auto it = normal_attacks_.begin();
-//	while (it != normal_attacks_.end()) {
-//		(*it)->Update(delta_time);
-//		it++;
-//	}
-//
-//	//弾を消す処理を書いてない
-//}
+void Player::Normal_Attack() {
+	//マウス座標
+	int mouse_pos_x = 0, mouse_pos_y = 0;
+	
+	if (tnl::Input::IsMouseTrigger(eMouseTrigger::IN_LEFT)) {
+		GetMousePoint(&mouse_pos_x, &mouse_pos_y);
+		//攻撃生成
+		attack_manager_->NormalAttack_Create(pos_, mouse_pos_x, mouse_pos_y);
+	}
+}
 
 tnl::Vector3 Player::GetterPos() {
 	return pos_;

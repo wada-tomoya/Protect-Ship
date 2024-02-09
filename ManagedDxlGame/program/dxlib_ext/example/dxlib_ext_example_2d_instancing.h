@@ -80,7 +80,7 @@ void gameStart() {
 
     int sx = -DXE_WINDOW_WIDTH / 2;
     int sy = -DXE_WINDOW_HEIGHT / 2;
-
+    
     // 作成したメッシュを並べる & リストに保存
     for(int i = 0 ; i < 50 ; ++i){
         sx = -DXE_WINDOW_WIDTH / 2;

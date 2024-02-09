@@ -25,7 +25,7 @@ void Camera::Update(tnl::Vector3 target_pos, float up_edge, float down_edge, flo
     if (pos_.x < left_edge + (DXE_WINDOW_WIDTH / 2)) {
         pos_.x = left_edge + (DXE_WINDOW_WIDTH / 2);
     }
-
+    
     // dxe::camera‚Ìupdate
     update();
 }

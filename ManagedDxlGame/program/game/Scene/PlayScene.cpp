@@ -8,7 +8,6 @@ PlayScene::PlayScene() {
 	camera_ = std::make_shared<Camera>();
 	player_ = std::make_shared<Player>(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"), map_->Groundpos_Getter());
 	//protectobj_ = std::make_shared<ProtectObject>();
-	//enemy_ = std::make_shared<Enemy>(protectobj_->GetterPos(), enemy_spon_pos, 5.0f);
 }
 
 void PlayScene::Update(float delta_time) {
@@ -17,8 +16,6 @@ void PlayScene::Update(float delta_time) {
 		map_->MapEdge_Getter("upleft").y, map_->MapEdge_Getter("lowright").y, map_->MapEdge_Getter("lowright").x, map_->MapEdge_Getter("upleft").x);
 	//プレイヤー実行
 	player_->Update(delta_time);
-	//敵
-	//enemy_->Update(delta_time);
 }
 
 void PlayScene::Draw(float delta_time) {
@@ -26,12 +23,11 @@ void PlayScene::Draw(float delta_time) {
 	map_->Background_Draw(camera_);
 	//足場ブロック
 	map_->MapChip_Draw(camera_);
-	//敵のターゲット、プレイヤーが守るやつ
+	//守るオブジェクト
 	//protectobj_->Draw(delta_time, *camera_);
-	//敵
-	//enemy_->Draw(delta_time, *camera_);
 	//プレイヤー表示
 	player_->Draw(delta_time, camera_);
 
 	DrawStringEx(10, 30, -1, "camera %f, %f", camera_->pos_.x, camera_->pos_.y);
+	DrawStringEx(10, 110, -1, "cameratarget %f, %f", camera_->target_.x, camera_->target_.y);
 }

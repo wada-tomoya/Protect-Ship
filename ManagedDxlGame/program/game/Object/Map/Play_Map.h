@@ -22,6 +22,8 @@ private:
 	float ground_ = 0.0f;
 
 public:
+	static Play_Map* GetInstance_PlayMap();
+
 	Play_Map();
 	//îwåiï\é¶
 	void Background_Draw(std::shared_ptr<Camera> camera);

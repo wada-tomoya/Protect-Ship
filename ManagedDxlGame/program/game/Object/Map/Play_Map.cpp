@@ -25,7 +25,14 @@ Play_Map::Play_Map() {
 	map_lowright_ = { Block::size_ * (float)mapchip_csv_[0].size(), Block::size_ * (float)mapchip_csv_.size(), 0 };
 	//地面の位置計算
 	ground_ = (blocks_.front()->pos_.y + (Block::size_ / 2.0f));
-	tnl::DebugTrace("%f",ground_);
+}
+
+Play_Map* Play_Map::GetInstance_PlayMap(){
+	static Play_Map* instance(nullptr);
+	if (!instance) {
+		instance = new Play_Map();
+	}
+	return instance;
 }
 
 void Play_Map::Background_Draw(std::shared_ptr<Camera> camera) {
@@ -42,6 +49,7 @@ void Play_Map::MapChip_Draw(std::shared_ptr<Camera> camera) {
 		tnl::Vector3 draw_pos = blk->pos_ - camera->pos_ + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
 		DrawGraph(draw_pos.x, draw_pos.y, blk->graph_, true);
 	}
+	DrawStringEx(10,170,-1,"マップチップ表示");
 }
 
 tnl::Vector3 Play_Map::MapEdge_Getter(std::string s) {

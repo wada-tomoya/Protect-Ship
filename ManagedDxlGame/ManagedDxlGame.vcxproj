@@ -193,6 +193,7 @@
     <ClCompile Include="program\game\Manager\ResourceManager.cpp" />
     <ClCompile Include="program\game\Manager\Spawner.cpp" />
     <ClCompile Include="program\game\Object\Attack\AttackBase.cpp" />
+    <ClCompile Include="program\game\Object\Attack\AttackManager.cpp" />
     <ClCompile Include="program\game\Object\Attack\NormalAttack.cpp" />
     <ClCompile Include="program\game\Object\Camera.cpp" />
     <ClCompile Include="program\game\Object\Map\Block.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="program\game\Manager\ResourceManager.h" />
     <ClInclude Include="program\game\Manager\Sspawner.h" />
     <ClInclude Include="program\game\Object\Attack\AttackBase.h" />
+    <ClInclude Include="program\game\Object\Attack\AttackManager.h" />
     <ClInclude Include="program\game\Object\Attack\NormalAttack.h" />
     <ClInclude Include="program\game\Object\Camera.h" />
     <ClInclude Include="program\game\Object\Map\Block.h" />
