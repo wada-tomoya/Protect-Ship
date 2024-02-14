@@ -257,9 +257,6 @@
     <ClCompile Include="program\game\Object\Map\Play_Map.cpp">
       <Filter>program\[003] game\Object\Map</Filter>
     </ClCompile>
-    <ClCompile Include="program\game\Object\Map\Block.cpp">
-      <Filter>program\[003] game\Object\Map</Filter>
-    </ClCompile>
     <ClCompile Include="program\game\Object\Attack\AttackManager.cpp">
       <Filter>program\[003] game\Object\Attack</Filter>
     </ClCompile>
@@ -519,9 +516,6 @@
       <Filter>program\[003] game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="program\game\Object\Map\Play_Map.h">
-      <Filter>program\[003] game\Object\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="program\game\Object\Map\Block.h">
       <Filter>program\[003] game\Object\Map</Filter>
     </ClInclude>
     <ClInclude Include="program\game\Object\Attack\AttackManager.h">

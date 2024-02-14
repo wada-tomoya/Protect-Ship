@@ -3,11 +3,11 @@
 
 class GameManager {
 private:
+	//Às’†‚ÌƒV[ƒ“
 	SceneBace* nowscene_ = nullptr;
 
 	GameManager(SceneBace* startscene);
 public:
-	
 	static GameManager* GetInstance_GameManager(SceneBace* startscene = nullptr);
 	void Update(float delta_time);
 };

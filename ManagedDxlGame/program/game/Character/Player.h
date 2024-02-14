@@ -7,6 +7,8 @@
 
 class Player : public CharacterBase{
 private:
+	//マウスの座標
+	tnl::Vector3 mouse_pos_ = {0,0,0};
 	//攻撃の移動速度
 	float attack_speed_ = 10.0f;
 	//移動できる画面の端
@@ -27,14 +29,13 @@ private:
 	std::shared_ptr<AttackManager> attack_manager_ = nullptr;
 
 public:
-	//引数（マップの端の座標を取得、地面の座標取得）
-	Player(tnl::Vector3 upleft, tnl::Vector3 downright, float ground);
+	//引数（マップの端の座標、地面の座標）
+	Player(tnl::Vector3 upleft, tnl::Vector3 downright);
 	//実行関数
 	void Update(float delta_time) override;
 	//表示関数
 	void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
-	//移動
-	//引数（delta_time, 移動出来るマップの左上、右下）
+	//移動　引数（delta_time, 移動出来るマップの左上、右下）
 	void Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge);
 	//攻撃
 	void Normal_Attack();

@@ -14,6 +14,7 @@ GameManager* GameManager::GetInstance_GameManager(SceneBace* startscene) {
 }
 
 void GameManager::Update(float delta_time) {
+	//nowscene_‚É“ü‚Á‚Ä‚¢‚éƒV[ƒ“‚ÌUpdate‚ÆDraw‚ðŽÀs
 	if (nowscene_) {
 		nowscene_->Update(delta_time);
 		nowscene_->Draw(delta_time);

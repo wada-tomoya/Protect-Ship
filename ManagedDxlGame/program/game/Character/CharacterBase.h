@@ -29,7 +29,7 @@ protected:
 	float anim_speed_ = 0.1f;
 
 	//表示するメッシュ配列インデックス
-	int render_ = 0;
+	int render_ = 1;
 
 public:
 	//実行関数

@@ -1,4 +1,5 @@
 ,‰æ‘œƒpƒX
-PLAYER_RIGHT,graphics/Animation/Character/player_right.png
-PLAYER_LEFT,graphics/Animation/Character/player_left.png
+PLAYER_RIGHT,graphics/Animation/Character/playerright.png
+PLAYER_LEFT,graphics/Animation/Character/playerleft.png
 NORMALATTACK_1,graphics/Attack/bullet28.png
+PlayScene_BackGround,graphics/BackGround/background.png
