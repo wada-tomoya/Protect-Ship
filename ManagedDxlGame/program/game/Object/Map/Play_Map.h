@@ -27,8 +27,14 @@ public:
 	Play_Map();
 	~Play_Map();
 	//背景表示
-	void Background_Draw(std::shared_ptr<Camera> camera);
-	
+	inline void Background_Draw(std::shared_ptr<Camera> camera) {
+		//InstMeshPoolの描画
+		dxe::DirectXRenderBegin();
+		//背景描画
+		mesh_pool_->render(camera);
+
+		dxe::DirectXRenderEnd();
+	};
 	//マップの左上座標と右下座標のGetter
 	//引数 upleftなら左上の数値、lowrightなら右下の数値を返す 
 	tnl::Vector3 MapEdge_Getter(std::string s);

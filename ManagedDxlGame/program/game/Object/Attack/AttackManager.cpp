@@ -12,10 +12,11 @@ AttackManager::AttackManager() {
 	//ブレンドモード設定
 	noratk.mesh_pool_->dxe::InstMeshPool::setBlendState(dxe::eBlendState::ALPHA);
 	//メッシュの色設定
-	noratk.mesh_pool_->dxe::InstMeshPool::setMtrlEmissive({1,1,1});
+	noratk.mesh_pool_->dxe::InstMeshPool::setMtrlEmissive({ 1,1,1 });
 }
 
 AttackManager::~AttackManager() {
+	//mesh_pool_の参照カウンタを0に
 	noratk.mesh_pool_.reset();
 }
 
@@ -32,14 +33,6 @@ void AttackManager::Update(float delta_time) {
 		}
 		it++;
 	}
-}
-
-void AttackManager::Draw(std::shared_ptr<Camera> camera) {
-	dxe::DirectXRenderBegin();
-	//NormalAttackの表示
-	noratk.mesh_pool_->render(camera);
-	
-	dxe::DirectXRenderEnd();
 }
 
 void AttackManager::NormalAttack_Create(tnl::Vector3 spwan_pos, tnl::Vector3 target_pos) {

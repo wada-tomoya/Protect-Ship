@@ -187,8 +187,10 @@
     <ClCompile Include="program\dxlib_ext\OBJLoader.cpp" />
     <ClCompile Include="program\game\Character\CharacterBase.cpp" />
     <ClCompile Include="program\game\Character\Enemy.cpp" />
+    <ClCompile Include="program\game\Character\EnemyBase.cpp" />
     <ClCompile Include="program\game\Character\Player.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
+    <ClCompile Include="program\game\Manager\Collision.cpp" />
     <ClCompile Include="program\game\Manager\GameManager.cpp" />
     <ClCompile Include="program\game\Manager\ResourceManager.cpp" />
     <ClCompile Include="program\game\Manager\Spawner.cpp" />
@@ -271,8 +273,10 @@
     <ClInclude Include="program\dxlib_ext\OBJLoader.h" />
     <ClInclude Include="program\game\Character\CharacterBase.h" />
     <ClInclude Include="program\game\Character\Enemy.h" />
+    <ClInclude Include="program\game\Character\EnemyBase.h" />
     <ClInclude Include="program\game\Character\Player.h" />
     <ClInclude Include="program\game\gm_main.h" />
+    <ClInclude Include="program\game\Manager\Collision.h" />
     <ClInclude Include="program\game\Manager\GameManager.h" />
     <ClInclude Include="program\game\Manager\ResourceManager.h" />
     <ClInclude Include="program\game\Manager\Sspawner.h" />

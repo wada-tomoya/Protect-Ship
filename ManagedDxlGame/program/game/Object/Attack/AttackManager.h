@@ -34,7 +34,10 @@ public:
 	//各攻撃の実行関数
 	void Update(float delta_time);
 	//各攻撃の表示関数
-	void Draw(std::shared_ptr<Camera> camera);
+	inline void Draw(std::shared_ptr<Camera> camera) {
+		//NormalAttackの表示
+		noratk.mesh_pool_->render(camera);
+	};
 	//NormalAttack生成関数 playerがこの関数を呼ぶことで攻撃が生成される
 	//引数（攻撃の初期座標、ターゲット座標）
 	void NormalAttack_Create(tnl::Vector3 spwan_pos, tnl::Vector3 target_pos);

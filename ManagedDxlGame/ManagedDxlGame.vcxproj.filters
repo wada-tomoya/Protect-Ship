@@ -260,6 +260,12 @@
     <ClCompile Include="program\game\Object\Attack\AttackManager.cpp">
       <Filter>program\[003] game\Object\Attack</Filter>
     </ClCompile>
+    <ClCompile Include="program\game\Character\EnemyBase.cpp">
+      <Filter>program\[003] game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="program\game\Manager\Collision.cpp">
+      <Filter>program\[003] game\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagedDxlGame.rc">
@@ -520,6 +526,12 @@
     </ClInclude>
     <ClInclude Include="program\game\Object\Attack\AttackManager.h">
       <Filter>program\[003] game\Object\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\Character\EnemyBase.h">
+      <Filter>program\[003] game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="program\game\Manager\Collision.h">
+      <Filter>program\[003] game\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

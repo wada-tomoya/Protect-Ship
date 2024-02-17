@@ -1,42 +1,40 @@
 #include "Enemy.h"
 
-Enemy::Enemy(tnl::Vector3 target, tnl::Vector3 spon_pos, float speed) : target_pos_(target){
-	//アニメーション画像ロード
-	anim_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadAnim_("ENEMY_GHOST_RIGHT");
+Enemy::Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> inst_mesh){
+	//メッシュ
+	inst_mesh_ = inst_mesh;
 	
-	//初期座標設定
-	pos_ = spon_pos;
+	//座標設定
+	pos_ = spawn_pos;
+	target_pos_ = target;
 	//移動速度設定
-	speed_ = speed;
-	//角度計算
-	int x = target_pos_.x - pos_.x;
-	int y = target_pos_.y - pos_.y;
-	angle_ = atan2(y, x);
+	speed_ = 0.5f;	
+	//移動方向計算
+	move_dir_ = tnl::Vector3::Normalize(target_pos_ - pos_) * speed_;
+	//初期座標設定
+	inst_mesh_->setPosition(pos_);
 }
 
 void Enemy::Update(float delta_time) {
-	Move(delta_time);
+	//行動シーケンス実行
+	tnl_sequence_.update(delta_time);
+
+	DrawStringEx(10, 30, -1, "attack_pos x%f y%f", inst_mesh_->getPosition().x, inst_mesh_->getPosition().y);
 }
 
-void Enemy::Draw(float delta_time, std::shared_ptr<Camera> camera) {
-	// 描画位置の調整　　　　　　　　　　　　　　　　　
-	//tnl::Vector3 draw_pos = pos_ - camera.target_ + tnl::Vector3(DXE_WINDOW_WIDTH >> 1, DXE_WINDOW_HEIGHT >> 1, 0);
-	//敵表示
-	//DrawRotaGraph(draw_pos.x, draw_pos.y, 1.0, 0, (*anim_hdl_)[anim_frame_], true, isturn_);
-
-}
-
-void Enemy::Move(float delta_time) {
+bool Enemy::move(const float delta_time) {
 	//移動
-	pos_.x += cos(angle_) * speed_;
-	pos_.y += sin(angle_) * speed_;
-	
-	//1f前の座標
-	tnl::Vector3 prev_pos_{0,0,0};
-	//左右向き変換
-	prev_pos_ = pos_;
-	float dir = pos_.x - prev_pos_.x;
-	//if (dir > 0) isturn_ = DIRECTION::RIGHT;
-	//else if (dir < 0) isturn_ = DIRECTION::LEFT;
+	inst_mesh_->setPosition(inst_mesh_->getPosition() + move_dir_);
 
+	//attackフラグがtrueになれば攻撃シーケンスに移動
+	if (is_attack_) {
+		tnl_sequence_.change(&Enemy::attack);
+	}
+
+	TNL_SEQ_CO_END
+}
+
+bool Enemy::attack(const float delta_time) {
+
+	TNL_SEQ_CO_END
 }

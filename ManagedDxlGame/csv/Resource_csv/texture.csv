@@ -3,3 +3,6 @@ PLAYER_RIGHT,graphics/Animation/Character/playerright.png
 PLAYER_LEFT,graphics/Animation/Character/playerleft.png
 NORMALATTACK_1,graphics/Attack/bullet28.png
 PlayScene_BackGround,graphics/BackGround/background.png
+ENEMY_1_RIGHT,graphics/Enemy/enemy_1_right.png
+ENEMY_1_LEFT,graphics/Enemy/enemy_1_left.png
+PROTECTOBJECT,graphics/Texture/protectobject.png

@@ -1,26 +1,27 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
 #include "../Object/Camera.h"
-#include "CharacterBase.h"
+#include "EnemyBase.h"
 #include "../Manager/ResourceManager.h"
 
-class Enemy : public CharacterBase {
+//ProtectObjectに向かって進行する敵
+//引数（ターゲットの座標、生成座標、移動スピード）
+class Enemy : public EnemyBase {
 private:
-	//アニメーション画像ハンドル
-	std::shared_ptr<std::vector<int>> anim_hdl_;
-	//ターゲットの座標
-	tnl::Vector3 target_pos_ {0,0,0};
-	//移動角度
-	float angle_ = 0.0f;
+	//攻撃フラグ
+	bool is_attack_ = false;
+
+	//行動シーケンス
+	TNL_CO_SEQUENCE(Enemy, &Enemy::move)
+	//移動
+	bool move(const float delta_time);
+	//攻撃
+	bool attack(const float delta_time);
 
 public:
 	//コンストラクタ
 	//引数（ターゲットの座標、生成座標、移動スピード）
-	Enemy(tnl::Vector3 target, tnl::Vector3 spon_pos, float speed);
+	Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> inst_mesh);
 	//実行関数
 	void Update(float delta_time) override;
-	//表示関数
-	void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
-	//移動
-	void Move(float delta_time);
 };

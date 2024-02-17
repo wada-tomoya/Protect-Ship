@@ -7,7 +7,7 @@
 #include "../Character/Enemy.h"
 #include "../Manager/Sspawner.h"
 #include "../Object/ProtectObject.h"
-#include "../Object/Attack/AttackManager.h"
+#include "../Manager/Sspawner.h"
 
 class PlayScene : public SceneBace{
 private:
@@ -15,8 +15,8 @@ private:
 	std::shared_ptr<Play_Map> map_ = nullptr;
 	std::shared_ptr<Camera> camera_ = nullptr;
 	std::shared_ptr<Player> player_ = nullptr;
-	std::shared_ptr<AttackManager> attack_ = nullptr;
-	//std::shared_ptr<ProtectObject> protectobj_= nullptr;
+	std::shared_ptr<ProtectObject> protectobj_= nullptr;
+	std::shared_ptr<Spawner> spawner_ = nullptr;
 	
 public:
 	PlayScene();

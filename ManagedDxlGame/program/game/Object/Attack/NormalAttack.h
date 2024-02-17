@@ -10,7 +10,7 @@ private:
 	//ターゲットの座標（進行方向座標）
 	float target_posx_ = 0, target_posy_ = 0;
 	//弾の速度
-	float speed_ = 7;
+	float speed_ = 10;
 	//弾を発射する角度
 	float angle_ = 0.0f;
 	//弾の生死

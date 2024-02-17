@@ -5,21 +5,21 @@
 
 class ProtectObject {
 private:
+	//サイズ
+	tnl::Vector3 size_{ 64,64,0 };
 	//表示座標
-	tnl::Vector3 pos_{940,600,0};
-	//画像ハンドル
-	std::shared_ptr<std::vector<int>> anim_hdl_;
+	tnl::Vector3 pos_{0,0,0};
+	//テクスチャ
+	Shared<dxe::Texture> texture_;
+	//メッシュ
+	Shared<dxe::Mesh> mesh_ = nullptr;
 
-	//アニメーション再生のカウント
-	float anim_time_ = 0.0f;
-	//再生するフレーム
-	int anim_frame_ = 0;
-	//アニメーションの再生速度
-	float anim_speed_ = 0.1f;
 public:
 	ProtectObject();
 	//表示関数
-	void Draw(float delta_time, const Camera& camera);
+	inline void Draw(std::shared_ptr<Camera> camera) {
+		mesh_->render(camera);
+	};
 	//座標ゲッター
 	tnl::Vector3 GetterPos();
 };

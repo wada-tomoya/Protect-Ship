@@ -6,7 +6,7 @@ Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright) {
 	//画像サイズ
 	size_ = { 32,32,0 };
 	//初期座標
-	pos_ = { 0,0,0 };
+	pos_ = { -48,0,0 };
 	//プレイヤーが動ける画面の端
 	up_edge_ = upleft.y + size_.y;
 	down_edge_ = downright.y - size_.y;
@@ -23,6 +23,7 @@ Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright) {
 	//テクスチャの分割位置
 	float dir = 1.0f / texture_dir;
 
+	//メッシュ生成
 	for (int i = 0; i < mesh_index_; ++i) {
 		//テクスチャの切り取る位置計算
 		const float ltop_x = dir * i;
@@ -57,21 +58,6 @@ void Player::Update(float delta_time) {
 	Normal_Attack();
 	//各攻撃実行
 	attack_manager_->Update(delta_time);
-}
-
-void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
-	//プレイヤー表示
-	//右向き
-	if (chara_dir_ == DIRECTION::RIGHT) {
-		mesh_right_[render_]->render(camera);
-	}
-	//左向き
-	else if (chara_dir_ == DIRECTION::LEFT) {
-		mesh_left_[render_]->render(camera);
-	}
-
-	//各攻撃表示
-	attack_manager_->Draw(camera);
 }
 
 void Player::Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge) {	

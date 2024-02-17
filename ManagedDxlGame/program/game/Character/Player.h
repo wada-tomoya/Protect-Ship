@@ -34,7 +34,25 @@ public:
 	//実行関数
 	void Update(float delta_time) override;
 	//表示関数
-	void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
+	inline void Draw(float delta_time, std::shared_ptr<Camera> camera) override {
+		//右向き
+		if (chara_dir_ == DIRECTION::RIGHT) {
+			mesh_right_[render_]->render(camera);
+		}
+		//左向き
+		else if (chara_dir_ == DIRECTION::LEFT) {
+			mesh_left_[render_]->render(camera);
+		}
+	};
+	//攻撃描画
+	inline void AttackDraw(std::shared_ptr<Camera> camera) {
+		//InstMeshPoolの描画
+		dxe::DirectXRenderBegin();
+		//各攻撃表示
+		attack_manager_->Draw(camera);
+
+		dxe::DirectXRenderEnd();
+	}
 	//移動　引数（delta_time, 移動出来るマップの左上、右下）
 	void Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge);
 	//攻撃

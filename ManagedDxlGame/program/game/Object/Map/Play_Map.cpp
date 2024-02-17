@@ -1,9 +1,8 @@
  #include "Play_Map.h"
 
 Play_Map::Play_Map() {	
-	//マップの端（左上）の座標
+	//マップの端（左上、右下）の座標
 	map_upleft_ = { -DXE_WINDOW_WIDTH, -DXE_WINDOW_HEIGHT, 0 };
-	//マップの端（右下）の座標
 	map_lowright_ = { DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, 0 };
 	//プレイヤーの移動限界座標
 	player_upleft_ = { map_upleft_.x / 2, map_upleft_.y / 2, 0 };
@@ -27,16 +26,8 @@ Play_Map::Play_Map() {
 }
 
 Play_Map::~Play_Map() {
+	//mesh_pool_の参照カウンタを0に
 	mesh_pool_.reset();
-}
-
-void Play_Map::Background_Draw(std::shared_ptr<Camera> camera) {
-	//背景描画
-	dxe::DirectXRenderBegin();
-
-	mesh_pool_->render(camera);
-
-	dxe::DirectXRenderEnd();
 }
 
 tnl::Vector3 Play_Map::MapEdge_Getter(std::string s) {
