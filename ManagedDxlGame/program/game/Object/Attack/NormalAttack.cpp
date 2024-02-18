@@ -15,7 +15,7 @@ NormalAttack::NormalAttack(const tnl::Vector3 map_upleft, const tnl::Vector3 map
 	upleft_ = map_upleft;
 	lowright_ = map_lowright;
 	//’e‚Ì‘¬“xİ’è
-	speed_ = 1.0f;
+	speed_ = 15.0f;
 	//“–‚½‚è”»’è—p”¼Œaİ’è
 	rad_ = 8.0f;
 
@@ -43,8 +43,6 @@ void NormalAttack::Update(float delta_time) {
 	if (nowpos.x < upleft_.x || nowpos.y < upleft_.y || nowpos.x > lowright_.x || nowpos.y > lowright_.y) {
 		Delete();
 	}
-
-	DrawStringEx(10, 50, -1, "attack_pos x%f y%f", inst_mesh_->getPosition().x, inst_mesh_->getPosition().y);
 }
 
 void NormalAttack::Delete() {

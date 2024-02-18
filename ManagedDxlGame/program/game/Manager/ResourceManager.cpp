@@ -7,6 +7,8 @@ ResourceManager::ResourceManager() {
 	animation_csv_ = tnl::LoadCsv("csv/Resource_csv/animation.csv");
 	//テクスチャcsv読み込み
 	texture_csv_ = tnl::LoadCsv("csv/Resource_csv/texture.csv");
+	//音csv読み込み
+	sound_csv_ = tnl::LoadCsv("csv/Resource_csv/sound.csv");
 }
 
 ResourceManager* ResourceManager::GetInstance_ResourceManager() {
@@ -112,4 +114,28 @@ Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
 			return texture_hdl;
 		}
 	}
+}
+
+int ResourceManager::LoadSound_(std::string sound_name) {
+	auto it = sound_map_.find(sound_name);
+
+	//すでにロードしている場合
+	if (it != sound_map_.end()) {
+		return sound_map_[sound_name];
+	}
+
+	//ロードしていない場合
+	for (int y = 0; sound_csv_.size(); ++y) {
+		if (sound_csv_[y][0].getString().c_str() == sound_name) {
+			int sound = LoadSoundMem(graphics_csv_[y][1].getString().c_str());
+
+			//mapに読み込んだ音を保存
+			sound_map_.insert(std::make_pair(sound_name, sound));
+
+			//音を返す
+			return sound;
+		}
+	}
+
+	return -1;
 }

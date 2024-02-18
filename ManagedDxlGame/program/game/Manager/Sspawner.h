@@ -27,6 +27,10 @@ private:
 	ENEMY_1 enemy1_;
 	//マップの情報
 	tnl::Vector3 map_upleft_{ 0,0,0 }, map_lowright_{ 0,0,0 };
+	//マップのxの長さ
+	unsigned int map_x_length_ = 0;
+	//マップのyの長さ
+	unsigned int map_y_length_ = 0;
 
 	//ProtectObject敵の標的
 	std::shared_ptr<ProtectObject> protectobject_ = nullptr;
@@ -37,6 +41,7 @@ public:
 	//引数（マップの左上座標、右下座標）
 	Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright);
 	~Spawner();
+	void Destroy() { delete Instance_Spawner(); };
 	static Spawner* Instance_Spawner(tnl::Vector3 map_upleft = { 0,0,0 }, tnl::Vector3 map_lowright = { 0,0,0 });
 	//実行
 	void Update(float delta_time);
@@ -50,7 +55,7 @@ public:
 		dxe::DirectXRenderEnd();
 	};
 	//敵生成
-	void Enemy_Spawn(tnl::Vector3 target_pos, tnl::Vector3 spwan_pos, float delta_time);
+	void Enemy_Spawn(tnl::Vector3 target_pos, float delta_time);
 	
 	//敵のlist
 	std::list<std::shared_ptr<EnemyBase>> enemys_;

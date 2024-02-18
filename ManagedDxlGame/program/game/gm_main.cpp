@@ -5,12 +5,12 @@
 #include "../dxlib_ext/dxlib_ext.h"
 #include "gm_main.h"
 #include "Manager/GameManager.h"
-#include "Scene/PlayScene.h"
+#include "Scene/TitleScene.h"
 
 //------------------------------------------------------------------------------------------------------------
 // ゲーム起動時に１度だけ実行されます
 void gameStart() {
-	GameManager::GetInstance_GameManager(new PlayScene());
+	GameManager::GetInstance_GameManager(new TitleScene());
 		
 }
 

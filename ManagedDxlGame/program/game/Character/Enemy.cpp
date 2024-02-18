@@ -20,13 +20,11 @@ Enemy::Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> 
 void Enemy::Update(float delta_time) {
 	//行動シーケンス実行
 	tnl_sequence_.update(delta_time);
-
-	DrawStringEx(10, 30, -1, "enemy_pos x%f y%f", inst_mesh_->getPosition().x, inst_mesh_->getPosition().y);
 }
 
 bool Enemy::move(const float delta_time) {
 	//移動
-	//inst_mesh_->setPosition(inst_mesh_->getPosition() + move_dir_);
+	inst_mesh_->setPosition(inst_mesh_->getPosition() + move_dir_);
 
 	//attackフラグがtrueになれば攻撃シーケンスに移動
 	if (is_attack_) {

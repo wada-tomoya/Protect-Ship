@@ -15,7 +15,7 @@ Play_Map::Play_Map() {
 	//インスタンスメッシュ複製
 	mesh_pool_ = dxe::InstMeshPool::Create(mesh_, 1, &texture_);
 	//ブレンドモード設定
-	mesh_pool_->dxe::InstMeshPool::setBlendState(dxe::eBlendState::ALPHA);
+	//mesh_pool_->dxe::InstMeshPool::setBlendState(dxe::eBlendState::ALPHA);
 	//メッシュの色設定
 	mesh_pool_->dxe::InstMeshPool::setMtrlEmissive({ 1,1,1 });
 	//インスタンスメッシュ生成、座標設定、テクスチャ設定

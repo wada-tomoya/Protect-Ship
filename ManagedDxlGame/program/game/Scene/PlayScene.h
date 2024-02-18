@@ -10,6 +10,7 @@
 #include "../Manager/Sspawner.h"
 #include "../Object/Attack/AttackManager.h"
 #include "../Manager/Collision.h"
+#include "../Manager/ResourceManager.h"
 
 class PlayScene : public SceneBace{
 private:
@@ -19,10 +20,13 @@ private:
 	std::shared_ptr<Player> player_ = nullptr;
 	std::shared_ptr<ProtectObject> protectobj_= nullptr;
 	std::shared_ptr<Collision> collision_ = nullptr;
+
+	//âπäy
+	int bgm_ = 0;
 	
 public:
 	PlayScene();
-
+	~PlayScene();
 	//é¿çsä÷êî
 	void Update(float delta_time) override;
 	//ï\é¶ä÷êî

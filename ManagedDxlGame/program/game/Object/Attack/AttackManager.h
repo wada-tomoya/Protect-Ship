@@ -31,6 +31,7 @@ private:
 public:
 	AttackManager();
 	~AttackManager();
+	void Destroy() { delete Instance_AttackManager(); };
 	static AttackManager* Instance_AttackManager();
 	//ŠeUŒ‚‚ÌÀsŠÖ”
 	void Update(float delta_time);

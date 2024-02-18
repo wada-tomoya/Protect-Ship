@@ -35,6 +35,14 @@ private:
 	std::unordered_map <std::string, Shared<dxe::Texture>> texture_map_;
 	
 //-----------------------------------------------------------------------------------------------
+
+	//音関係
+	//音のパスのcsv
+	std::vector <std::vector<tnl::CsvCell>> sound_csv_;
+	//音を保存するmap
+	std::unordered_map <std::string, int> sound_map_;
+
+//-----------------------------------------------------------------------------------------------
 	//コンストラクタ
 	ResourceManager();
 
@@ -57,5 +65,10 @@ public:
 
 	//テクスチャを読み込む関数
 	Shared<dxe::Texture > LoadTexture_(std::string texture_name);
+
+//-----------------------------------------------------------------------------------------------
+
+	//音を読み込む関数
+	int LoadSound_(std::string sound_name);
 
 };

@@ -41,9 +41,6 @@ void AttackManager::Update(float delta_time) {
 		}
 		it++;
 	}
-
-	int aaa = attacks_.size();
-	DrawStringEx(10, 110, -1, "atakmana%d", aaa);
 }
 
 void AttackManager::NormalAttack_Create(tnl::Vector3 spwan_pos, tnl::Vector3 target_pos) {

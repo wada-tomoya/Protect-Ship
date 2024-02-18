@@ -10,6 +10,16 @@ PlayScene::PlayScene() {
 	protectobj_ = std::make_shared<ProtectObject>();
 	Spawner::Instance_Spawner(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"));
 	collision_ = std::make_shared<Collision>();
+
+	//‰¹Šyƒ[ƒh
+	bgm_ = ResourceManager::GetInstance_ResourceManager()->LoadSound_("PlayScene_BGM");
+	PlaySoundMem(bgm_, DX_PLAYTYPE_LOOP);
+	ChangeVolumeSoundMem(255, bgm_);
+}
+
+PlayScene::~PlayScene() {
+	Spawner::Instance_Spawner()->Destroy();
+	AttackManager::Instance_AttackManager()->Destroy();
 }
 
 void PlayScene::Update(float delta_time) {
@@ -22,9 +32,6 @@ void PlayScene::Update(float delta_time) {
 	//“–‚½‚è”»’è
 	collision_->Attack_Enemy_HitCheck(AttackManager::Instance_AttackManager()->attacks_,
 		Spawner::Instance_Spawner()->enemys_);
-
-	int aaa = AttackManager::Instance_AttackManager()->attacks_.size();
-	DrawStringEx(10, 70, -1, "playscene atk %d", aaa);
 }
 
 void PlayScene::Draw(float delta_time) {

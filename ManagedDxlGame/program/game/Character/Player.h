@@ -24,10 +24,6 @@ private:
 	//メッシュ
 	Shared<dxe::Mesh> mesh_right_[mesh_index_];
 	Shared<dxe::Mesh> mesh_left_[mesh_index_];
-
-	//攻撃マネージャー
-	//std::shared_ptr<AttackManager> attackmanager_ = nullptr;
-
 public:
 	//引数（マップの端の座標、地面の座標）
 	Player(tnl::Vector3 upleft, tnl::Vector3 downright);
