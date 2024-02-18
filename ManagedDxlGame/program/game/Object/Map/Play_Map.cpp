@@ -30,13 +30,13 @@ Play_Map::~Play_Map() {
 	mesh_pool_.reset();
 }
 
-tnl::Vector3 Play_Map::MapEdge_Getter(std::string s) {
+const tnl::Vector3& Play_Map::MapEdge_Getter(std::string s) const {
 	//マップの端の座標を返す
 	if (s == "upleft") return map_upleft_;
 	else if (s == "lowright") return map_lowright_;
 }
 
-tnl::Vector3 Play_Map::MapEdgePlsyer_Getter(std::string s) {
+const tnl::Vector3& Play_Map::MapEdgePlsyer_Getter(std::string s) const {
 	//マップの端の座標を返す
 	if (s == "upleft") return player_upleft_;
 	else if (s == "lowright") return player_lowright_;

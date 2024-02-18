@@ -37,7 +37,7 @@ public:
 	};
 	//マップの左上座標と右下座標のGetter
 	//引数 upleftなら左上の数値、lowrightなら右下の数値を返す 
-	tnl::Vector3 MapEdge_Getter(std::string s);
+	const tnl::Vector3& MapEdge_Getter(std::string s) const;
 	//playerの移動限界座標
-	tnl::Vector3 MapEdgePlsyer_Getter(std::string s);
+	const tnl::Vector3& MapEdgePlsyer_Getter(std::string s) const;
 };

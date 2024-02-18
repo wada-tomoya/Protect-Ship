@@ -8,25 +8,33 @@ PlayScene::PlayScene() {
 	camera_ = std::make_shared<Camera>();
 	player_ = std::make_shared<Player>(map_->MapEdgePlsyer_Getter("upleft"), map_->MapEdgePlsyer_Getter("lowright"));
 	protectobj_ = std::make_shared<ProtectObject>();
-	spawner_ = std::make_shared<Spawner>(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"));
+	Spawner::Instance_Spawner(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"));
+	collision_ = std::make_shared<Collision>();
 }
 
 void PlayScene::Update(float delta_time) {
 	//ƒJƒƒ‰Às						
 	camera_->Update(player_->GetterPos());
 	//“G‚ÌƒXƒ|ƒi[Às
-	spawner_->Update(delta_time);
+	Spawner::Instance_Spawner()->Update(delta_time);
 	//ƒvƒŒƒCƒ„[Às
 	player_->Update(delta_time);
+	//“–‚½‚è”»’è
+	collision_->Attack_Enemy_HitCheck(AttackManager::Instance_AttackManager()->attacks_,
+		Spawner::Instance_Spawner()->enemys_);
+
+	int aaa = AttackManager::Instance_AttackManager()->attacks_.size();
+	DrawStringEx(10, 70, -1, "playscene atk %d", aaa);
 }
 
 void PlayScene::Draw(float delta_time) {
-	//ƒvƒŒƒCƒ„[‚ÌUŒ‚•`‰æ
-	player_->AttackDraw(camera_);
-	//“G•\¦
-	spawner_->Draw(camera_);
+	//ŠeUŒ‚•`‰æ
+	player_->Attack_Draw(camera_);
+	//“G•`‰æ
+	Spawner::Instance_Spawner()->Draw(camera_);
 	//”wŒi
 	map_->Background_Draw(camera_);
+	
 //InstMeshPool•`‰æ
 //----------------------------------------------------------
 //’ÊíMesh•`‰æ

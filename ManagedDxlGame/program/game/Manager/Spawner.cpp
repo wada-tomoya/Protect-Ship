@@ -12,7 +12,7 @@ Spawner::Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright) {
 	//ENEMY_1メッシュ複製
 	enemy1_.mesh_pool_ = dxe::InstMeshPool::Create(enemy1_.origine_mesh_, enemy1_.instmax_, &textures_);
 	//ブレンドモード設定
-	enemy1_.mesh_pool_->dxe::InstMeshPool::setBlendState(dxe::eBlendState::ALPHA);
+	//enemy1_.mesh_pool_->dxe::InstMeshPool::setBlendState(dxe::eBlendState::ALPHA);
 	//色設定
 	enemy1_.mesh_pool_->dxe::InstMeshPool::setMtrlEmissive({ 1,1,1 });
 
@@ -24,7 +24,9 @@ Spawner::Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright) {
 	//テクスチャ設定
 	inst->setUseTextureIndex(0);
 	//listに挿入
-	enemys_.emplace_back(std::make_shared<Enemy>(protectobject_->GetterPos(), map_upleft_, inst));
+	{
+		enemys_.emplace_back(std::make_shared<Enemy>(protectobject_->GetterPos(), tnl::Vector3{-200,-200,0}, inst));
+	}
 }
 
 Spawner::~Spawner() {
@@ -32,10 +34,18 @@ Spawner::~Spawner() {
 	enemy1_.mesh_pool_.reset();
 }
 
+Spawner* Spawner::Instance_Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright) {
+	static Spawner* instance(nullptr);
+	if (!instance) {
+		instance = new Spawner(map_upleft, map_lowright);
+	}
+	return instance;
+}
+
 void Spawner::Update(float delta_time) {
 	//Enemy_Spawn(protectobject_->GetterPos(), tnl::Vector3{30,30,0}, delta_time);
 	
-	//敵１の実行と消去
+	//敵の実行と消去
 	auto it = enemys_.begin();
 	while (it != enemys_.end())
 	{

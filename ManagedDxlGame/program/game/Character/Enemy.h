@@ -22,6 +22,16 @@ public:
 	//コンストラクタ
 	//引数（ターゲットの座標、生成座標、移動スピード）
 	Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> inst_mesh);
+	//消去
+	void Delete() { is_alive_ = false; };
 	//実行関数
 	void Update(float delta_time) override;
+	//is_alive_のゲッター　
+	bool Getter_is_alive() override { return is_alive_; };
+	//is_alive_のセッター
+	void Setter_is_alive(bool is_alive) override { is_alive_ = (is_alive == true) ? true : false; };
+	//座標のゲッター
+	tnl::Vector3 Getter_pos_() override { return inst_mesh_->getPosition(); };
+	//半径のゲッター
+	float Getter_rad_() override { return rad_; };
 };

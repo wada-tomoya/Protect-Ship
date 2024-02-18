@@ -5,31 +5,21 @@
 
 class NormalAttack : public AttackBase{
 private:	
-	//初期座標
-	tnl::Vector3 spawn_pos_{0,0,0};
-	//ターゲットの座標（進行方向座標）
-	float target_posx_ = 0, target_posy_ = 0;
-	//弾の速度
-	float speed_ = 10;
-	//弾を発射する角度
-	float angle_ = 0.0f;
-	//弾の生死
-	bool is_alive_ = true;
-
-	//mapの端
-	tnl::Vector3 upleft_{ 0,0,0 }, lowright_{0,0,0};
-
-	//複製されたメッシュ
-	Shared<dxe::InstMesh> inst_mesh_;
-
+	
 public:		 
 	//引数（マップの左上、マップの右下、生成する座標、進行方向の座標、複製されたメッシュ）
 	NormalAttack(const tnl::Vector3 map_upleft, const tnl::Vector3 map_lowright, 
 		const tnl::Vector3& spawn_pos, const tnl::Vector3 target_pos, Shared<dxe::InstMesh> inst_mesh);
 	//実行関数
-	void Update(float delta_time);
+	void Update(float delta_time) override;
 	//攻撃の消去 is_aliveをfalseにする
 	void Delete();
 	//is_alive_のゲッター
-	bool Getter_is_alive();
+	bool Getter_is_alive() override { return is_alive_; };
+	//is_alive_のセッター
+	void Setter_is_alive(bool is_alive) override { is_alive_ = (is_alive == true) ? true : false; };
+	//座標のゲッター
+	const tnl::Vector3& Getter_pos_() const override { return inst_mesh_->getPosition(); };
+	//半径のゲッター
+	const float& Getter_rad_() const override { return rad_; };
 };

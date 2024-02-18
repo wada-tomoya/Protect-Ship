@@ -8,7 +8,9 @@ Enemy::Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> 
 	pos_ = spawn_pos;
 	target_pos_ = target;
 	//移動速度設定
-	speed_ = 0.5f;	
+	speed_ = 1.0f;	
+	//半径設定
+	rad_ = 16.0f;
 	//移動方向計算
 	move_dir_ = tnl::Vector3::Normalize(target_pos_ - pos_) * speed_;
 	//初期座標設定
@@ -19,12 +21,12 @@ void Enemy::Update(float delta_time) {
 	//行動シーケンス実行
 	tnl_sequence_.update(delta_time);
 
-	DrawStringEx(10, 30, -1, "attack_pos x%f y%f", inst_mesh_->getPosition().x, inst_mesh_->getPosition().y);
+	DrawStringEx(10, 30, -1, "enemy_pos x%f y%f", inst_mesh_->getPosition().x, inst_mesh_->getPosition().y);
 }
 
 bool Enemy::move(const float delta_time) {
 	//移動
-	inst_mesh_->setPosition(inst_mesh_->getPosition() + move_dir_);
+	//inst_mesh_->setPosition(inst_mesh_->getPosition() + move_dir_);
 
 	//attackフラグがtrueになれば攻撃シーケンスに移動
 	if (is_attack_) {

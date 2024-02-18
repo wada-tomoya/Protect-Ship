@@ -21,5 +21,5 @@ public:
 		mesh_->render(camera);
 	};
 	//座標ゲッター
-	tnl::Vector3 GetterPos();
+	const tnl::Vector3& GetterPos()const;
 };

@@ -10,6 +10,6 @@ ProtectObject::ProtectObject() {
 	mesh_->setSampleFilterMode(DX_DRAWMODE_NEAREST);
 }
 
-tnl::Vector3 ProtectObject::GetterPos() {
+const tnl::Vector3& ProtectObject::GetterPos() const {
 	return pos_;
 }

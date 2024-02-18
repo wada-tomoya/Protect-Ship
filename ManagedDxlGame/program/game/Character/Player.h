@@ -25,8 +25,8 @@ private:
 	Shared<dxe::Mesh> mesh_right_[mesh_index_];
 	Shared<dxe::Mesh> mesh_left_[mesh_index_];
 
-	//攻撃
-	std::shared_ptr<AttackManager> attack_manager_ = nullptr;
+	//攻撃マネージャー
+	//std::shared_ptr<AttackManager> attackmanager_ = nullptr;
 
 public:
 	//引数（マップの端の座標、地面の座標）
@@ -44,12 +44,12 @@ public:
 			mesh_left_[render_]->render(camera);
 		}
 	};
-	//攻撃描画
-	inline void AttackDraw(std::shared_ptr<Camera> camera) {
+	//各攻撃描画
+	inline void Attack_Draw(std::shared_ptr<Camera> camera) {
 		//InstMeshPoolの描画
 		dxe::DirectXRenderBegin();
-		//各攻撃表示
-		attack_manager_->Draw(camera);
+
+		AttackManager::Instance_AttackManager()->Draw(camera);
 
 		dxe::DirectXRenderEnd();
 	}

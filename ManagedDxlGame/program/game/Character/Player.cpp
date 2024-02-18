@@ -13,9 +13,6 @@ Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright) {
 	right_edge_ = downright.x - size_.x;
 	left_edge_ = upleft.x + size_.x;
 
-	//AttackManagerインスタンス
-	attack_manager_ = std::make_shared<AttackManager>();
-
 	//右向きと左向きのテクスチャをロード
 	texture_hdl_right_ = ResourceManager::GetInstance_ResourceManager()->LoadTexture_("PLAYER_RIGHT");
 	texture_hdl_left_ = ResourceManager::GetInstance_ResourceManager()->LoadTexture_("PLAYER_LEFT");
@@ -53,11 +50,12 @@ void Player::Update(float delta_time) {
 		mesh_right_[i]->pos_ = pos_;
 		mesh_left_[i]->pos_ = pos_;
 	}
+
+	//各攻撃実行
+	AttackManager::Instance_AttackManager()->Update(delta_time);
 	
 	//Normal_Attack生成
 	Normal_Attack();
-	//各攻撃実行
-	attack_manager_->Update(delta_time);
 }
 
 void Player::Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge) {	
@@ -110,7 +108,7 @@ void Player::Normal_Attack() {
 		//マウスの座標補正
 		tnl::Vector3 a = { mouse_pos_.x - (DXE_WINDOW_WIDTH/2), mouse_pos_.y - (DXE_WINDOW_HEIGHT/2),0.0f };
 		//攻撃生成
-		attack_manager_->NormalAttack_Create(pos_, a);
+		AttackManager::Instance_AttackManager()->NormalAttack_Create(pos_, a);
 	}
 }
 

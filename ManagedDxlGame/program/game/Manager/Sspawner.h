@@ -11,7 +11,7 @@ struct ENEMY_1 {
 	Shared<dxe::Mesh> origine_mesh_ = nullptr;
 	//ENEMY_1インスタンシングメッシュプール
 	Shared<dxe::InstMeshPool> mesh_pool_ = nullptr;
-	//サイズ
+	//meshのサイズ
 	tnl::Vector3 size_ = { 32,32,0 };
 	//複製最大数
 	int instmax_ = 500;
@@ -21,8 +21,7 @@ class Spawner {
 private:
 	//テクスチャのvector
 	std::vector<Shared<dxe::Texture>> textures_;
-	//敵のlist
-	std::list<std::shared_ptr<EnemyBase>> enemys_;
+	
 	
 	//敵１
 	ENEMY_1 enemy1_;
@@ -38,6 +37,7 @@ public:
 	//引数（マップの左上座標、右下座標）
 	Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright);
 	~Spawner();
+	static Spawner* Instance_Spawner(tnl::Vector3 map_upleft = { 0,0,0 }, tnl::Vector3 map_lowright = { 0,0,0 });
 	//実行
 	void Update(float delta_time);
 	//表示
@@ -51,4 +51,7 @@ public:
 	};
 	//敵生成
 	void Enemy_Spawn(tnl::Vector3 target_pos, tnl::Vector3 spwan_pos, float delta_time);
+	
+	//敵のlist
+	std::list<std::shared_ptr<EnemyBase>> enemys_;
 };
