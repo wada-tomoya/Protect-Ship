@@ -4,6 +4,7 @@
 #include <functional>
 #include "../dxlib_ext/dxlib_ext.h"
 #include "gm_main.h"
+#include "Manager/ResourceManager.h"
 #include "Manager/GameManager.h"
 #include "Scene/TitleScene.h"
 
@@ -24,5 +25,6 @@ void gameMain(float delta_time) {
 //------------------------------------------------------------------------------------------------------------
 // ƒQ[ƒ€I—¹Žž‚É‚P“x‚¾‚¯ŽÀs‚³‚ê‚Ü‚·
 void gameEnd() {
-
+	GameManager::GetInstance_GameManager()->Destroy();
+	//ResourceManager::GetInstance_ResourceManager()->Destroy();
 }

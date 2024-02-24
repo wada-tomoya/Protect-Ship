@@ -5,6 +5,8 @@
 
 class NormalAttack : public AttackBase{
 private:	
+	//1フレームの回転角度
+	float angle_ = 10.0f;
 	
 public:		 
 	//引数（マップの左上、マップの右下、生成する座標、進行方向の座標、複製されたメッシュ）

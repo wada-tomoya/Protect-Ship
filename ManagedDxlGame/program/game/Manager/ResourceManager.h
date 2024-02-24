@@ -48,6 +48,7 @@ private:
 
 public:
 	static ResourceManager* GetInstance_ResourceManager();
+	static void Destroy();
 
 //----------------------------------------------------------------------------------------------
 

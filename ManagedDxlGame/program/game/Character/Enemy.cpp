@@ -4,7 +4,7 @@ Enemy::Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> 
 	//メッシュ
 	inst_mesh_ = inst_mesh;
 	
-	//座標設定
+	//生成座標設定
 	pos_ = spawn_pos;
 	target_pos_ = target;
 	//移動速度設定
@@ -17,7 +17,7 @@ Enemy::Enemy(tnl::Vector3 target, tnl::Vector3 spawn_pos, Shared<dxe::InstMesh> 
 	inst_mesh_->setPosition(pos_);
 }
 
-void Enemy::Update(float delta_time) {
+void Enemy::Update(float delta_time, tnl::Vector3 player_pos) {
 	//行動シーケンス実行
 	tnl_sequence_.update(delta_time);
 }

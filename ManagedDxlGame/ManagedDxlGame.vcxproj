@@ -190,12 +190,12 @@
     <ClCompile Include="program\game\Character\EnemyBase.cpp" />
     <ClCompile Include="program\game\Character\Player.cpp" />
     <ClCompile Include="program\game\gm_main.cpp" />
+    <ClCompile Include="program\game\Manager\AttackManager.cpp" />
     <ClCompile Include="program\game\Manager\Collision.cpp" />
     <ClCompile Include="program\game\Manager\GameManager.cpp" />
     <ClCompile Include="program\game\Manager\ResourceManager.cpp" />
     <ClCompile Include="program\game\Manager\Spawner.cpp" />
     <ClCompile Include="program\game\Object\Attack\AttackBase.cpp" />
-    <ClCompile Include="program\game\Object\Attack\AttackManager.cpp" />
     <ClCompile Include="program\game\Object\Attack\NormalAttack.cpp" />
     <ClCompile Include="program\game\Object\Camera.cpp" />
     <ClCompile Include="program\game\Object\Map\Play_Map.cpp" />
@@ -277,12 +277,12 @@
     <ClInclude Include="program\game\Character\EnemyBase.h" />
     <ClInclude Include="program\game\Character\Player.h" />
     <ClInclude Include="program\game\gm_main.h" />
+    <ClInclude Include="program\game\Manager\AttackManager.h" />
     <ClInclude Include="program\game\Manager\Collision.h" />
     <ClInclude Include="program\game\Manager\GameManager.h" />
     <ClInclude Include="program\game\Manager\ResourceManager.h" />
     <ClInclude Include="program\game\Manager\Sspawner.h" />
     <ClInclude Include="program\game\Object\Attack\AttackBase.h" />
-    <ClInclude Include="program\game\Object\Attack\AttackManager.h" />
     <ClInclude Include="program\game\Object\Attack\NormalAttack.h" />
     <ClInclude Include="program\game\Object\Camera.h" />
     <ClInclude Include="program\game\Object\Map\Play_Map.h" />

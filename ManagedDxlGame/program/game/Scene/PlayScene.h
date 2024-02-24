@@ -8,18 +8,18 @@
 #include "../Manager/Sspawner.h"
 #include "../Object/ProtectObject.h"
 #include "../Manager/Sspawner.h"
-#include "../Object/Attack/AttackManager.h"
+#include "../Manager/AttackManager.h"
 #include "../Manager/Collision.h"
 #include "../Manager/ResourceManager.h"
 
 class PlayScene : public SceneBace{
 private:
 	//オブジェクトのプレハブ
-	std::shared_ptr<Play_Map> map_ = nullptr;
 	std::shared_ptr<Camera> camera_ = nullptr;
+//	std::shared_ptr<Play_Map> map_ = nullptr;
 	std::shared_ptr<Player> player_ = nullptr;
-	std::shared_ptr<ProtectObject> protectobj_= nullptr;
-	std::shared_ptr<Collision> collision_ = nullptr;
+//	std::shared_ptr<ProtectObject> protectobj_= nullptr;
+//	std::shared_ptr<Collision> collision_ = nullptr;
 
 	//音楽
 	int bgm_ = 0;

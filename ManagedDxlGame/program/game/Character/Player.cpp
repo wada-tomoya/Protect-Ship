@@ -2,7 +2,7 @@
 
 Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright) {
 	//移動速度
-	speed_ = 10;
+	speed_ = 8;
 	//画像サイズ
 	size_ = { 32,32,0 };
 	//初期座標
@@ -40,6 +40,11 @@ Player::Player(tnl::Vector3 upleft, tnl::Vector3 downright) {
 			mesh_left_[i]->dxe::Mesh::setSampleFilterMode(DX_DRAWMODE_NEAREST);
 		}
 	}
+
+	//カーソルのmesh生成
+	cursor_mesh_ = dxe::Mesh::CreateSphereMV(10,10,10);
+	cursor_texture_ = dxe::Texture::CreateFromFile("graphics/red1.bmp");
+	cursor_mesh_->setTexture(cursor_texture_);
 }
 
 void Player::Update(float delta_time) {
@@ -51,25 +56,46 @@ void Player::Update(float delta_time) {
 		mesh_left_[i]->pos_ = pos_;
 	}
 
-	//各攻撃実行
-	AttackManager::Instance_AttackManager()->Update(delta_time);
-	
-	//Normal_Attack生成
-	Normal_Attack();
+	//マウスの座標
+	tnl::Vector3 aaa = tnl::Input::GetMousePosition();
+	DrawStringEx(10, 10, -1, "マウス x%f y%f z%f", aaa.x, aaa.y, aaa.z);
+
+	//カーソルの座標移動
+	cursor_mesh_->pos_ = { pos_.x + Cursor_Move_Dir_().x, pos_.y, pos_.z + -Cursor_Move_Dir_().y };
+
+	////各攻撃実行
+	//AttackManager::Instance_AttackManager()->Update(delta_time);
+	//
+	////Normal_Attack生成
+	//Normal_Attack();
 }
+
+void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
+	//右向き
+	if (chara_dir_ == DIRECTION::RIGHT) {
+		mesh_right_[render_]->render(camera);
+	}
+	//左向き
+	else if (chara_dir_ == DIRECTION::LEFT) {
+		mesh_left_[render_]->render(camera);
+	}
+
+	//カーソル
+	cursor_mesh_->render(camera);
+};
 
 void Player::Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge) {	
 	//移動　上
 	if (tnl::Input::IsKeyDown(eKeys::KB_W)) {
 		is_move_ = true;
 		//移動
-		pos_.y += speed_;
+		pos_.z += speed_;
 	}
 	//移動　下
 	if (tnl::Input::IsKeyDown(eKeys::KB_S)) {
 		is_move_ = true;
 		//移動
-		pos_.y -= speed_;	
+		pos_.z -= speed_;	
 	}
 	//移動　右
 	if (tnl::Input::IsKeyDown(eKeys::KB_D)) {
@@ -87,18 +113,31 @@ void Player::Move(float delta_time, float up_edge, float down_edge, float right_
 		//向き変換　左
 		chara_dir_ = DIRECTION::LEFT;
 	}
-	//上端以上に行かない
-	if (pos_.y < up_edge) pos_.y = up_edge;
-	//下端以上に行かない
-	if (pos_.y > down_edge) pos_.y = down_edge;
-	//右端以上に行かない
-	if (pos_.x > right_edge) pos_.x = right_edge;
-	//左端以上に行かない
-	if (pos_.x < left_edge) pos_.x = left_edge;
+	////上端以上に行かない
+	//if (pos_.y < up_edge) pos_.y = up_edge;
+	////下端以上に行かない
+	//if (pos_.y > down_edge) pos_.y = down_edge;
+	////右端以上に行かない
+	//if (pos_.x > right_edge) pos_.x = right_edge;
+	////左端以上に行かない
+	//if (pos_.x < left_edge) pos_.x = left_edge;
 
 	//移動アニメーション再生
 	Texture_Anim_Play(mesh_index_, delta_time);
 	is_move_ = false;
+}
+
+tnl::Vector3 Player::Cursor_Move_Dir_() {
+	//移動量
+	tnl::Vector3 move_dir;
+	//マウスの座標
+	tnl::Vector3 mouse_pos = tnl::Input::GetMousePosition();
+	//画面の中心
+	tnl::Vector3 center_screen = tnl::Vector3{ DXE_WINDOW_WIDTH / 2,DXE_WINDOW_HEIGHT / 2,0.0f };
+	//マウスへの移動量計算（正規化）
+	move_dir = tnl::Vector3::Normalize(mouse_pos - center_screen) * distance_cursor_player_;
+
+	return move_dir;
 }
 
 void Player::Normal_Attack() {

@@ -11,6 +11,10 @@ ResourceManager::ResourceManager() {
 	sound_csv_ = tnl::LoadCsv("csv/Resource_csv/sound.csv");
 }
 
+void ResourceManager::Destroy() {
+	delete GetInstance_ResourceManager();
+}
+
 ResourceManager* ResourceManager::GetInstance_ResourceManager() {
 	static ResourceManager* instance(nullptr);
 	if (!instance) {

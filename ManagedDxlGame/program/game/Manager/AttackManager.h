@@ -1,9 +1,9 @@
 #pragma once
 #include "../dxlib_ext/dxlib_ext.h"
-#include "../../Manager/ResourceManager.h"
-#include "../Camera.h"
-#include "NormalAttack.h"
-#include "../Map/Play_Map.h"
+#include "../Manager/ResourceManager.h"
+#include "../Object/Camera.h"
+#include "../Object/Attack/NormalAttack.h"
+#include "../Object/Map/Play_Map.h"
 
 //通常攻撃
 struct NORMALATTACK {
@@ -27,10 +27,9 @@ private:
 	//テクスチャのvector
 	std::vector<Shared<dxe::Texture>> textures_;
 	
-
-public:
 	AttackManager();
 	~AttackManager();
+public:
 	void Destroy() { delete Instance_AttackManager(); };
 	static AttackManager* Instance_AttackManager();
 	//各攻撃の実行関数

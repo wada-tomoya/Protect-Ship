@@ -37,10 +37,10 @@ private:
 
 	float time = 0;
 
-public:
 	//引数（マップの左上座標、右下座標）
 	Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright);
 	~Spawner();
+public:
 	void Destroy() { delete Instance_Spawner(); };
 	static Spawner* Instance_Spawner(tnl::Vector3 map_upleft = { 0,0,0 }, tnl::Vector3 map_lowright = { 0,0,0 });
 	//実行

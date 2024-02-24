@@ -3,7 +3,7 @@
 #include "../Object/Camera.h"
 #include "CharacterBase.h"
 #include "../Manager/ResourceManager.h"
-#include "../Object/Attack/AttackManager.h"
+#include "../Manager/AttackManager.h"
 
 class Player : public CharacterBase{
 private:
@@ -24,22 +24,21 @@ private:
 	//メッシュ
 	Shared<dxe::Mesh> mesh_right_[mesh_index_];
 	Shared<dxe::Mesh> mesh_left_[mesh_index_];
+
+	//通常攻撃の発射方向を示すカーソルのMesh
+	Shared<dxe::Mesh> cursor_mesh_ = nullptr;
+	//カーソルのテクスチャ
+	Shared<dxe::Texture> cursor_texture_;
+	//カーソルとプレイヤーの距離
+	float distance_cursor_player_ = 30.0f;
+
 public:
 	//引数（マップの端の座標、地面の座標）
-	Player(tnl::Vector3 upleft, tnl::Vector3 downright);
+	Player(tnl::Vector3 upleft = { 0,0,0 }, tnl::Vector3 downright = {0,0,0});
 	//実行関数
 	void Update(float delta_time) override;
 	//表示関数
-	inline void Draw(float delta_time, std::shared_ptr<Camera> camera) override {
-		//右向き
-		if (chara_dir_ == DIRECTION::RIGHT) {
-			mesh_right_[render_]->render(camera);
-		}
-		//左向き
-		else if (chara_dir_ == DIRECTION::LEFT) {
-			mesh_left_[render_]->render(camera);
-		}
-	};
+	inline void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
 	//各攻撃描画
 	inline void Attack_Draw(std::shared_ptr<Camera> camera) {
 		//InstMeshPoolの描画
@@ -51,6 +50,8 @@ public:
 	}
 	//移動　引数（delta_time, 移動出来るマップの左上、右下）
 	void Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge);
+	//カーソルの方向計算（マウスの方向）
+	tnl::Vector3 Cursor_Move_Dir_();
 	//攻撃
 	void Normal_Attack();
 	//プレイヤーの座標のゲッター

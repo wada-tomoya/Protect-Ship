@@ -25,7 +25,7 @@ public:
 	//消去
 	void Delete() { is_alive_ = false; };
 	//実行関数
-	void Update(float delta_time) override;
+	void Update(float delta_time, tnl::Vector3 player_pos = {0,0,0}) override;
 	//is_alive_のゲッター　
 	bool Getter_is_alive() override { return is_alive_; };
 	//is_alive_のセッター

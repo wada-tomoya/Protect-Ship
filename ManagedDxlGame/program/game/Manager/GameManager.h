@@ -24,6 +24,7 @@ private:
 	bool seqRunScene(const float delta_time);
 
 	GameManager(SceneBace* startscene);
+
 public:
 	static GameManager* GetInstance_GameManager(SceneBace* startscene = nullptr);
 	//各シーンのUpdateとDraw実行

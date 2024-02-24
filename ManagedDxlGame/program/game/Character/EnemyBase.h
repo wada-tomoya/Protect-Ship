@@ -20,7 +20,7 @@ protected:
 
 public:
 	//実行関数
-	virtual void Update(float delat_time) {};
+	virtual void Update(float delat_time, tnl::Vector3 player_pos = { 0,0,0 }) {};
 	
 	//is_alive_のゲッター　
 	virtual bool Getter_is_alive() { return is_alive_; };

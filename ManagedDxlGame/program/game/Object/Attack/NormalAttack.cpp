@@ -36,7 +36,7 @@ void NormalAttack::Update(float delta_time) {
 	//’eˆÚ“®
 	inst_mesh_->setPosition(inst_mesh_->getPosition() + move);
 	//’e‰ñ“]
-	inst_mesh_->setRotation(inst_mesh_->getRotation() * tnl::Quaternion::RotationAxis({ 0,0,1 }, tnl::ToRadian(10)));
+	inst_mesh_->setRotation(inst_mesh_->getRotation() * tnl::Quaternion::RotationAxis({ 0,0,1 }, tnl::ToRadian(angle_)));
 	
 	//ƒ}ƒbƒvŠO‚És‚¯‚Î’e‚ÍÁ‚¦‚é
 	tnl::Vector3 nowpos = inst_mesh_->getPosition();

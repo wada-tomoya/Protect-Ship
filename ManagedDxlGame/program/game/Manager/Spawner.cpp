@@ -7,7 +7,7 @@ Spawner::Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright) {
 	//マップの大きさ計算
 	map_x_length_ = map_upleft.x - map_lowright.x;
 	map_y_length_ = map_upleft.y - map_lowright.y;
-
+	//敵１のテクスチャ
 	textures_.emplace_back(ResourceManager::GetInstance_ResourceManager()->LoadTexture_("ENEMY_1_RIGHT"));
 	textures_.emplace_back(ResourceManager::GetInstance_ResourceManager()->LoadTexture_("ENEMY_1_LEFT"));
 	//ENEMY_1複製元のメッシュ
@@ -59,7 +59,7 @@ void Spawner::Update(float delta_time) {
 
 void Spawner::Enemy_Spawn(tnl::Vector3 target_pos, float delta_time) {
 	time += delta_time;
-	//2秒ごとに生成
+	//0.5秒ごとに生成
 	if (time > 0.5f) {
 		//敵の生成座標
 		tnl::Vector3 spawnpos{ 0,0,0 };
