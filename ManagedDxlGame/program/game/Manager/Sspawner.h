@@ -35,14 +35,17 @@ private:
 	//ProtectObject敵の標的
 	std::shared_ptr<ProtectObject> protectobject_ = nullptr;
 
+	//敵のlist
+	std::list<std::shared_ptr<EnemyBase>> enemys_;
+
+	//スポンする間隔
 	float time = 0;
 
+
+public:
 	//引数（マップの左上座標、右下座標）
 	Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright);
 	~Spawner();
-public:
-	void Destroy() { delete Instance_Spawner(); };
-	static Spawner* Instance_Spawner(tnl::Vector3 map_upleft = { 0,0,0 }, tnl::Vector3 map_lowright = { 0,0,0 });
 	//実行
 	void Update(float delta_time);
 	//表示
@@ -56,7 +59,6 @@ public:
 	};
 	//敵生成
 	void Enemy_Spawn(tnl::Vector3 target_pos, float delta_time);
-	
-	//敵のlist
-	std::list<std::shared_ptr<EnemyBase>> enemys_;
+	//listのゲッター
+	std::list < std::shared_ptr<EnemyBase>> Getter_list() { return enemys_; };
 };

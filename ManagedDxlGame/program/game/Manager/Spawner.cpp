@@ -30,14 +30,6 @@ Spawner::~Spawner() {
 	enemy1_.mesh_pool_.reset();
 }
 
-Spawner* Spawner::Instance_Spawner(tnl::Vector3 map_upleft, tnl::Vector3 map_lowright) {
-	static Spawner* instance(nullptr);
-	if (!instance) {
-		instance = new Spawner(map_upleft, map_lowright);
-	}
-	return instance;
-}
-
 void Spawner::Update(float delta_time) {
 	//“G¶¬
 	Enemy_Spawn(protectobject_->GetterPos(), delta_time);
