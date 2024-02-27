@@ -27,9 +27,12 @@ protected:
 	int anim_frame_ = 0;
 	//アニメーションの再生速度
 	float anim_speed_ = 0.1f;
-
 	//表示するメッシュ配列インデックス
 	int render_ = 1;
+	//移動できるマップの中心
+	tnl::Vector3 map_center_{ 0,0,0 };
+	//移動できるマップの半径
+	float map_rad_ = 0.0f;
 
 public:
 	//実行関数
