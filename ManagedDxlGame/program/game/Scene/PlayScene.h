@@ -16,11 +16,10 @@ class PlayScene : public SceneBace{
 private:
 	//オブジェクトのプレハブ
 	std::shared_ptr<Camera> camera_ = nullptr;
-	std::shared_ptr<Play_Map> map_ = nullptr;
+//	std::shared_ptr<Play_Map> map_ = nullptr;
 	std::shared_ptr<Player> player_ = nullptr;
 //	std::shared_ptr<ProtectObject> protectobj_= nullptr;
 //	std::shared_ptr<Collision> collision_ = nullptr;
-//	std::shared_ptr<Sspawner> spawner_ = nullptr;
 
 	//音楽
 	int bgm_ = 0;

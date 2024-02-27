@@ -5,31 +5,39 @@
 
 class Play_Map {
 private:
-	//地面の画像ハンドル
-	Shared<dxe::Texture> ground_texture_;
-	//地面画像のメッシュ
-	Shared<dxe::Mesh> ground_mesh_ = nullptr;
-	//地面の中心
-	tnl::Vector3 ground_center_ = { 0,0,0 };
-	//地面画像のサイズ
-	tnl::Vector3 ground_size_{2000,2000,0};
+	//背景の画像ハンドル
+	std::vector<Shared<dxe::Texture>> texture_;
+	//背景画像のメッシュ
+	Shared<dxe::Mesh> mesh_ = nullptr;
+	//インスタンシングメッシュプール
+	Shared<dxe::InstMeshPool> mesh_pool_ = nullptr;
+	//インスタンシングメッシュlist
+	std::list<Shared<dxe::InstMesh>> inst_meshs_;
 
-	//プレイヤーの移動限界の座標の中心、円状
-	tnl::Vector3 player_move_center = { 0,0,0 };
-	//プレイヤーの移動限界の座標の半径
-	float player_move_rad_ = 500.0f;
+	//背景の座標
+	tnl::Vector3 bg_pos_ = { 0,0,0 };
+	//マップの左上と右下の座標
+	tnl::Vector3 map_upleft_ = { 0,0,0 }, map_lowright_ = {0,0,0};
+	//プレイヤーの移動限界の座標
+	tnl::Vector3 player_upleft_ = { 0,0,0 }, player_lowright_ = { 0,0,0 };
+	//マップの中心座標
+	tnl::Vector3 map_center_ = { 0,0,0 };
 
 public:
 	Play_Map();
 	~Play_Map();
-	//マップ表示
-	void Map_Draw(std::shared_ptr<Camera> camera);
-	//プレイヤーの移動限界の中心座標のゲッター
-	tnl::Vector3 Getter_Player_Center() {
-		return player_move_center;
+	//背景表示
+	inline void Background_Draw(std::shared_ptr<Camera> camera) {
+		//InstMeshPoolの描画
+		dxe::DirectXRenderBegin();
+		//背景描画
+		mesh_pool_->render(camera);
+
+		dxe::DirectXRenderEnd();
 	};
-	//プレイヤーの移動限界の半径のゲッター
-	float Getter_Player_Rad() {
-		return player_move_rad_;
-	}
+	//マップの左上座標と右下座標のGetter
+	//引数 upleftなら左上の数値、lowrightなら右下の数値を返す 
+	const tnl::Vector3& MapEdge_Getter(std::string s) const;
+	//playerの移動限界座標
+	const tnl::Vector3& MapEdgePlsyer_Getter(std::string s) const;
 };

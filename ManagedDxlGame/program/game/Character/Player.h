@@ -11,6 +11,8 @@ private:
 	tnl::Vector3 mouse_pos_ = {0,0,0};
 	//攻撃の移動速度
 	float attack_speed_ = 10.0f;
+	//移動できる画面の端
+	float up_edge_, down_edge_, right_edge_, left_edge_;
 
 	//テクスチャ画像ハンドル
 	Shared<dxe::Texture> texture_hdl_right_;
@@ -23,35 +25,33 @@ private:
 	Shared<dxe::Mesh> mesh_right_[mesh_index_];
 	Shared<dxe::Mesh> mesh_left_[mesh_index_];
 
-//-----------------------------------------------------------------
-
 	//通常攻撃の発射方向を示すカーソルのMesh
 	Shared<dxe::Mesh> cursor_mesh_ = nullptr;
 	//カーソルのテクスチャ
 	Shared<dxe::Texture> cursor_texture_;
 	//カーソルとプレイヤーの距離
-	float distance_cursor_player_ = 20.0f;
-	//カーソルの角度
-	tnl::Quaternion cursor_rad_ = tnl::Quaternion();
-	//カーソルの座標
-	tnl::Vector3 cursor_pos_{ 0,0,0 };
-	//カーソルを90度傾けるよう
-	tnl::Quaternion cursor_down_ = tnl::Quaternion::RotationAxis({ 0,0,1 }, tnl::ToRadian(90));
+	float distance_cursor_player_ = 30.0f;
 
 public:
-	//引数（円状のマップの中心、半径）
-	Player(tnl::Vector3 map_center = { 0,0,0 }, float map_rad = 500.0f);
+	//引数（マップの端の座標、地面の座標）
+	Player(tnl::Vector3 upleft = { 0,0,0 }, tnl::Vector3 downright = {0,0,0});
 	//実行関数
 	void Update(float delta_time) override;
 	//表示関数
-	void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
-	//移動　
-	//引数（delta_time, 移動出来るマップの中心、半径）
-	void Move(float delta_time, tnl::Vector3 map_center, float map_rad);
-	//画面の中心からマウスカーソルの方向へのベクトルを正規化した値
-	tnl::Vector3 Cursor_Move_Norm_();
-	//画面中心からマウスカーソルへの角度（度数法）
-	float Angle_Center_Mouse();
+	inline void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
+	//各攻撃描画
+	inline void Attack_Draw(std::shared_ptr<Camera> camera) {
+		//InstMeshPoolの描画
+		dxe::DirectXRenderBegin();
+
+		AttackManager::Instance_AttackManager()->Draw(camera);
+
+		dxe::DirectXRenderEnd();
+	}
+	//移動　引数（delta_time, 移動出来るマップの左上、右下）
+	void Move(float delta_time, float up_edge, float down_edge, float right_edge, float left_edge);
+	//カーソルの方向計算（マウスの方向）
+	tnl::Vector3 Cursor_Move_Dir_();
 	//攻撃
 	void Normal_Attack();
 	//プレイヤーの座標のゲッター

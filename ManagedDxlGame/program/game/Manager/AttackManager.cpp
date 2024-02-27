@@ -49,6 +49,6 @@ void AttackManager::NormalAttack_Create(tnl::Vector3 spwan_pos, tnl::Vector3 tar
 	//テクスチャ設定
 	inst->setUseTextureIndex(0);
 	//listに挿入
-	//attacks_.emplace_back(std::make_shared<NormalAttack>(map_->MapEdge_Getter("upleft"),map_->MapEdge_Getter("lowright"),
-	//	spwan_pos, target_pos, inst));
+	attacks_.emplace_back(std::make_shared<NormalAttack>(map_->MapEdge_Getter("upleft"),map_->MapEdge_Getter("lowright"),
+		spwan_pos, target_pos, inst));
 }

@@ -5,10 +5,10 @@ PlayScene::PlayScene() {
 
 	//オブジェクトインスタンス
 	camera_ = std::make_shared<Camera>();
-	map_ = std::make_shared<Play_Map>();
+//	map_ = std::make_shared<Play_Map>();
 	player_ = std::make_shared<Player>();
 //	protectobj_ = std::make_shared<ProtectObject>();
-//	spawner_ = std::make_shared<Spawner>(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"));
+//	Spawner::Instance_Spawner(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"));
 //	collision_ = std::make_shared<Collision>();
 
 	//音楽ロード
@@ -18,6 +18,8 @@ PlayScene::PlayScene() {
 }
 
 PlayScene::~PlayScene() {
+	//スポナーのインスタンスを開放
+	Spawner::Instance_Spawner()->Destroy();
 	//攻撃マネージャーのインスタンスを開放
 	AttackManager::Instance_AttackManager()->Destroy();
 }
@@ -29,16 +31,28 @@ void PlayScene::Update(float delta_time) {
 //	Spawner::Instance_Spawner()->Update(delta_time);
 	//プレイヤー実行
 	player_->Update(delta_time);
+	//当たり判定
+//	collision_->Attack_Enemy_HitCheck(AttackManager::Instance_AttackManager()->attacks_,
+//		Spawner::Instance_Spawner()->enemys_);
 }
 
 void PlayScene::Draw(float delta_time) {
 	DrawGridGround(camera_, 50, 20);
-
-	//プレイシーンのマップ描画
-	map_->Map_Draw(camera_);
-
-	//プレイヤー表示
+//	//各攻撃描画
+//	player_->Attack_Draw(camera_);
+//	//敵描画
+//	Spawner::Instance_Spawner()->Draw(camera_);
+//	//背景
+//	map_->Background_Draw(camera_);
+//	
+//InstMeshPool描画
+//----------------------------------------------------------
+//通常Mesh描画
+//	//守るオブジェクト
+//	protectobj_->Draw(camera_);
+//	//プレイヤー表示
 	player_->Draw(delta_time, camera_);
 	
+
 	DrawFpsIndicator({ 10, DXE_WINDOW_HEIGHT - 10, 0 }, delta_time);
 }
