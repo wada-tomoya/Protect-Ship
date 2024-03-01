@@ -9,6 +9,8 @@ ResourceManager::ResourceManager() {
 	texture_csv_ = tnl::LoadCsv("csv/Resource_csv/texture.csv");
 	//音csv読み込み
 	sound_csv_ = tnl::LoadCsv("csv/Resource_csv/sound.csv");
+	//mv1モデルcsv読み込み
+	mv1model_csv_ = tnl::LoadCsv("csv/Resource_csv/mv1model.csv");
 }
 
 void ResourceManager::Destroy() {
@@ -34,6 +36,7 @@ int ResourceManager::LoadGraph_(std::string graph_name) {
 
 	//ロードしてない場合、画像読み込み
 	for (int y = 1; y < graphics_csv_.size(); ++y) {
+		//名前が一致する物を探す
 		if (graphics_csv_[y][0].getString().c_str() == graph_name) {
 			int gpc_hdl = LoadGraph(graphics_csv_[y][1].getString().c_str(), true);
 
@@ -44,8 +47,7 @@ int ResourceManager::LoadGraph_(std::string graph_name) {
 			return gpc_hdl;
 		}
 	}
-
-	//読み込み出来なかった場合-1を返す
+	//一致する物がなかった場合
 	return -1;
 }
 
@@ -73,9 +75,10 @@ std::shared_ptr<std::vector<int>> ResourceManager::LoadAnim_(std::string animati
 
 	//ロードしていない場合、読み込み
 	for (int y = 1; y < animation_csv_.size(); ++y) {
+		//名前が一致する物を探す
 		if (animation_csv_[y][0].getString().c_str() == animation_name) {
 
-			std::shared_ptr<std::vector<int>> anim_hdl_ 
+			std::shared_ptr<std::vector<int>> anim_hdl_
 				= std::make_shared<std::vector<int>>(animation_csv_[y][ANIMATION_CSV_ITEM::TOTAL_DIV_NUM].getInt());
 
 			//anim_hdl_にcsvから読み取ったデータを入れる
@@ -94,6 +97,8 @@ std::shared_ptr<std::vector<int>> ResourceManager::LoadAnim_(std::string animati
 			return anim_hdl_;
 		}
 	}
+	//名前が一致する物がない場合
+	return nullptr;
 }
 
 Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
@@ -101,11 +106,13 @@ Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
 	
 	//すでにロードしている場合
 	if (it != texture_map_.end()) {
+		//読み込んでいる物を返す
 		return texture_map_[texture_name];
 	}
 
 	//ロードしていない場合
 	for (int y = 0; y < texture_csv_.size(); ++y) {
+		//名前が一致する物を探す
 		if (texture_csv_[y][0].getString().c_str() == texture_name) {
 			
 			Shared<dxe::Texture> texture_hdl
@@ -118,6 +125,8 @@ Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
 			return texture_hdl;
 		}
 	}
+	//名前の一致する物がない場合
+	return nullptr;
 }
 
 int ResourceManager::LoadSound_(std::string sound_name) {
@@ -125,11 +134,13 @@ int ResourceManager::LoadSound_(std::string sound_name) {
 
 	//すでにロードしている場合
 	if (it != sound_map_.end()) {
+		//読み込んでいる物を返す
 		return sound_map_[sound_name];
 	}
 
 	//ロードしていない場合
 	for (int y = 0; sound_csv_.size(); ++y) {
+		//名前が一致する物を探す
 		if (sound_csv_[y][0].getString().c_str() == sound_name) {
 			int sound = LoadSoundMem(graphics_csv_[y][1].getString().c_str());
 
@@ -140,6 +151,33 @@ int ResourceManager::LoadSound_(std::string sound_name) {
 			return sound;
 		}
 	}
+	//名前の一致する物がない場合
+	return -1;
+}
 
+int ResourceManager::LoadMV1Model_(std::string model_name) {
+	auto it = mv1model_map_.find(model_name);
+
+	//すでにロードしてmapに保存している場合
+	if (it != mv1model_map_.end()) {
+		//読み込んでいる物を返す
+		return mv1model_map_[model_name];
+	}
+
+	//ロードしていない場合
+	for (int y = 0; mv1model_csv_.size(); ++y) {
+		//名前が一致する物を探す
+		if (mv1model_csv_[y][MV1MODEL_CSV_ITEM::MODEL_NAME].getString().c_str() == model_name) {
+			//モデルロード
+			int model = MV1LoadModel(mv1model_csv_[y][MV1MODEL_CSV_ITEM::MODEL_FILE_PATH].getString().c_str());
+			
+			//mapに読み込んだモデルを保存
+			mv1model_map_.insert(std::make_pair(model_name, model));
+
+			//mv1モデルを返す
+			return model;		
+		}
+	}
+	//一致する名前がない場合
 	return -1;
 }

@@ -10,4 +10,4 @@
 サイト...illustAC
 
 3D素材
-木...BOOTH/Seaeeesのお店　さん
+木...BOOTH/Seaeeesのお店、KAORU師匠の商い

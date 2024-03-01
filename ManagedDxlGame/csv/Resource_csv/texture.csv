@@ -7,3 +7,5 @@ ENEMY_1_RIGHT,graphics/Enemy/enemy_1_right.png
 ENEMY_1_LEFT,graphics/Enemy/enemy_1_left.png
 PROTECTOBJECT,graphics/Texture/protectobject.png
 ATTACK_CURSOR,graphics/red1.bmp
+SHADOW,graphics/Shadow.png
+PLAYER,graphics/Animation/Character/character1.png

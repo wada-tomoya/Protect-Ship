@@ -26,5 +26,5 @@ void gameMain(float delta_time) {
 // ƒQ[ƒ€I—¹Žž‚É‚P“x‚¾‚¯ŽÀs‚³‚ê‚Ü‚·
 void gameEnd() {
 	GameManager::GetInstance_GameManager()->Destroy();
-	//ResourceManager::GetInstance_ResourceManager()->Destroy();
+	ResourceManager::GetInstance_ResourceManager()->Destroy();
 }

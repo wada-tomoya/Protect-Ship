@@ -11,12 +11,16 @@ protected:
 	tnl::Vector3 size_{ 0,0,0 };
 	//表示座標
 	tnl::Vector3 pos_ { 0,0,0 };
+	//移動前の座標
+	tnl::Vector3 prev_pos_{ 0,0,0 };
 	//左右反転フラグ
 	bool isturn_ = false;
 	//キャラクターの向き
 	enum class DIRECTION {
-		RIGHT,
-		LEFT
+		FRONT = 1,
+		LEFT = 2,
+		RIGHT = 3,
+		BACK = 4
 	};
 	DIRECTION chara_dir_ = DIRECTION::RIGHT;
 	//移動フラグ
@@ -33,14 +37,16 @@ protected:
 	tnl::Vector3 map_center_{ 0,0,0 };
 	//移動できるマップの半径
 	float map_rad_ = 0.0f;
+	//マップの中央からの外周までの値の平方根
+	float map_rad_root_ = 0.0f;
 
 public:
 	//実行関数
 	virtual void Update(float delat_time) {};
 	//画像表示関数
 	virtual void Draw(float delat_time, std::shared_ptr<Camera> camera) {};
-	//アニメーション再生関数
+	//アニメーション関数
 	virtual void Anim_Play(std::shared_ptr<std::vector<int>> animhdl, float delta_time);
-	//meshテクスチャ　アニメーション
+	//meshテクスチャ　アニメーション関数
 	virtual void Texture_Anim_Play(int mesharray_index, float delta_time);
 };

@@ -6,7 +6,7 @@ PlayScene::PlayScene() {
 	//オブジェクトインスタンス
 	camera_ = std::make_shared<Camera>();
 	map_ = std::make_shared<Play_Map>();
-	player_ = std::make_shared<Player>();
+	player_ = std::make_shared<Player>(map_->Getter_Playmap_Center(), map_->Getter_Playmap_Rad());
 //	protectobj_ = std::make_shared<ProtectObject>();
 //	spawner_ = std::make_shared<Spawner>(map_->MapEdge_Getter("upleft"), map_->MapEdge_Getter("lowright"));
 //	collision_ = std::make_shared<Collision>();
