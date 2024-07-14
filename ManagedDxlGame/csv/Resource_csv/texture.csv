@@ -1,0 +1,17 @@
+,‰æ‘œƒpƒX
+PLAYER_RIGHT,graphics/Animation/Character/playerright.png
+PLAYER_LEFT,graphics/Animation/Character/playerleft.png
+NORMALATTACK_1,graphics/Attack/normalattack.bmp
+PlayScene_BackGround,graphics/BackGround/background.png
+ENEMY_1_RIGHT,graphics/Enemy/enemy_1_right.png
+ENEMY_1_LEFT,graphics/Enemy/enemy_1_left.png
+PROTECTOBJECT,graphics/Texture/protectobject.png
+ATTACK_CURSOR,graphics/red1.bmp
+SHADOW,graphics/Shadow.png
+PLAYER,graphics/Animation/Character/character1.png
+ENEMY_1,graphics/Enemy/enemy_1.png
+ENEMY1_FLONT1,graphics/Enemy/enemy1_flont1.png
+ENEMY1_FLONT2,graphics/Enemy/enemy1_flont2.png
+ENEMY1_FLONT3,graphics/Enemy/enemy1_flont3.png
+SHADOW_2,graphics/Shadow_2.png
+BombAttack,graphics/Attack/bombattack.png

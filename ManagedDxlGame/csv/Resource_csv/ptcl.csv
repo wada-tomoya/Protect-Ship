@@ -1,0 +1,9 @@
+,ƒpƒX
+Attack_Hit_Ptcl,particle/playerattack_hit.bin
+Enemy_Death,particle/enemy_death.bin
+Player_Enemy_Hit,particle/player_enemy_hit.bin
+Player_BombAttack,particle/bombattack.bin
+Player_BombAttackMove,particle/bombattack_move.bin
+player_Attack_Move,particle/playerattack_move.bin
+AttackCursor,particle/attackcursor.bin
+ProtectOBJ_Smoke,particle/protectobj_smoke.bin
