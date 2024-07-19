@@ -1,45 +1,27 @@
 #include "NormalAttack.h"
+#include "math.h"
 
-NormalAttack::NormalAttack(const tnl::Vector3 map_center, const float map_rad,const tnl::Vector3& spwan_pos,
-	const tnl::Quaternion dir_angle, Shared<dxe::InstMesh> inst_mesh, float bullet_rad, 
-	std::shared_ptr<dxe::Particle> hit_ptcl, std::shared_ptr<dxe::Particle> move_ptcl,
-	float speed, float power, int penetration) {
-	//複製されたメッシュ
-	inst_mesh_ = inst_mesh;
-	//進行方向の角度
-	dir_rad_ = dir_angle;
-	//プレイエリアの中心
-	map_center_ = map_center;
-	//プレイエリアの半径
-	map_rad_ = map_rad;	
-	//マップの中心から外周までのベクトル
-	map_vec_ = static_cast<float>(std::pow(map_rad, 2));
-	//弾の速度設定
-	speed_ = 15.0f + speed;
-	//弾の半径設定
-	bullet_rad_ = bullet_rad;
-	//初期座標設定
-	inst_mesh_->setPosition(spwan_pos);
+NormalAttack::NormalAttack(const tnl::Vector3 map_center, const float map_rad,const tnl::Vector3& spawn_pos,
+	const tnl::Quaternion dir_angle, std::shared_ptr<dxe::InstMesh>& inst_mesh, float bullet_rad,
+	std::shared_ptr<dxe::Particle>& hit_ptcl, std::shared_ptr<dxe::Particle>& move_ptcl,
+	float speed, float power, int penetration) :
+	AttackBase(inst_mesh, hit_ptcl, move_ptcl, dir_angle, map_center, map_rad, bullet_rad, spawn_pos) {
+	
 	//攻撃力設定
 	attack_power_ = 10.0f + power;
+	//攻撃力を1未満にしない
+	if (attack_power_ <= 1.0f) {
+		attack_power_ = 1.0f;
+	}
+	//弾の速度設定
+	speed_ = 15.0f + speed;
 	//貫通力セット
 	penetration_ += penetration;
-
-	//敵と当たった時のパーティクル設定
-	hit_ptcl_ = hit_ptcl;
-	//生成時間設定
-	hit_ptcl_time_ = hit_ptcl_->getTimeLimit();
-	//移動時のパーティクル
-	move_ptcl_ = move_ptcl;
-	//生成範囲設定
-	move_ptcl_->setOriginRange(bullet_rad_);
-
 
 }
 
 NormalAttack::~NormalAttack(){
-	hit_ptcl_.reset();
-	move_ptcl_.reset();
+
 }
 
 void NormalAttack::Update(float delta_time) {
@@ -48,7 +30,6 @@ void NormalAttack::Update(float delta_time) {
 }
 
 void NormalAttack::Enemy_Hit(){
-	
 	//ヒット時のパーティクル生成
 	is_hit_ptcl_ = true;
 	hit_ptcl_->setPosition(Getter_pos());

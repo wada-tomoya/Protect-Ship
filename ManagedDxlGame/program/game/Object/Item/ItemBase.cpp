@@ -1,4 +1,6 @@
 #include "ItemBase.h"
+#include "../../Object/Camera.h"
+#include "../../Manager/ResourceManager.h"
 
 ItemBase::ItemBase(int mv1model){
 	//ƒ‚ƒfƒ‹

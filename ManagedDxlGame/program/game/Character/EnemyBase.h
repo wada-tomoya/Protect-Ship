@@ -1,8 +1,7 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Object/Camera.h"
-#include "../Manager/ResourceManager.h"
-#include "math.h"
+
+class Camera;
 
 class EnemyBase {
 protected:

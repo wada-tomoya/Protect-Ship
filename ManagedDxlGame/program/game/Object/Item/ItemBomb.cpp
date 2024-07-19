@@ -1,4 +1,5 @@
 #include "ItemBomb.h"
+#include "../../Object/Camera.h"
 
 ItemBomb::ItemBomb(int& mv1model) : ItemBase(mv1model){
 	//É^ÉCÉvê›íË

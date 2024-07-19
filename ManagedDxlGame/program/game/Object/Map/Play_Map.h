@@ -1,10 +1,12 @@
 #pragma once
 #include "../../../dxlib_ext/dxlib_ext.h"
-#include "../../Manager/ResourceManager.h"
-#include "../Camera.h"
+
+class Camera;
 
 class Play_Map {
 private:
+	//地面関係
+
 	//地面の画像ハンドル
 	Shared<dxe::Texture> ground_texture_;
 	//地面画像のメッシュ
@@ -15,6 +17,7 @@ private:
 	const tnl::Vector3 ground_scale_{ 5000.0f,5.0f,5000.0f };
 
 //---------------------------------------------------------------------------
+	//木関係
 
 	//木のmv1モデル 複製元
 	int tree_mhdl_ = 0;
@@ -34,6 +37,7 @@ private:
 	const int shift_z_ = 30;
 
 //---------------------------------------------------------------------------
+	//プレイヤー移動範囲円関係
 
 	//プレイヤーの移動限界の座標の中心、円状
 	tnl::Vector3 player_move_center = { 0,0,0 };
@@ -53,7 +57,6 @@ private:
 	//マウスカーソルのレイとの当たり判定用のbox
 	//ボックスサイズ
 	const float ray_box_size_ = 1.0f;
-
 
 public:
 	Play_Map();

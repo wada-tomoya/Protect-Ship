@@ -1,11 +1,11 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Manager/ResourceManager.h"
-#include "../Object/Camera.h"
-#include "../Character/EnemyBase.h"
-#include "../Object/ProtectObject.h"
-#include "../Character/Player.h"
 #include "ItemSpawner.h"
+
+class Camera;
+class EnemyBase;
+class Player;
+class ProtectObject;
 
 //敵
 struct ENEMY {
@@ -14,9 +14,9 @@ struct ENEMY {
 	//敵のサイズ
 	DxLib::VECTOR scale_ = { 0.3f,0.3f,0.3f };
 	//移動速度
-	float speed_ = 1.0f;
+	float speed_ = 0.0f;
 	//体力
-	float hp_ = 20.0f;
+	float hp_ = 0.0f;
 	//モデルの元のサイズ
 	const tnl::Vector3 size_{ 100,310,100 };
 	//弾との当たり判定用半径
@@ -25,7 +25,7 @@ struct ENEMY {
 	tnl::Vector3 colli_size_{35,50,35};
 
 	//スポンする間隔
-	float spawn_count_ = 0.0f, spawn_interval_ = 1.0f;
+	float spawn_count_ = 0.0f, spawn_interval_ = 0.0f;
 	//最低スポン間隔
 	float spawn_interval_low_ = 0.1f;
 };
@@ -34,7 +34,8 @@ struct ENEMY {
 enum class ENEMYTYPE {
 	normal,
 	chase,
-	big
+	big,
+	max
 };
 
 class Spawner : public ItemSpawner {
@@ -88,6 +89,7 @@ public:
 	//引数（プレイエリアの中心、プレイエリアの半径、ターゲット（船）、ターゲット（プレイヤー））
 	Spawner(tnl::Vector3 map_center, float map_rad, std::shared_ptr<ProtectObject>& target_protectobj, std::shared_ptr<Player>& target_player);
 	~Spawner();
+	
 	//実行
 	void Update(float delta_time);
 	//表示
@@ -95,11 +97,14 @@ public:
 	
 	//敵生成
 	void Enemy_Spawn(std::weak_ptr<ProtectObject> protectobject, std::weak_ptr<Player> player, float delta_time);
+	
 	//通常敵スポン間隔、スポン時のステータス変更
-	//引数１：敵の種類、　引数２：減算値スポンインターバル、　引数３：加算値hp、　引数４：加算値スピード
+	//引数１：敵の種類、　引数２：変更値スポンインターバル、　引数３：変更値hp、　引数４：変更値スピード
 	void Enemy_SpawnStatusChange(ENEMYTYPE enemytype, float sub_spawn_interval, float add_hp, float add_speed);
+	
 	//敵複製、初期位置に移動、サイズ変更
 	int EnemyDupe(int model_hdl, DxLib::VECTOR scale);	
+	
 	//影複製
 	Shared<dxe::InstMesh> ShadowDupe(int enedupe);
 	 

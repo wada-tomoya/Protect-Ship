@@ -1,8 +1,6 @@
 #pragma once
 #include "../../library/tnl_sequence.h"
-#include "ResourceManager.h"
 #include "../Scene/SceneBace.h"
-
 
 class GameManager {
 private:
@@ -24,6 +22,9 @@ private:
 	bool seqRunScene(const float delta_time);
 
 	GameManager(SceneBace* startscene);
+
+	//α値のマックス
+	const float alpha_max_ = 255.0f;
 
 public:
 	static GameManager* GetInstance_GameManager(SceneBace* startscene = nullptr);

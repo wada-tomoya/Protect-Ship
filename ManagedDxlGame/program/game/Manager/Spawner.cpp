@@ -2,6 +2,11 @@
 #include "../Character/Enemy.h"
 #include "../Character/EnemyChase.h"
 #include "../Character/EnemyBig.h"
+#include "../Manager/ResourceManager.h"
+#include "../Object/Camera.h"
+#include "../Character/EnemyBase.h"
+#include "../Object/ProtectObject.h"
+#include "../Character/Player.h"
 
 Spawner::Spawner(tnl::Vector3 map_center, float map_rad, std::shared_ptr<ProtectObject>& target_protectobj, std::shared_ptr<Player>& target_player) {
 	//ターゲット情報
@@ -29,18 +34,12 @@ Spawner::Spawner(tnl::Vector3 map_center, float map_rad, std::shared_ptr<Protect
 	//複製元 enemy_chase_のmv1モデル読み込み
 	enemy_chase_.model_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadMV1Model_("ENEMY_CHASE");
 	//enemy_chase_ステータス設定
-	enemy_chase_.speed_ = 2.0f;
-	enemy_chase_.spawn_interval_ = 8.0f;
-	enemy_chase_.hp_ = 50.0;
 	enemy_chase_.colli_rad_ = enemy_chase_.size_.x * enemy_chase_.scale_.x;
 
 	//複製元 big_enemy_のモデル読み込み
 	big_enemy_.model_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadMV1Model_("BIG_ENEMY");
 	//big_enemy_ステータス設定
 	big_enemy_.scale_ = { 0.6f,0.6f,0.6f };
-	big_enemy_.speed_ = 0.5f;
-	big_enemy_.hp_ = 200.0f;
-	big_enemy_.spawn_interval_ = 20.0f;
 	big_enemy_.spawn_interval_low_ = 1.0f;
 	big_enemy_.colli_size_ = (big_enemy_.colli_size_ / big_enemy_.scale_.x);
 	big_enemy_.colli_rad_ = big_enemy_.size_.x * big_enemy_.scale_.x;
@@ -54,14 +53,9 @@ Spawner::~Spawner() {
 
 void Spawner::Update(float delta_time) {
 	auto protectobj = target_protectobj_.lock();
+	if (protectobj == nullptr) { return; }
 	auto player = target_player_.lock();
-
-	////normal_enemy_生成間隔減少
-	//NormalEnemy_SpawnStatusChange(normal_enemy_.spawn_interval_, normal_enemy_.interval_change_count_,
-	//	normal_enemy_.spawn_interval_change_, normal_enemy_.interval_change_, delta_time);
-	////enemy_chase_生成間隔減少
-	//NormalEnemy_SpawnStatusChange(enemy_chase_.spawn_interval_, enemy_chase_.interval_change_count_,
-	//	enemy_chase_.spawn_interval_change_, enemy_chase_.interval_change_, delta_time);
+	if (player == nullptr) { return; }
 
 	//敵生成
 	Enemy_Spawn(protectobj, player, delta_time);

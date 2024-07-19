@@ -1,4 +1,7 @@
 #include "EnemyBase.h"
+#include "../Object/Camera.h"
+#include "../Manager/ResourceManager.h"
+#include "math.h"
 
 EnemyBase::EnemyBase(){
 

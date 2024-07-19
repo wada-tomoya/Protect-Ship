@@ -1,52 +1,28 @@
 #include "BombAttack.h"
+#include "math.h"
 
 BombAttack::BombAttack(const tnl::Vector3 map_center, const float map_rad, tnl::Vector3 target_pos, const tnl::Vector3& spawn_pos,
-	const tnl::Quaternion dir_angle, Shared<dxe::InstMesh> inst_mesh, float bullet_rad, 
-	std::shared_ptr<dxe::Particle> hit_ptcl, std::shared_ptr<dxe::Particle> move_ptcl, int hit_se){
-	//複製されたメッシュ
-	inst_mesh_ = inst_mesh;
-	//進行方向の角度
-	dir_rad_ = dir_angle;
-	//プレイエリアの中心
-	map_center_ = map_center;
-	//プレイエリアの半径
-	map_rad_ = map_rad;
-	//マップの中心から外周までのベクトル
-	map_vec_ = static_cast<float>(std::pow(map_rad, 2));
+	const tnl::Quaternion dir_angle, std::shared_ptr<dxe::InstMesh> inst_mesh, float bullet_rad,
+	std::shared_ptr<dxe::Particle> hit_ptcl, std::shared_ptr<dxe::Particle> move_ptcl, int hit_se) :
+	AttackBase(inst_mesh, hit_ptcl, move_ptcl, dir_angle, map_center, map_rad, bullet_rad, spawn_pos){
+	
+	//ヒット時のse読み込み
+	hit_se_hdl_ = hit_se;
+	heiget_ = 100.0f;
+	//山なり移動の最大高さ
+	heiget_max_ = 150.0f;
 	//弾の速度設定
 	speed_ = 15.0f;
-	//弾の半径設定
-	bullet_rad_ = bullet_rad;
-	//初期座標設定
-	inst_mesh_->setPosition(spawn_pos);
 	//攻撃力設定、始めは0
 	attack_power_ = 0.0f;
 	//終着点の座標
 	end_pos_ = target_pos;
 	//初期座標から終着点の長さ
 	length_ = (end_pos_ - spawn_pos).length();
-	//山なり移動の最大高さ
-	heiget_max_ = 150.0f;
-
-	//爆破時のパーティクル
-	hit_ptcl_ = hit_ptcl;
-	//生成時間設定
-	hit_ptcl_time_ = hit_ptcl_->getTimeLimit();
-	//移動時のパーティクル
-	move_ptcl_ = move_ptcl;
-	//生成範囲設定
-	move_ptcl_->setOriginRange(bullet_rad_);
-
-	//ヒット時のse読み込み
-	hit_se_hdl_ = hit_se;
-
-	heiget_ = 100.0f;
 }
 
 BombAttack::~BombAttack(){
 	DeleteSoundMem(hit_se_hdl_);
-	hit_ptcl_.reset();
-	move_ptcl_.reset();
 }
 
 void BombAttack::Update(float delta_time){

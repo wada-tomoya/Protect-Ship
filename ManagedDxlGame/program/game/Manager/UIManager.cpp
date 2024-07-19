@@ -133,18 +133,18 @@ void UIManager::UI_Update_PlayScene(float delta_time, const float& protectobj_hp
 
 	//hpbarの画像変更
 	//50%以上で青
-	if (bar_rario_ > 0.5f) {
+	if (bar_rario_ > hpbar_yellow_) {
 		draw_graph_hdl_ = hpbar_graph_hdl_;
 	}
 	//50%~20%で黄色
-	else if (bar_rario_ <= 0.5f && bar_rario_ > 0.2f) {
+	else if (bar_rario_ <= hpbar_yellow_ && bar_rario_ > hpbar_red_) {
 		draw_graph_hdl_ = hpbar50_graph_hdl_;
 
 		//スクリーンエフェクトの時間をセット
 		screeneffect_time_ = effecttime50_;
 	}
 	//20%以下で赤
-	else if (bar_rario_ <= 0.2f) {
+	else if (bar_rario_ <= hpbar_red_) {
 		draw_graph_hdl_ = hpbar20_graph_hdl_;
 
 		//スクリーンエフェクトの時間を変更
@@ -215,10 +215,10 @@ void UIManager::Hpbar_blur(float delta_time, const float& protectobj_hp) {
 
 void UIManager::Draw_ScreenEffect() {
 	//hp_50%以下でスリーンエフェクト表示
-	if (bar_rario_ <= 0.5f) {
+	if (bar_rario_ <= hpbar_yellow_) {
 		SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, static_cast<int>(screeneffect_alpha_));
 		DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, screeneffect_hdl_, true);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, alpha_max_);
 	}
 }
 
@@ -303,15 +303,15 @@ float UIManager::GraphBlink(float delta_time, float blink_time) {
 	float alpha = 0.0f;
 	//徐々に濃く
 	if (blink_change_) {
-		alpha = (blink_count_ / blink_time * 255.0f);
-		if (alpha >= 255) {
+		alpha = (blink_count_ / blink_time * alpha_max_);
+		if (alpha >= static_cast<int>(alpha_max_)) {
 			blink_change_ = false;
 			blink_count_ = 0.0f;
 		}
 	}
 	//徐々に薄く
 	if (!blink_change_) {
-		alpha = 255 - (blink_count_ / blink_time * 255.0f);
+		alpha = static_cast<int>(alpha_max_) - (blink_count_ / blink_time * alpha_max_);
 		if (alpha <= 0) {
 			blink_change_ = true;
 			blink_count_ = 0.0f;

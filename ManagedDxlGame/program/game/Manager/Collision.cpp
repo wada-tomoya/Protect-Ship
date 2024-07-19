@@ -1,4 +1,8 @@
 #include "Collision.h"
+#include "../Object/Attack/AttackBase.h"
+#include "../Character/EnemyBase.h"
+#include "../Character/Player.h"
+#include "../Manager/ItemSpawner.h"
 
 Collision::Collision() {
 	
@@ -30,8 +34,6 @@ void Collision::Player_Enemy_HitChack(std::shared_ptr<Player>& player, std::list
 			player->Enemy_Hit();
 		}
 	}
-
-	
 }
 
 void Collision::Player_Item_HitChack(std::shared_ptr<Player>& player, std::list<std::shared_ptr<ItemBase>>& item_list){
@@ -43,5 +45,4 @@ void Collision::Player_Item_HitChack(std::shared_ptr<Player>& player, std::list<
 			player->Item_Hit(item_->Getter_itemtype());
 		}
 	}
-
 }

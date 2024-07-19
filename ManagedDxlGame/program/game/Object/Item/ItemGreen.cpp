@@ -1,4 +1,5 @@
 #include "ItemGreen.h"
+#include "../../Object/Camera.h"
 
 ItemGreen::ItemGreen(int& mv1model) : ItemBase(mv1model){
 	//É^ÉCÉvê›íË

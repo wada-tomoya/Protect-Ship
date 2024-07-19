@@ -1,9 +1,8 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "random"
-#include "../Object/Camera.h"
 #include "../Object/Item/ItemBase.h"
-#include "../Manager/ResourceManager.h"
+
+class Camera;
 
 struct Item {
 	//ï°êªå≥ÉÇÉfÉã

@@ -1,10 +1,10 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Object/Camera.h"
 #include "CharacterBase.h"
-#include "../Manager/ResourceManager.h"
 #include "../Manager/AttackManager.h"
 #include "../Object/Item/ItemBase.h"
+
+class Camera;
 
 //引数（マップの移動限界の中心、移動限界の半径）
 class Player : public CharacterBase, public AttackManager{
@@ -17,6 +17,8 @@ private:
 	float invincible_ = 0.0f;
 	//0以下なら攻撃できる
 	float can_attack_ = 0.0f;
+	//攻撃インターバルでの攻撃可能タイミング
+	bool is_normalattack_ = true;
 	//trueならプレイヤー表示
 	bool is_flash_ = true;
 	//無敵時間
@@ -86,23 +88,25 @@ private:
 		//プレイヤー移動速度
 		float speed_player_ = 0.0f;
 		//上がり幅
-		float speed_attack_onerise_ = 5.0f;
-		float interval_onerise_ = 0.07f;
-		float power_onerise_ = 8.0f;
-		int Penetration_onerise_ = 1;
-		float size_scale_onerise_ = 0.25f;
-		float speed_player_onerise_ = 1.5f;
+		float speed_attack_up_ = 5.0f;
+		float interval_down_ = 0.07f;
+		float power_up_ = 8.0f;
+		int penetration_up_ = 1;
+		float size_scale_up_ = 0.25f;
+		float speed_player_up_ = 1.5f;
+		//緑を取得している場合の攻撃力の減り幅
+		float power_down_ = 1.5f;
 	};
 	ATTACKSTATUS itemupstatus_;
 	const float little_up_ = 0.2f;
 
 	//マップの地面のメッシュ
-	Shared<dxe::Mesh> ground_ = nullptr;
+	std::weak_ptr<dxe::Mesh> ground_;
 	//カメラ
-	Shared<Camera> camera_ = nullptr;
+	std::weak_ptr<Camera> camera_;
 
 public:
-	Player(tnl::Vector3 map_center = { 0,0,0 }, float map_rad = 500.0f, Shared<dxe::Mesh> ground = nullptr, Shared<Camera> camera = nullptr);
+	Player(tnl::Vector3 map_center, float map_rad, std::weak_ptr<dxe::Mesh> ground, std::weak_ptr<Camera> camera);
 	~Player();
 	//実行関数
 	void Update(float delta_time) override;

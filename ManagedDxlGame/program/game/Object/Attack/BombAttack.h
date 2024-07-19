@@ -1,6 +1,5 @@
 #pragma once
 #include "../../../dxlib_ext/dxlib_ext.h"
-#include "math.h"
 #include "AttackBase.h"
 
 //引数（マップの中心、マップの半径、生成する座標、進行方向の角度、複製されたメッシュ, 弾の半径、敵に当たった時のパーティクル）
@@ -16,13 +15,13 @@ private:
 	bool SEQ_Death(const float delta_time);
 
 	//爆破時のダメージ
-	float explosion_damage_ = 30.0f;
+	float explosion_damage_ = 1000.0f;
 	//爆破当たり判定サイズのパーティクルとの比率
 	float explosion_size_ = 0.8f;
 
 public:
 	BombAttack(const tnl::Vector3 map_center, const float map_rad, tnl::Vector3 target_pos, const tnl::Vector3& spawn_pos,
-		const tnl::Quaternion dir_angle, Shared<dxe::InstMesh> inst_mesh, float bullet_rad, 
+		const tnl::Quaternion dir_angle, std::shared_ptr<dxe::InstMesh> inst_mesh, float bullet_rad,
 		std::shared_ptr<dxe::Particle> hit_ptcl, std::shared_ptr<dxe::Particle> move_ptcl, int hit_se);
 	~BombAttack();
 

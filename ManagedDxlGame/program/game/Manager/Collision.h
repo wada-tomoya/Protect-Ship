@@ -1,10 +1,10 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Object/Attack/AttackBase.h"
-#include "../Character/EnemyBase.h"
-#include "../Character/Player.h"
-#include "../Manager/ItemSpawner.h"
-#include <new>
+
+class EnemyBase;
+class AttackBase;
+class Player;
+class ItemBase;
 
 class Collision {
 private:

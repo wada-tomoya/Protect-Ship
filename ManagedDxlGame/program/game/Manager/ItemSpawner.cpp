@@ -3,7 +3,9 @@
 #include "../Object/Item/ItemBlue.h"
 #include "../Object/Item/ItemGreen.h"
 #include "../Object/Item/ItemBomb.h"
-
+#include "random"
+#include "../Object/Camera.h"
+#include "../Manager/ResourceManager.h"
 
 ItemSpawner::ItemSpawner(){
 	//ƒAƒCƒeƒ€Ôİ’è

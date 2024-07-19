@@ -53,6 +53,10 @@ private:
 	//点滅にかかる時間
 	float effecttime50_ = 1.5f, effecttime20_ = 0.8f;
 	float screeneffect_time_ = effecttime50_;
+	//hpバー割合ごとの色、5割：黄色　2割：赤
+	const float hpbar_yellow_ = 0.5f, hpbar_red_ = 0.2f;
+	//α値のmax
+	const float alpha_max_ = 255.0f;
 
 	//点滅切り替え
 	bool blink_change_ = true;
@@ -60,7 +64,7 @@ private:
 
 	//船が攻撃を受けた時のhpbarのブレ値
 	static const int blur_num_ = 4;
-	tnl::Vector2i hpbar_blur_[blur_num_] = { {5,5},{3,-2},{-2,3},{-3,-3} };
+	const tnl::Vector2i hpbar_blur_[blur_num_] = { {5,5},{3,-2},{-2,3},{-3,-3} };
 	tnl::Vector2i hpbar_offset_ = { 0,0 };
 	float hpblur_interval_ = 0.1f, hpblur_count_ = 0.0f;
 	int blur_index_ = 0;

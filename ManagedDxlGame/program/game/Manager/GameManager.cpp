@@ -1,5 +1,6 @@
 #include "../../dxlib_ext/dxlib_ext.h"
 #include "GameManager.h"
+#include "ResourceManager.h"
 
 GameManager::GameManager(SceneBace* startscene) : nowscene_(startscene){
 	trans_garph_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadGraph_("Trans_Graph");
@@ -34,20 +35,20 @@ void GameManager::ChangeScene(SceneBace* nextscene, float trans_time) {
 }
 
 bool GameManager::seqTransIn(const float delta_time) {
-	int alpha = 255 - static_cast<int>((sequence_.getProgressTime() / trans_time_ * 255.0f));
+	int alpha = static_cast<int>(alpha_max_) - static_cast<int>((sequence_.getProgressTime() / trans_time_ * alpha_max_));
 	if (alpha <= 0) {
 		//シーン切り替え
 		sequence_.change(&GameManager::seqRunScene);
 	}
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, trans_garph_hdl_, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, static_cast<int>(alpha_max_));
 	return true;
 }
 
 bool GameManager::seqTransOut(const float delta_time) {
-	int alpha = static_cast<int>((sequence_.getProgressTime() / trans_time_ * 255.0f));
-	if (alpha >= 255) {
+	int alpha = static_cast<int>((sequence_.getProgressTime() / trans_time_ * alpha_max_));
+	if (alpha >= static_cast<int>(alpha_max_)) {
 		//ここでシーンの切り替え
 		sequence_.change(&GameManager::seqTransIn);
 		delete nowscene_;
@@ -56,7 +57,7 @@ bool GameManager::seqTransOut(const float delta_time) {
 	}
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, trans_garph_hdl_, true);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, static_cast<int>(alpha_max_));
 	return true;
 }
 

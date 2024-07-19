@@ -1,5 +1,6 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
+
 //継承の末端シーン名
 enum class ENDCLASS_NAME {
 	title,
@@ -8,7 +9,7 @@ enum class ENDCLASS_NAME {
 	play_hard
 };
 
-class SceneBace {
+class SceneBace{
 protected:
 	//シーン切り替えフラグ
 	bool is_scene_change_ = false;

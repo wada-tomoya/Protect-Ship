@@ -1,9 +1,9 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Object/Camera.h"
 #include "EnemyBase.h"
-#include "../Character/CharacterBase.h"
-#include "../Manager/ResourceManager.h"
+
+class Camera;
+class CharacterBase;
 
 //プレイヤーを追いかける敵
 //引数（ターゲット、複製メッシュ、移動速度、体力、たまとの当たり判定用の半径、プレイヤーとの当たり判定用のサイズ）

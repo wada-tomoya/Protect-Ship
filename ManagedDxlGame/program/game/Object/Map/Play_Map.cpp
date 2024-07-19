@@ -1,4 +1,6 @@
  #include "Play_Map.h"
+#include "../../Manager/ResourceManager.h"
+#include "../Camera.h"
 
 Play_Map::Play_Map() {	
 	//地面のテクスチャ読み込み

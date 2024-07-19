@@ -3,10 +3,10 @@
 #include "../Object/Map/Play_Map.h"
 #include "../Object/Camera.h"
 #include "../Character/Player.h"
-#include "../Manager/Sspawner.h"
 #include "../Object/ProtectObject.h"
 #include "../Manager/Collision.h"
 #include "../Manager/UIManager.h"
+#include "TitleScene.h"
 
 PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 	srand(time(0));
@@ -35,6 +35,104 @@ PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 
 	//プレイシーンUI初期値設定
 	ui_->UI_init_PlayScene(protectobject_->Getter_Hp(), player_->Getter_statusup_itemlist_());
+
+	//敵のステータス変更タイミング
+	const float changetiming_easy_[]{ 25.0f,45.0f };
+	const float changetiming_normal_[]{ 30.0f,60.0f,75.0f,90.0f,105.0f };
+	const float changetiming_hard_[]{30.0f,60.0f,90.0f,120.0f,135.0f,150.0f,165.0f};
+	//ゲームレベルごとのステータス変更
+	switch (scenename_) {
+	case ENDCLASS_NAME::play_easy:
+		//敵の初期値設定
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 20.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 8.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::chase)] = 30.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::chase)] = 2.0f;
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 20.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::big)] = 200.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.5f;
+		//タイミングでの変化値設定
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.2f;
+		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 15.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.3f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 1.5f;
+		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 10.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.2f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 2.0f;
+		change_hp_[static_cast<int>(ENEMYTYPE::big)] = 50.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.1f;
+		//敵のステータス変更タイミング
+		status_change_timing_.insert(status_change_timing_.end(), std::begin(changetiming_easy_),std::end(changetiming_easy_));
+		//変更回数上限設定
+		status_change_max_ = status_change_timing_.size();
+		//ゲーム制限時間変更
+		gametime_ = 61.0f;
+		break;
+	case ENDCLASS_NAME::play_normal:
+		//敵の初期値設定
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 20.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 7.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::chase)] = 30.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::chase)] = 2.0f;
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 20.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::big)] = 200.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.5f;
+		//タイミングでの変化値設定
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.13f;
+		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 10.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.2f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 1.0f;
+		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 10.2f;
+		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.3f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 2.0f;
+		change_hp_[static_cast<int>(ENEMYTYPE::big)] = 70.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.2f;
+		//敵のステータス変更タイミング
+		status_change_timing_.insert(status_change_timing_.end(), std::begin(changetiming_normal_), std::end(changetiming_normal_));
+		//変更回数上限設定
+		status_change_max_ = status_change_timing_.size();
+		//ゲーム制限時間変更
+		gametime_ = 121.0f;
+		break;
+	case ENDCLASS_NAME::play_hard:
+		//敵の初期値設定
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 40.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::normal)] = 1.5f;
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 7.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::chase)] = 30.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::chase)] = 2.0f;
+		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 15.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::big)] = 300.0f;
+		enemy_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.5f;
+		//タイミングでの変化値設定
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.12f;
+		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 10.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.2f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 0.5f;
+		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 20.2f;
+		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.3f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 1.5f;
+		change_hp_[static_cast<int>(ENEMYTYPE::big)] = 80.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.4f;
+		//敵のステータス変更タイミング
+		status_change_timing_.insert(status_change_timing_.end(), std::begin(changetiming_hard_), std::end(changetiming_hard_));
+		//変更回数上限設定
+		status_change_max_ = status_change_timing_.size();
+		//ゲーム制限時間変更
+		gametime_ = 181.0f;
+		break;
+	default:
+		break;
+	}
+	//敵の初期値設定
+	spawner_->Enemy_SpawnStatusChange(ENEMYTYPE::normal, -enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)], enemy_hp_[static_cast<int>(ENEMYTYPE::normal)], enemy_speed_[static_cast<int>(ENEMYTYPE::normal)]);
+	spawner_->Enemy_SpawnStatusChange(ENEMYTYPE::chase, -enemy_spawninterval_[static_cast<int>(ENEMYTYPE::chase)], enemy_hp_[static_cast<int>(ENEMYTYPE::chase)], enemy_speed_[static_cast<int>(ENEMYTYPE::chase)]);
+	spawner_->Enemy_SpawnStatusChange(ENEMYTYPE::big, -enemy_spawninterval_[static_cast<int>(ENEMYTYPE::big)], enemy_hp_[static_cast<int>(ENEMYTYPE::big)], enemy_speed_[static_cast<int>(ENEMYTYPE::big)]);
 
 	tnl::DebugTrace("%d", scenename_);
 }
@@ -85,7 +183,7 @@ void PlayScene::Draw(float delta_time) {
 		//プレイヤー所持爆破攻撃表示
 		ui_->Draw_Bombstock(player_->Getter_BombStock());
 		//escメニュー案内
-		DrawStringEx(DXE_WINDOW_WIDTH - 150, 15, -1, "ESC : メニュー画面");
+		DrawStringEx(esc_guid_pos_.x, esc_guid_pos_.y, -1, "ESC : メニュー画面");
 		break;
 	case NOWSEQUENCE::gameover:
 		ui_->Draw_gameend((int)NOWSEQUENCE::gameover);
@@ -126,6 +224,28 @@ bool PlayScene::Seq_Update(float delta_time) {
 	//制限時間のカウント
 	gametime_ -= delta_time;
 
+	//敵ステータス変更
+	//ステータス変更回数上限以下ならば実行
+	if (status_change_num_ < status_change_max_) {
+		//変更タイミングになればis_status_change_をtrueにし、変更
+		if (play_sequence_.getProgressTime() >= status_change_timing_[status_change_num_]) {
+			is_status_change_ = true;
+		}
+		if (is_status_change_) {		
+			is_status_change_ = false;
+			//変更タイミングを次に進める
+			status_change_num_++;
+
+			tnl::DebugTrace("敵ステータス変更 ");
+			tnl::DebugTrace("%d回目\n", status_change_num_);
+
+			//敵のステータス変更
+			spawner_->Enemy_SpawnStatusChange(ENEMYTYPE::normal, change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)], change_hp_[static_cast<int>(ENEMYTYPE::normal)], change_speed_[static_cast<int>(ENEMYTYPE::normal)]);
+			spawner_->Enemy_SpawnStatusChange(ENEMYTYPE::chase, change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)], change_hp_[static_cast<int>(ENEMYTYPE::chase)], change_speed_[static_cast<int>(ENEMYTYPE::chase)]);
+			spawner_->Enemy_SpawnStatusChange(ENEMYTYPE::big, change_spawninterval_[static_cast<int>(ENEMYTYPE::big)], change_hp_[static_cast<int>(ENEMYTYPE::big)], change_speed_[static_cast<int>(ENEMYTYPE::big)]);
+		}
+	}
+	
 	//敵のスポナー実行
 	spawner_->Update(delta_time);
 	//プレイヤー実行

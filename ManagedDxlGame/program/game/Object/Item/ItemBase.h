@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../dxlib_ext/dxlib_ext.h"
-#include "../../Object/Camera.h"
-#include "../../Manager/ResourceManager.h"
+
+class Camera;
 
 enum class ITEMTYPE {
 	Red,
@@ -16,7 +16,7 @@ protected:
 	//当たり判定用座標
 	tnl::Vector3 pos_{ 0,0,0 };
 	//当たり判定用サイズ
-	tnl::Vector3 size_ = {30,30,30};
+	const tnl::Vector3 size_ = {30,30,30};
 	//回転角度
 	float rotateangle_ = 0.05f;
 	//ｙ座標

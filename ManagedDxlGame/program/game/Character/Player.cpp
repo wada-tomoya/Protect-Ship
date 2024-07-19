@@ -1,6 +1,8 @@
 #include "Player.h"
+#include "../Object/Camera.h"
+#include "../Manager/ResourceManager.h"
 
-Player::Player(tnl::Vector3 map_center, float map_rad, Shared<dxe::Mesh> ground, Shared<Camera> camera){
+Player::Player(tnl::Vector3 map_center, float map_rad, std::weak_ptr<dxe::Mesh> ground, std::weak_ptr<Camera> camera){
 	//移動速度
 	speed_ = 4;
 	ori_speed_ = speed_;
@@ -194,12 +196,15 @@ void Player::Update(float delta_time) {
 	//影の座標を合わせる
 	shadow_mesh_->pos_ = { pos_.x, shadow_pos_y_, pos_.z };
 
-	//カーソルの移動、回転
-	cursor_mesh_->pos_ = pos_ + tnl::Vector3::TransformCoord({ 0,distance_cursor_player_,0 }, cursor_mesh_->rot_);
-	cursor_mesh_->rot_ = cursor_down_ * tnl::Quaternion::RotationAxis({ 0,1,0 }, tnl::ToRadian(Angle_Center_Mouse()));
-	//マウスカーソルの座標セット
-	//attackcursor_ptcl_->setPosition(ground_hit_pos_);
-
+	try {
+		//カーソルの移動、回転
+		cursor_mesh_->pos_ = pos_ + tnl::Vector3::TransformCoord({ 0,distance_cursor_player_,0 }, cursor_mesh_->rot_);
+		cursor_mesh_->rot_ = cursor_down_ * tnl::Quaternion::RotationAxis({ 0,1,0 }, tnl::ToRadian(Angle_Center_Mouse()));
+	}
+	catch (int error) {
+		assert(error );
+	}
+	
 	//攻撃不能が終わるまでのカウント
 	//can_attack_が0より多ければ攻撃できない
 	if (can_attack_ > 0.0f) {
@@ -338,6 +343,11 @@ tnl::Vector3 Player::Cursor_Move_Norm_() {
 }
 
 float Player::Angle_Center_Mouse() {
+	auto ground = ground_.lock();
+	if (ground == nullptr) { throw - 1; }
+	auto camera = camera_.lock();
+	if (camera == nullptr) { throw - 1; }
+
 	//角度
 	float rad_;
 	float angle_;
@@ -346,9 +356,9 @@ float Player::Angle_Center_Mouse() {
 	tnl::Vector3 mouse_pos = tnl::Input::GetMousePosition();
 	//マウスカーソルのレイ
 	tnl::Vector3 ray_nml = tnl::Vector3::CreateScreenRay(static_cast<int>(mouse_pos.x), static_cast<int>(mouse_pos.y),
-														DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, camera_->view_, camera_->proj_);
+														DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, camera->view_, camera->proj_);
 	//マウスのレイと地面の当たった座標を取得
-	tnl::IsIntersectRayAABB(camera_->pos_, ray_nml, tnl::ToMaxAABB(ground_->pos_, ground_->scl_), tnl::ToMinAABB(ground_->pos_, ground_->scl_), &ground_hit_pos_);
+	tnl::IsIntersectRayAABB(camera->pos_, ray_nml, tnl::ToMaxAABB(ground->pos_, ground->scl_), tnl::ToMinAABB(ground->pos_, ground->scl_), &ground_hit_pos_);
 	//ラジアンで角度計算
 	rad_ = atan2((ground_hit_pos_.x - pos_.x), (ground_hit_pos_.z - pos_.z));
 
@@ -361,7 +371,8 @@ float Player::Angle_Center_Mouse() {
 void Player::Attack_Create(float delta_time) {
 	//通常攻撃　左クリック
 	if (tnl::Input::IsMouseDown(eMouse::LEFT)) {
-		if (attack_count_ <= 0.0f) {
+		if (is_normalattack_) {
+			is_normalattack_ = false;
 			//se再生
 			PlaySoundMem(attack_se_hdl_, DX_PLAYTYPE_BACK);
 
@@ -379,19 +390,18 @@ void Player::Attack_Create(float delta_time) {
 					attacks_, noratk_, attack_map_center_, attack_map_rad_, static_cast<int>(TEXTURENUM::normalattack), itemupstatus_.size_scale_);
 			}
 		}	
+	}
+	if (!is_normalattack_) {
 		//攻撃インターバルカウント
 		attack_count_ += delta_time;
-
 		if (attack_count_ >= attack_interval_) {
+			//攻撃可能にする
+			is_normalattack_ = true;
 			//攻撃カウントリセット
 			attack_count_ = 0.0f;
 		}
 	}
-	//else {
-	//	//攻撃カウントリセット
-	//	attack_count_ = 0.0f;
-	//}
-
+	
 	//爆破攻撃　右クリック
 	if (tnl::Input::IsMouseTrigger(eMouseTrigger::IN_RIGHT)) {
 		if (bombstock_ > 0) {
@@ -437,21 +447,21 @@ void Player::AttackStatus_Set(){
 
 	//攻撃ステータス設定
 	//攻撃力設定
-	itemupstatus_.power_ = (itemupstatus_.power_onerise_ * redcount);
+	itemupstatus_.power_ = (itemupstatus_.power_up_ * redcount) - (itemupstatus_.power_down_ * greencount);
 	//攻撃スピード設定
-	itemupstatus_.speed_attack_ = (itemupstatus_.speed_attack_onerise_ * redcount);
+	itemupstatus_.speed_attack_ = (itemupstatus_.speed_attack_up_ * redcount);
 	//攻撃インターバル設定
-	itemupstatus_.interval_ = ori_attack_interval_ - (itemupstatus_.interval_onerise_ * redcount);
+	itemupstatus_.interval_ = ori_attack_interval_ - (itemupstatus_.interval_down_ * redcount);
 	attack_interval_ = itemupstatus_.interval_;
 	//貫通力設定
-	itemupstatus_.Penetration_ = ori_attack_penetration_ + (itemupstatus_.Penetration_onerise_ * redcount);
+	itemupstatus_.Penetration_ = ori_attack_penetration_ + (itemupstatus_.penetration_up_ * redcount);
 
 	//攻撃サイズ設定
-	itemupstatus_.size_scale_ = 1.0f + (itemupstatus_.size_scale_onerise_ * redcount);
+	itemupstatus_.size_scale_ = 1.0f + (itemupstatus_.size_scale_up_ * redcount);
 	noratk_.size_ = ori_noratk_size_ * itemupstatus_.size_scale_;
 
 	//プレイヤー移動速度
-	itemupstatus_.speed_player_ = ori_speed_ + (itemupstatus_.speed_player_onerise_ * bluecount);
+	itemupstatus_.speed_player_ = ori_speed_ + (itemupstatus_.speed_player_up_ * bluecount);
 	speed_ = itemupstatus_.speed_player_;
 
 	//追加攻撃の個数設定
@@ -460,7 +470,7 @@ void Player::AttackStatus_Set(){
 
 void Player::Setter_Item(ITEMTYPE& itemtype){
 	//要素を追加
-	statusup_itemlist_.push_back(itemtype);
+	statusup_itemlist_.emplace_back(itemtype);
 
 	//listの要素がitemmax以上ならば先頭の要素を消去
 	if (statusup_itemlist_.size() > itemmax_) {

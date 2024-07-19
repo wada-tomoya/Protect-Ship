@@ -1,12 +1,12 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Manager/ResourceManager.h"
-#include "Camera.h"
+
+class Camera;
 
 class ProtectObject {
 private:
 	//サイズ
-	tnl::Vector3 size_{ 64,64,0 };
+	const tnl::Vector3 size_{ 64,64,0 };
 	//表示座標
 	tnl::Vector3 pos_{0,0,0};
 	//テクスチャ
@@ -23,6 +23,8 @@ private:
 	float init_hp_ = hp_;
 	//残りhpの割合
 	float hp_ratio_ = 0.0f;
+	//煙パーティクルが出る体力の割合
+	const float smoke_gene_hp_ = 0.5f;
 	//生死フラグ
 	bool is_alive_ = true;
 public:

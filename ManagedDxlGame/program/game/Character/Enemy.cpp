@@ -1,4 +1,7 @@
 #include "Enemy.h"
+#include "../Object/Camera.h"
+#include "../Manager/ResourceManager.h"
+#include "../Object/ProtectObject.h"
 
 Enemy::Enemy(std::weak_ptr<ProtectObject> protectobject, int duplication_mesh, Shared<dxe::InstMesh> shadow_mesh,
 	float speed, float hp, float colli_rad, tnl::Vector3 colli_size){

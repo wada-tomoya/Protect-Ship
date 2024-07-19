@@ -1,4 +1,5 @@
 #include "AttackManager.h"
+#include "../Object/Camera.h"
 #include "../Character/CharacterBase.h"
 
 void AttackManager::Attack_Update( float delta_time, std::list<std::shared_ptr<AttackBase>>& attacks) {
@@ -18,7 +19,7 @@ void AttackManager::Attack_Update( float delta_time, std::list<std::shared_ptr<A
 	}
 }
 
-void AttackManager::Attack_Draw(std::shared_ptr<Camera> camera, std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& normalatk) {
+void AttackManager::Attack_Draw(std::shared_ptr<Camera>& camera, std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& normalatk) {
 	dxe::DirectXRenderBegin();
 
 	//パーティクル描画

@@ -1,4 +1,6 @@
 #include "ProtectObject.h"
+#include "../Manager/ResourceManager.h"
+#include "Camera.h"
 
 ProtectObject::ProtectObject() {
 	//テクスチャ　ロード
@@ -24,7 +26,7 @@ void ProtectObject::Update(float delta_time){
 	//hpの残り割合計算
 	hp_ratio_ = hp_ / init_hp_;
 	//hpが50％以下になればsmoke_を生成
-	if (hp_ratio_ <= 0.5f) {
+	if (smoke_gene_hp_ >= hp_ratio_) {
 		smoke_->start();
 	}
 

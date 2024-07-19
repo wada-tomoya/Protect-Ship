@@ -20,7 +20,7 @@ private:
 	//タイトル
 	const std::string title_name_ = "Protect-Ship";
 	const int fontsize_title_ = 100;
-	tnl::Vector3 title_pos_{ 0,80,0 };
+	tnl::Vector2i title_pos_{ 0,80 };
 
 	//中央揃え用
 	int str_len_ = 0, str_wid_ = 0;
@@ -36,5 +36,5 @@ public:
 
 	//中央揃え関数
 	//引数（表示する文字、文字のｘ座標）
-	void Centered(std::string str, float& x_pos);
+	void Centered(std::string str, int& x_pos);
 };

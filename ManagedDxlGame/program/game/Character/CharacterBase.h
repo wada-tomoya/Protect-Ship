@@ -79,18 +79,18 @@ protected:
 		bombattack
 	};
 
+	//UŒ‚‚Ìlist
+	std::list<std::shared_ptr<AttackBase>> attacks_;
 	//ŒvZŒ³‚Ì’ÊíUŒ‚‚Ì‘å‚«‚³
 	float ori_noratk_size_ = 0.0f;
 	//’ÊíUŒ‚‚Ì’Ç‰Á‚Åo‚é”
 	int attack_addnum_ = 0;
 	//’Ç‰ÁUŒ‚‚Ìo‚éŠp“x
-	float addattack_rad_[5] = { 30,60,90,120,150 };
+	const float addattack_rad_[5] = { 30,60,90,120,150 };
 	//UŒ‚‚ğ—LŒø‚É‚·‚é”ÍˆÍ‚Ì’†S‚ÌÀ•W
 	tnl::Vector3 attack_map_center_{ 0,0,0 };
 	//UŒ‚‚ğ—LŒø‚Ì‚·‚é”ÍˆÍ‚Ì”¼Œa
 	float attack_map_rad_ = 0.0f;
-	//UŒ‚‚Ìlist
-	std::list<std::shared_ptr<AttackBase>> attacks_;
 	//’ÊíUŒ‚‚ğo‚µ‚½‚Æ‚«‚Ìse
 	int attack_se_hdl_ = 0;
 	//”š’eUŒ‚‚ğo‚µ‚½‚Ìse

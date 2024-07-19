@@ -1,9 +1,8 @@
 #pragma once
 #include "../../dxlib_ext/dxlib_ext.h"
-#include "../Object/Camera.h"
 #include "EnemyBase.h"
-#include "../Manager/ResourceManager.h"
-#include "../Object/ProtectObject.h"
+
+class ProtectObject;
 
 //通常より大きい敵
 //引数（ターゲット、複製メッシュ、影メッシュ、移動速度、体力、たまとの当たり判定用の半径、プレイヤーとの当たり判定用のサイズ）

@@ -1,4 +1,7 @@
 #include "EnemyChase.h"
+#include "../Object/Camera.h"
+#include "../Character/CharacterBase.h"
+#include "../Manager/ResourceManager.h"
 
 EnemyChase::EnemyChase(std::weak_ptr<CharacterBase> player, int duplication_mesh, Shared<dxe::InstMesh> shadow_mesh, 
 	float speed, float hp, float colli_rad, tnl::Vector3 colli_size){

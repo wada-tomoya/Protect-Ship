@@ -105,7 +105,7 @@ void TitleScene::Draw(float delta_time) {
 	MouseDraw(false);
 }
 
-void TitleScene::Centered(std::string str, float& x_pos) {
+void TitleScene::Centered(std::string str, int& x_pos) {
 	str_len_ = static_cast<int>(strlen(str.c_str()));
 	str_wid_ = GetDrawStringWidth(str.c_str(), str_len_);
 	x_pos = static_cast<float>((DXE_WINDOW_WIDTH / 2) - (str_wid_ / 2));

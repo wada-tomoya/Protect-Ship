@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../dxlib_ext/dxlib_ext.h"
-#include "../../Object/Camera.h"
+
+class Camera;
 
 class AttackBase {
 protected:
@@ -12,7 +13,7 @@ protected:
 	float map_vec_ = 0.0f;
 
 	//複製されたメッシュ
-	Shared<dxe::InstMesh> inst_mesh_;
+	std::shared_ptr<dxe::InstMesh> inst_mesh_ = nullptr;
 	//初期座標
 	tnl::Vector3 spawn_pos_{ 0,0,0 };
 	//弾の半径
@@ -24,7 +25,7 @@ protected:
 	//弾を発射する角度
 	float angle_ = 0.0f;
 	//弾の速度
-	float speed_ = 0;
+	float speed_ = 0.0f;
 	//弾の生死
 	bool is_alive_ = true;
 	//攻撃力
@@ -62,12 +63,18 @@ protected:
 	int penetration_ = 1;
 
 public:
+	AttackBase(std::shared_ptr<dxe::InstMesh>& inst_mesh,
+		std::shared_ptr<dxe::Particle>& hit_ptcl, std::shared_ptr<dxe::Particle>& move_ptcl,
+		const tnl::Quaternion dir_angle, const tnl::Vector3 map_center, const float map_rad, 
+		float bullet_rad, const tnl::Vector3& spawn_pos);
+	~AttackBase();
+
 	//実行関数
 	virtual void Update(float delta_time) {};
 	//消去までの実行関数
 	virtual void DeathUpdate(float delta_time) {};
 	//パーティクル描画
-	void Draw_Ptcl(std::shared_ptr<Camera> camera);
+	void Draw_Ptcl(std::shared_ptr<Camera>& camera);
 	//敵に当たった時の処理
 	virtual void Enemy_Hit() {};
 	//座標からマップの中心のベクトル計算
@@ -78,9 +85,11 @@ public:
 	//is_alive_のセッター;
 	void Setter_is_alive(bool is_alive) { is_alive_ = is_alive; };
 	//座標のゲッター
-	tnl::Vector3 Getter_pos()const { return inst_mesh_->getPosition(); };
+	tnl::Vector3 Getter_pos()const { 
+		return inst_mesh_->getPosition(); };
 	//サイズのゲッター
-	tnl::Vector3 Getter_size()const { return inst_mesh_->getScale(); };
+	tnl::Vector3 Getter_size()const { 
+		return inst_mesh_->getScale(); };
 	//半径のゲッター
 	float Getter_bullet_rad()const { return bullet_rad_; };
 	//攻撃力のゲッター
