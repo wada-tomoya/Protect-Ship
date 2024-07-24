@@ -65,6 +65,9 @@ protected:
 	//当たった敵のアドレスのlist
 	std::list<EnemyBase*> hiteneaddress_;
 
+	//ノックバック値
+	float knockback_value_ = 0.0f;
+
 public:
 	AttackBase() = default;
 
@@ -111,4 +114,6 @@ public:
 	bool Getter_is_collision()const { return is_collision_; };
 	//当たった敵のアドレスlistのゲッター
 	std::list<EnemyBase*>& Getter_hiteneaddress() { return hiteneaddress_; };
+	//ノックバック値のゲッター
+	float Getter_knockback_value_()const { return knockback_value_; };
 };

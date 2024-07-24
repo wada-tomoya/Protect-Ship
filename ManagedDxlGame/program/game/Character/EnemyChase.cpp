@@ -4,32 +4,20 @@
 #include "../Manager/ResourceManager.h"
 
 EnemyChase::EnemyChase(std::weak_ptr<CharacterBase> player, const int& duplication_mesh, const Shared<dxe::InstMesh>& shadow_mesh, 
-	const float& speed, const float& hp, const float& colli_rad, const tnl::Vector3& colli_size){
+	const float& speed, const float& hp, const float& colli_rad, const tnl::Vector3& colli_size) : 
+	EnemyBase(duplication_mesh, shadow_mesh, speed, hp, colli_rad, colli_size) {
 	//ターゲット
 	target_ = player;
 	auto target = target_.lock();
 	if (!target) {
 		return;
 	}
-
 	//ターゲット座標
 	target_pos_ = target->GetterPos();
-	//モデル
-	duplication_model_ = duplication_mesh;
-	//影のメッシュ
-	shadow_mesh_ = shadow_mesh;
-	//移動速度
-	speed_ = speed;
-	//弾との当たり判定用半径
-	colli_rad_ = colli_rad;
-	//プレイヤーとの当たり判定用ボックスサイズ
-	colli_size_ = colli_size;
 	//攻撃のインターバル
 	attack_interval_ = 1.0f;
 	//攻撃に移るターゲットとの距離
 	trans_attack_distance_ = 20.0f;
-	//体力
-	hp_ = hp;
 	//移動方向更新インターバル
 	movedir_update_interval_ = 0.2f;
 	//初期移動方向計算
@@ -64,14 +52,13 @@ void EnemyChase::Update(const float& delta_time){
 	target_pos_ = target->GetterPos();
 	//進行方向更新
 	Movedir_update(delta_time, movedir_update_interval_);
+	//進行方向を向く
+	MV1SetRotationXYZ(duplication_model_, { 0, Rotate_front(), 0 });
 
 	//当たり判定座標更新
 	colli_center_ = {Getter_pos().x, Getter_pos().y + colli_rad_, Getter_pos().z};
 	//影の座標更新
 	shadow_mesh_->setPosition({ Getter_pos().x, shadow_mesh_->getPosition().y, Getter_pos().z });
-
-	//アニメーション再生
-	AnimPlay(delta_time);
 }
 
 void EnemyChase::Draw(const std::shared_ptr<Camera>& camera){
@@ -94,9 +81,6 @@ bool EnemyChase::SEQ_Move(const float delta_time){
 	//移動
 	MV1SetPosition(duplication_model_,
 		{ Getter_pos().x + (move_dir_.x * speed_), Getter_pos().y, Getter_pos().z + (move_dir_.z * speed_) });
-
-	//進行方向を向く
-	MV1SetRotationXYZ(duplication_model_, { 0, Rotate_front(), 0 });
 
 	//シーケンス移動条件
 	//体力が0以下に場合死亡シーケンスに移動

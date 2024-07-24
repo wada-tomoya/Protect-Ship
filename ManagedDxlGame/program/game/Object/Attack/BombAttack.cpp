@@ -19,6 +19,9 @@ BombAttack::BombAttack(const tnl::Vector3& map_center, const float& map_rad, con
 	end_pos_ = target_pos;
 	//初期座標から終着点の長さ
 	length_ = (end_pos_ - spawn_pos).length();
+
+	//ノックバック値設定
+	knockback_value_ = 2.0f;
 }
 
 BombAttack::~BombAttack(){

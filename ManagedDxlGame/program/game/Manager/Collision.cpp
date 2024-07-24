@@ -22,7 +22,7 @@ void Collision::Attack_Enemy_HitCheck(const std::list<Shared<AttackBase>>& atk_l
 						//’e‚Ì“G‚ª“–‚½‚Á‚½Žž‚Ìˆ—
 						atk_->Enemy_Hit(ene_.get());
 						//“G‚Ì’e‚Æ“–‚½‚Á‚½Žž‚Ìˆ—
-						ene_->PlyaerAttack_Recieve(-(atk_->Getter_attack_power()));
+						ene_->PlyaerAttack_Recieve(-(atk_->Getter_attack_power()), atk_->Getter_pos(), atk_->Getter_knockback_value_());
 					}
 				}
 			}

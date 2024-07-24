@@ -42,6 +42,8 @@ protected:
 	//進行方向更新インターバル
 	float movedir_update_interval_ = 0.5f;
 	float movedir_update_count_ = 0.0f;
+	//進行方向変更フラグ
+	bool is_movedir_ = true;
 
 	//攻撃に移るターゲットとの距離
 	float trans_attack_distance_ = 50.0f;
@@ -74,10 +76,20 @@ protected:
 
 	//アイテム生成フラグ
 	bool is_itemspawn_ = true;
+
+	//ノックバック方向
+	tnl::Vector3 knockback_dir_{ 0,0,0 };
+	//ノックバック値
+	float knockback_value_ = 0.0f;
 	
 public:
+	EnemyBase() = default;
+
 	//コンストラクタ
-	EnemyBase();
+	//１：複製メッシュ、２：影メッシュ、
+	//３：移動速度、４：体力、５：たまとの当たり判定用の半径、６：プレイヤーとの当たり判定用のサイズ
+	EnemyBase(const int& duplication_mesh, const Shared<dxe::InstMesh>& shadow_mesh,
+		const float& speed, const float& hp, const float& colli_rad, const tnl::Vector3& colli_size);
 	~EnemyBase();
 
 	//実行関数
@@ -97,8 +109,8 @@ public:
 	//引数１：時間、移動方向更新間隔
 	void Movedir_update(const float& delta_time, const float& movedir_update_interval = 0.0f);
 	//プレイヤーの攻撃が当たった時
-	//引数１：受けるダメージ
-	virtual void PlyaerAttack_Recieve(const float& damage);
+	//引数１：受けるダメージ、２：受けた攻撃の座標、ノックバック値
+	virtual void PlyaerAttack_Recieve(const float& damage, const tnl::Vector3& atkpos, const float& knockback_value);
 	//アニメーションの変更
 	//引数１：アニメーションのタイプ
 	void Anim_Change(const int& animtype);

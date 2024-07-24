@@ -3,14 +3,25 @@
 #include "../Manager/ResourceManager.h"
 #include "math.h"
 
-EnemyBase::EnemyBase(){
-
+EnemyBase::EnemyBase(const int& duplication_mesh, const Shared<dxe::InstMesh>& shadow_mesh,
+	const float& speed, const float& hp, const float& colli_rad, const tnl::Vector3& colli_size){
 	//プレイヤーの攻撃がヒットした時のse読み込み
 	hit_se_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadSound_("Hit_SE");
-
 	//死亡時のパーティクル読み込み
 	death_ptcl_ = ResourceManager::GetInstance_ResourceManager()->LoadPtcl_("Enemy_Death");
 
+	//モデル
+	duplication_model_ = duplication_mesh;
+	//影のメッシュ
+	shadow_mesh_ = shadow_mesh;
+	//移動速度設定
+	speed_ = speed;
+	//弾との当たり判定用半径
+	colli_rad_ = colli_rad;
+	//プレイヤーとの当たり判定用ボックスサイズ
+	colli_size_ = colli_size;
+	//体力
+	hp_ = hp;
 }
 
 EnemyBase::~EnemyBase(){
@@ -19,10 +30,26 @@ EnemyBase::~EnemyBase(){
 
 }
 
-void EnemyBase::Update(const float& delat_time){
-
+void EnemyBase::Update(const float& delta_time){
 	//移動前座標設定
 	prev_pos_ = MV1GetPosition(duplication_model_);
+
+	//ノックバック方向にノックバックさせる
+	tnl::Vector3 knockback = Getter_pos() + (knockback_dir_ * knockback_value_);
+	MV1SetPosition(duplication_model_, VGet(knockback.x, 0, knockback.z));
+
+	//ノックバック値が0より多ければ減らす
+	if (knockback_value_ > 0) {
+		knockback_value_ -= delta_time;
+	}
+	else {
+		knockback_value_ = 0;
+		//向きを進行方向を向くようにする
+		is_movedir_ = true;
+	}
+
+	//アニメーション再生
+	AnimPlay(delta_time);
 }
 
 void EnemyBase::Draw(const std::shared_ptr<Camera>& camera){
@@ -47,7 +74,7 @@ float EnemyBase::Rotate_front() {
 
 	//zの差が正の数だった場合逆向きにする
 	if (vec_z >= 0) {
-		return (atan(aaa) + tnl::PI );
+		return (atan(aaa) + tnl::PI);
 	}
 	else {
 		return atan(aaa);
@@ -59,23 +86,32 @@ float EnemyBase::Distance_target() {
 }
 
 void EnemyBase::Movedir_update(const float& delta_time, const float& movedir_update_interval){	
-	//movedir_update_intervalごとに進行方向更新
-	movedir_update_count_ += delta_time;
-	if (movedir_update_count_ >= movedir_update_interval) {
-		movedir_update_count_ = 0.0f;
+	//進行方向変更フラグがtrueならば
+	if (is_movedir_) {
+		//movedir_update_intervalごとに進行方向更新
+		movedir_update_count_ += delta_time;
+		if (movedir_update_count_ >= movedir_update_interval) {
+			movedir_update_count_ = 0.0f;
 
-		//進行方向更新
-		move_dir_ = tnl::Vector3::Normalize(target_pos_ - Getter_pos());
+			//進行方向更新
+			move_dir_ = tnl::Vector3::Normalize(target_pos_ - Getter_pos());
+		}
 	}
 }
 
-void EnemyBase::PlyaerAttack_Recieve(const float& damage){
+void EnemyBase::PlyaerAttack_Recieve(const float& damage, const tnl::Vector3& atkpos, const float& knockback_value){
 	//プレイヤーの攻撃が当たった時のse再生
 	PlaySoundMem(hit_se_hdl_, DX_PLAYTYPE_BACK);
 	//ダメージ反映
 	Setter_hp(damage);
 	//ダメージフラグtrue
 	is_HitRecieve_ = true;
+	//ダメージを受けた時向きを変えない
+	is_movedir_ = false;
+	//ノックバック値設定
+	knockback_value_ = knockback_value;
+	//ノックバック方向設定
+	knockback_dir_ = tnl::Vector3::Normalize(Getter_pos() - atkpos);
 }
 
 void EnemyBase::Anim_Change(const int& animtype){

@@ -17,6 +17,9 @@ NormalAttack::NormalAttack(const tnl::Vector3& map_center, const float& map_rad,
 	speed_ = 15.0f + speed;
 	//貫通力セット
 	penetration_ = penetration;
+
+	//ノックバック値設定
+	knockback_value_ = 1.0f;
 }
 
 NormalAttack::~NormalAttack(){
