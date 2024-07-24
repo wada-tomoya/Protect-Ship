@@ -7,14 +7,23 @@
 void Collision::Attack_Enemy_HitCheck(const std::list<Shared<AttackBase>>& atk_list, const std::list<Shared<EnemyBase>>& ene_list) {
 	for (auto atk_ : atk_list) {
 		for (auto ene_ : ene_list) {
-			//UŒ‚‚Ì“–‚½‚è”»’è‚ªtrue‚È‚ç‚Î“G‚Æ‚Ì“–‚½‚è”»’è‚ðŒvŽZ‚·‚é
-			if (atk_->Getter_is_collision()) {
-				//“G‚ÆƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ‚Ì“–‚½‚è”»’è
-				if (tnl::IsIntersectSphere(ene_->Getter_colli_center(), ene_->Getter_colli_rad(), atk_->Getter_pos(), atk_->Getter_bullet_rad())) {
-					//’e‚Ì“G‚ª“–‚½‚Á‚½Žž‚Ìˆ—
-					atk_->Enemy_Hit();
-					//“G‚Ì’e‚Æ“–‚½‚Á‚½Žž‚Ìˆ—
-					ene_->PlyaerAttack_Recieve(-(atk_->Getter_attack_power()));
+			//ˆê“x“–‚½‚Á‚½“G‚É‚Í“–‚½‚ç‚È‚¢iƒAƒhƒŒƒX‚Å”»’f‚·‚éj
+			bool continue_loop_ = true;
+			for (auto hitene : atk_->Getter_hiteneaddress()) {
+				if (hitene == ene_.get()) {
+					continue_loop_ = false;
+				}
+			}
+			if (continue_loop_) {
+				//UŒ‚‚Ì“–‚½‚è”»’è‚ªtrue‚È‚ç‚Î“G‚Æ‚Ì“–‚½‚è”»’è‚ðŒvŽZ‚·‚é
+				if (atk_->Getter_is_collision()) {
+					//“G‚ÆƒvƒŒƒCƒ„[‚ÌUŒ‚‚Æ‚Ì“–‚½‚è”»’è
+					if (tnl::IsIntersectSphere(ene_->Getter_colli_center(), ene_->Getter_colli_rad(), atk_->Getter_pos(), atk_->Getter_bullet_rad())) {
+						//’e‚Ì“G‚ª“–‚½‚Á‚½Žž‚Ìˆ—
+						atk_->Enemy_Hit(ene_.get());
+						//“G‚Ì’e‚Æ“–‚½‚Á‚½Žž‚Ìˆ—
+						ene_->PlyaerAttack_Recieve(-(atk_->Getter_attack_power()));
+					}
 				}
 			}
 		}

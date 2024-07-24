@@ -2,6 +2,7 @@
 #include "../../../dxlib_ext/dxlib_ext.h"
 
 class Camera;
+class EnemyBase;
 
 class AttackBase {
 protected:
@@ -60,7 +61,9 @@ protected:
 	float hit_ptcl_count_ = 0.0f;
 
 	//貫通力
-	int penetration_ = 1;
+	int penetration_ = 0;
+	//当たった敵のアドレスのlist
+	std::list<EnemyBase*> hiteneaddress_;
 
 public:
 	AttackBase() = default;
@@ -81,7 +84,8 @@ public:
 	//引数１：カメラインスタンス
 	void Draw_Ptcl(const std::shared_ptr<Camera>& camera);
 	//敵に当たった時の処理
-	virtual void Enemy_Hit() {};
+	//引数１：当たった敵のアドレス
+	virtual void Enemy_Hit(EnemyBase* hiteneaddress = 0) {};
 	//座標からマップの中心のベクトル計算
 	float MapCenter_Vec();
 
@@ -105,4 +109,6 @@ public:
 	void Delete() { is_alive_ = false; };
 	//当たり判定有無のゲッター
 	bool Getter_is_collision()const { return is_collision_; };
+	//当たった敵のアドレスlistのゲッター
+	std::list<EnemyBase*>& Getter_hiteneaddress() { return hiteneaddress_; };
 };

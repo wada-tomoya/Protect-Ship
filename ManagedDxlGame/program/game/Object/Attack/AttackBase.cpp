@@ -32,6 +32,7 @@ AttackBase::AttackBase(const std::shared_ptr<dxe::InstMesh>& inst_mesh, const st
 AttackBase::~AttackBase() {
 	hit_ptcl_.reset();
 	move_ptcl_.reset();
+	hiteneaddress_.clear();
 }
 
 void AttackBase::Draw_Ptcl(const std::shared_ptr<Camera>& camera) {

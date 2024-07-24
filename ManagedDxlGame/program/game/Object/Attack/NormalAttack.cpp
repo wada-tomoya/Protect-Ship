@@ -16,8 +16,7 @@ NormalAttack::NormalAttack(const tnl::Vector3& map_center, const float& map_rad,
 	//弾の速度設定
 	speed_ = 15.0f + speed;
 	//貫通力セット
-	penetration_ += penetration;
-
+	penetration_ = penetration;
 }
 
 NormalAttack::~NormalAttack(){
@@ -27,11 +26,12 @@ NormalAttack::~NormalAttack(){
 void NormalAttack::Update(const float& delta_time) {
 	//シーケンス実行
 	tnl_sequence_.update(delta_time);
-
-	tnl::DebugTrace("%d\n", penetration_);
 }
 
-void NormalAttack::Enemy_Hit(){
+void NormalAttack::Enemy_Hit(EnemyBase* hiteneaddress){
+	//当たった敵のアドレスを保存
+	hiteneaddress_.emplace_back(hiteneaddress);
+
 	//ヒット時のパーティクル生成
 	is_hit_ptcl_ = true;
 	hit_ptcl_->setPosition(Getter_pos());
@@ -56,8 +56,8 @@ bool NormalAttack::SEQ_Move(const float delta_time){
 	move_ptcl_->setPosition(inst_mesh_->getPosition());
 
 	//シーケンス移動条件
-	//貫通力が０になれば
-	if (penetration_ <= 0) {
+	//貫通力が0未満になれば
+	if (penetration_ < 0) {
 		//移動時のパーティクル終了
 		move_ptcl_->stop();
 

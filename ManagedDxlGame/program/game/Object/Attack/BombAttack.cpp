@@ -30,7 +30,7 @@ void BombAttack::Update(const float& delta_time){
 	tnl_sequence_.update(delta_time);
 }
 
-void BombAttack::Enemy_Hit(){
+void BombAttack::Enemy_Hit(EnemyBase* hiteneaddress ){
 	//”š’e‚ð•`‰æ‚µ‚È‚¢
 	inst_mesh_->setDrawEnable(false);
 

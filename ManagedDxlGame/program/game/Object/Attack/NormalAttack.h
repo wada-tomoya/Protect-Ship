@@ -31,5 +31,6 @@ public:
 	//ˆø”‚PFŠÔ
 	void Update(const float& delta_time) override;
 	//“G‚É“–‚½‚Á‚½‚Ìˆ—
-	void Enemy_Hit() override;
+	//ˆø”‚PF“–‚½‚Á‚½“G‚ÌƒAƒhƒŒƒX
+	void Enemy_Hit(EnemyBase* hiteneaddress = 0) override;
 };
