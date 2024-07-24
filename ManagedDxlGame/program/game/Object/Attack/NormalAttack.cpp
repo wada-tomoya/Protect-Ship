@@ -1,10 +1,10 @@
 #include "NormalAttack.h"
 #include "math.h"
 
-NormalAttack::NormalAttack(const tnl::Vector3 map_center, const float map_rad,const tnl::Vector3& spawn_pos,
-	const tnl::Quaternion dir_angle, std::shared_ptr<dxe::InstMesh>& inst_mesh, float bullet_rad,
-	std::shared_ptr<dxe::Particle>& hit_ptcl, std::shared_ptr<dxe::Particle>& move_ptcl,
-	float speed, float power, int penetration) :
+NormalAttack::NormalAttack(const tnl::Vector3& map_center, const float& map_rad, const tnl::Vector3& spawn_pos,
+	const tnl::Quaternion& dir_angle, const std::shared_ptr<dxe::InstMesh>& inst_mesh, const float& bullet_rad,
+	const std::shared_ptr<dxe::Particle>& hit_ptcl, const std::shared_ptr<dxe::Particle>& move_ptcl,
+	const float& speed, const float& power, const int& penetration) :
 	AttackBase(inst_mesh, hit_ptcl, move_ptcl, dir_angle, map_center, map_rad, bullet_rad, spawn_pos) {
 	
 	//攻撃力設定
@@ -24,9 +24,11 @@ NormalAttack::~NormalAttack(){
 
 }
 
-void NormalAttack::Update(float delta_time) {
+void NormalAttack::Update(const float& delta_time) {
 	//シーケンス実行
 	tnl_sequence_.update(delta_time);
+
+	tnl::DebugTrace("%d\n", penetration_);
 }
 
 void NormalAttack::Enemy_Hit(){

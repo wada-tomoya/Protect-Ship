@@ -15,6 +15,21 @@ ResourceManager::ResourceManager() {
 	ptcl_csv_ = tnl::LoadCsv("csv/Resource_csv/ptcl.csv");
 }
 
+ResourceManager::~ResourceManager() {
+	graphics_csv_.clear();
+	graphics_map_.clear();
+	animation_csv_.clear();
+	animation_map_.clear();
+	texture_csv_.clear();
+	texture_map_.clear();
+	sound_csv_.clear();
+	sound_map_.clear();
+	mv1model_csv_.clear();
+	mv1model_map_.clear();
+	ptcl_csv_.clear();
+	ptcl_map_.clear();
+}
+
 void ResourceManager::Destroy() {
 	delete GetInstance_ResourceManager();
 }
@@ -27,7 +42,7 @@ ResourceManager* ResourceManager::GetInstance_ResourceManager() {
 	return instance;
 }
 
-int ResourceManager::LoadGraph_(std::string graph_name) {
+int ResourceManager::LoadGraph_(const std::string& graph_name) {
 	//mapからgraph_nameに対応する画像ハンドルをさがす
 	auto it = graphics_map_.find(graph_name);
 
@@ -50,23 +65,10 @@ int ResourceManager::LoadGraph_(std::string graph_name) {
 		}
 	}
 	//一致する物がなかった場合
-	return -1;
+	return 0;
 }
 
-void ResourceManager::DeleteGraph_(std::string graph_name) {
-	// file_pathに対応する画像ハンドルを探す
-	auto it = graphics_map_.find(graph_name);
-
-	// 画像ハンドルを解放
-	DeleteGraph(it->second);
-
-	// file_pathの画像パスを削除する
-	if (it != graphics_map_.end()) {
-		graphics_map_.erase(graph_name);
-	}
-}
-
-std::shared_ptr<std::vector<int>> ResourceManager::LoadAnim_(std::string animation_name) {
+std::shared_ptr<std::vector<int>> ResourceManager::LoadAnim_(const std::string& animation_name) {
 	//animation_nameに対応するアニメーションハンドルを探す
 	auto it = animation_map_.find(animation_name);
 
@@ -103,7 +105,7 @@ std::shared_ptr<std::vector<int>> ResourceManager::LoadAnim_(std::string animati
 	return nullptr;
 }
 
-Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
+Shared<dxe::Texture> ResourceManager::LoadTexture_(const std::string& texture_name) {
 	auto it = texture_map_.find(texture_name);
 	
 	//すでにロードしている場合
@@ -131,7 +133,7 @@ Shared<dxe::Texture> ResourceManager::LoadTexture_(std::string texture_name) {
 	return nullptr;
 }
 
-int ResourceManager::LoadSound_(std::string sound_name) {
+int ResourceManager::LoadSound_(const std::string& sound_name) {
 	auto it = sound_map_.find(sound_name);
 
 	//すでにロードしている場合
@@ -157,7 +159,7 @@ int ResourceManager::LoadSound_(std::string sound_name) {
 	return -1;
 }
 
-int ResourceManager::LoadMV1Model_(std::string model_name) {
+int ResourceManager::LoadMV1Model_(const std::string& model_name) {
 	auto it = mv1model_map_.find(model_name);
 
 	//すでにロードしてmapに保存している場合
@@ -184,7 +186,7 @@ int ResourceManager::LoadMV1Model_(std::string model_name) {
 	return -1;
 }
 
-Shared<dxe::Particle> ResourceManager::LoadPtcl_(std::string ptcl_name){
+Shared<dxe::Particle> ResourceManager::LoadPtcl_(const std::string& ptcl_name){
 	auto it = ptcl_map_.find(ptcl_name);
 	//すでにロードしている場合
 	if (it != ptcl_map_.end()) {

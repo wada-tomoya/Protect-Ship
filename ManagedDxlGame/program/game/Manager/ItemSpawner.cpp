@@ -30,7 +30,7 @@ ItemSpawner::~ItemSpawner() {
 
 }
 
-void ItemSpawner::ItemUpdate(float delta_time){
+void ItemSpawner::ItemUpdate(const float& delta_time){
 	//アイテムの実行と消去
 	auto it = items_.begin();
 	while (it != items_.end()) {
@@ -48,7 +48,7 @@ void ItemSpawner::ItemUpdate(float delta_time){
 
 }
 
-void ItemSpawner::ItemDraw(Shared<dxe::Camera> camera){
+void ItemSpawner::ItemDraw(const Shared<dxe::Camera>& camera){
 	//アイテム描画
 	auto it = items_.begin();
 	while (it != items_.end()) {
@@ -58,7 +58,7 @@ void ItemSpawner::ItemDraw(Shared<dxe::Camera> camera){
 	}
 }
 
-void ItemSpawner::CreateItem(Item type, tnl::Vector3 pos) {
+void ItemSpawner::CreateItem(const Item& type, const tnl::Vector3& pos) {
 	//引数の種類を取得
 	int itemtype = static_cast<int>(type.itemtype_);
 
@@ -107,7 +107,7 @@ void ItemSpawner::CreateItem(Item type, tnl::Vector3 pos) {
 	}
 }
 
-Item ItemSpawner::Item_Lottery(int none, int probred, int probblue, int probgreen, int probbomb){
+Item ItemSpawner::Item_Lottery(const int& none, const int& probred, const int& probblue, const int& probgreen, const int& probbomb){
 	//確率の合計
 	int num = none + probred + probblue + probgreen + probbomb;
 	//ランダム値の器
@@ -141,7 +141,7 @@ Item ItemSpawner::Item_Lottery(int none, int probred, int probblue, int probgree
 	}
 }
 
-int ItemSpawner::ItemDupe(int origine_hdl, tnl::Vector3& pos){
+int ItemSpawner::ItemDupe(const int& origine_hdl, const tnl::Vector3& pos){
 	//複製
 	int dupli = MV1DuplicateModel(origine_hdl);
 	//座標セット

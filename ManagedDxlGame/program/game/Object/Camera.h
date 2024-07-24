@@ -9,6 +9,6 @@ private:
 public:
 	Camera();
 	//カメラのアップデートの処理
-	//引数（追従するターゲット座標）
-	void Update(tnl::Vector3 target_pos = {0,0,0});
+	//引数１：追従するターゲット座標
+	void Update(const tnl::Vector3& target_pos = {0,0,0});
 };

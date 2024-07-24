@@ -2,6 +2,7 @@
 #include "../../dxlib_ext/dxlib_ext.h"
 #include "../Object/Item/ItemBase.h"
 
+//ボタンの種類
 enum class BUTTONNAME {
 	arrow_left_,
 	arrow_right_,
@@ -209,29 +210,38 @@ public:
 	UIManager();
 	~UIManager();
 
-	//タイトルシーンUI
+	//タイトルシーンUI初期化関数
 	void UI_init_TitleScene();
-	void UI_Update_TitleScene(float delta_tiem);
+	//タイトルシーンUI実行関数
+	//引数１：時間
+	void UI_Update_TitleScene(const float& delta_tiem);
 
-	//プレイシーンのUI
-	void UI_init_PlayScene(float protectobj_hp, const std::vector<ITEMTYPE>& playeritem_list);
-	void UI_Update_PlayScene(float delta_time, const float& protectobj_hp);
+	//プレイシーンUI初期化関数
+	//引数１：船のhp、プレイヤーが所持しているアイテム
+	void UI_init_PlayScene(const float& protectobj_hp, const std::vector<ITEMTYPE>& playeritem_list);
+	//プレイシーンUI実行関数
+	//引数１：時間、２：船のhp
+	void UI_Update_PlayScene(const float& delta_time, const float& protectobj_hp);
 
 	//hpバー表示
 	void Draw_hpbar();
 	//hpをバー揺らす
-	void Hpbar_blur(float delta_time, const float& protectobj_hp);
+	//引数１：時間、２：船のhp
+	void Hpbar_blur(const float& delta_time, const float& protectobj_hp);
 
 	//船体力低下時のスクリーンエフェクト表示
 	void Draw_ScreenEffect();
 	//画像点滅
-	float GraphBlink(float delta_time, float blink_time);
+	//引数１：時間、２：点滅にかかる時間
+	float GraphBlink(const float& delta_time, const float& blink_time);
 
 	//制限時間表示
+	//引数１：ゲームの制限時間
 	void Draw_timer(const float& gametime);
 
 	//ゲーム終了表示
-	void Draw_gameend(int gameend_type);
+	//引数１：ゲーム終了の種類（ゲームオーバー or ゲームクリア）
+	void Draw_gameend(const int& gameend_type);
 
 	//プレイガイド表示
 	void Draw_PlayGuid();
@@ -244,25 +254,33 @@ public:
 	void Draw_GameLevel();
 
 	//各ボタン表示
-	void Draw_Button(int buttonname);
+	//引数１：ボタンの種類
+	void Draw_Button(const int& buttonname);
 
 	//プレイヤーの所持アイテム表示
-	void Draw_PlayerItem(const std::vector<ITEMTYPE>& playeritem_list);
+	//引数１：プレイヤーが所持しているアイテムのvector
+	void Draw_PlayerItem(const std::vector<ITEMTYPE>& playeritem_vector);
 
 	//爆弾のストック表示
+	//引数１：プレイヤーが所持している爆破攻撃のストック数
 	void Draw_Bombstock(const int& bombstock);
 
 	//メニュー画面更新
-	void Update_PlayMenu(float delta_time);
+	//引数１：時間
+	void Update_PlayMenu(const float& delta_time);
 	//メニュー画面表示
 	void Draw_PlayMenu();
 	//途中ゲーム終了確認表示
 	void Draw_MidEndConf();
 	//ゲームガイド表示ボタン表示
-	void Draw_PlayGuid_Button(tnl::Vector2i pos);
+	//引数１：表示座標
+	void Draw_PlayGuid_Button(const tnl::Vector2i& pos);
 
 	//各ボタンとマウスカーソルが被っているか判定
-	bool IsCursor_Button(int buttonname);
+	//引数１：ボタンの名前
+	bool IsCursor_Button(const int& buttonname);
+
+//ゲッター、セッター
 
 	//メニュー画面終了フラグ
 	bool Getter_is_menu_()const { return is_menu_; };

@@ -22,7 +22,7 @@ ProtectObject::~ProtectObject(){
 
 }
 
-void ProtectObject::Update(float delta_time){
+void ProtectObject::Update(const float& delta_time){
 	//hp‚Ìc‚èŠ„‡ŒvZ
 	hp_ratio_ = hp_ / init_hp_;
 	//hp‚ª50“ˆÈ‰º‚É‚È‚ê‚Îsmoke_‚ğ¶¬
@@ -32,7 +32,7 @@ void ProtectObject::Update(float delta_time){
 
 }
 
-void ProtectObject::Draw(std::shared_ptr<Camera> camera){
+void ProtectObject::Draw(const std::shared_ptr<Camera>& camera){
 	//‘D•`‰æ
 	mesh_->render(camera);
 

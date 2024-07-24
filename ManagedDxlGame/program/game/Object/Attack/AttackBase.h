@@ -63,22 +63,29 @@ protected:
 	int penetration_ = 1;
 
 public:
-	AttackBase(std::shared_ptr<dxe::InstMesh>& inst_mesh,
-		std::shared_ptr<dxe::Particle>& hit_ptcl, std::shared_ptr<dxe::Particle>& move_ptcl,
-		const tnl::Quaternion dir_angle, const tnl::Vector3 map_center, const float map_rad, 
-		float bullet_rad, const tnl::Vector3& spawn_pos);
+	AttackBase() = default;
+
+	//引数１：複製されたメッシュ、２：攻撃ヒット時のパーティクル、３：攻撃移動時のパーティクル
+	//４：進行方向角度、５：マップの中心、６：マップの半径、７、攻撃の半径、８：攻撃生成座標
+	AttackBase(const std::shared_ptr<dxe::InstMesh>& inst_mesh, const std::shared_ptr<dxe::Particle>& hit_ptcl, const std::shared_ptr<dxe::Particle>& move_ptcl,
+		const tnl::Quaternion& dir_angle, const tnl::Vector3& map_center, const float& map_rad, const float& bullet_rad, const tnl::Vector3& spawn_pos);
 	~AttackBase();
 
 	//実行関数
-	virtual void Update(float delta_time) {};
+	//引数１：時間
+	virtual void Update(const float& delta_time) {};
 	//消去までの実行関数
-	virtual void DeathUpdate(float delta_time) {};
+	//引数１：時間
+	virtual void DeathUpdate(const float& delta_time) {};
 	//パーティクル描画
-	void Draw_Ptcl(std::shared_ptr<Camera>& camera);
+	//引数１：カメラインスタンス
+	void Draw_Ptcl(const std::shared_ptr<Camera>& camera);
 	//敵に当たった時の処理
 	virtual void Enemy_Hit() {};
 	//座標からマップの中心のベクトル計算
 	float MapCenter_Vec();
+
+//ゲッター、セッター
 	
 	//is_alive_のゲッター
 	bool Getter_is_alive()const { return is_alive_; };

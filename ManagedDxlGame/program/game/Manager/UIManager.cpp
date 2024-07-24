@@ -55,12 +55,12 @@ void UIManager::UI_init_TitleScene() {
 	draw_playguid_ = playguid_page1_hdl_;
 }
 
-void UIManager::UI_Update_TitleScene(float delta_time) {
+void UIManager::UI_Update_TitleScene(const float& delta_time) {
 	//タイトルuiシーケンス
 	title_sequence_.update(delta_time);
 }
 
-void UIManager::UI_init_PlayScene(float protectobj_hp, const std::vector<ITEMTYPE>& playeritem_list) {
+void UIManager::UI_init_PlayScene(const float& protectobj_hp, const std::vector<ITEMTYPE>& playeritem_list) {
 	playeritem_list_ = playeritem_list;
 
 	//hp初期値設定
@@ -122,7 +122,7 @@ void UIManager::UI_init_PlayScene(float protectobj_hp, const std::vector<ITEMTYP
 	draw_playguid_ = playguid_page1_hdl_;
 }
 
-void UIManager::UI_Update_PlayScene(float delta_time, const float& protectobj_hp) {
+void UIManager::UI_Update_PlayScene(const float& delta_time, const float& protectobj_hp) {
 	//hpバーの長さ比率計算
 	bar_rario_ = protectobj_hp / hp_init_;
 	//hpバーの長さ更新
@@ -180,7 +180,7 @@ void UIManager::Draw_hpbar() {
 	SetFontSize(orifontsize);
 }
 
-void UIManager::Hpbar_blur(float delta_time, const float& protectobj_hp) {
+void UIManager::Hpbar_blur(const float& delta_time, const float& protectobj_hp) {
 	//hpが減ったかを判定
 	if (hpblur_dec_jud_ != protectobj_hp && !is_hpblur_) {
 		hpblur_dec_jud_ = protectobj_hp;
@@ -247,7 +247,7 @@ void UIManager::Draw_timer(const float& gametime) {
 	gametime_pos_.x = ((DXE_WINDOW_WIDTH / 2) - (str_wid_ / 2));
 }
 
-void UIManager::Draw_gameend(int gameend_type) {
+void UIManager::Draw_gameend(const int& gameend_type) {
 	if (gameend_type == static_cast<int>(ENDTYPE::gameover)) {
 		gameend_graph_hdl_ = gameover_graph_hdl_;
 	}
@@ -298,7 +298,7 @@ void UIManager::Update_PlayGuid() {
 	}
 }
 
-float UIManager::GraphBlink(float delta_time, float blink_time) {
+float UIManager::GraphBlink(const float& delta_time, const float& blink_time) {
 	blink_count_ += delta_time;
 	float alpha = 0.0f;
 	//徐々に濃く
@@ -366,7 +366,7 @@ void UIManager::Draw_Bombstock(const int& bombstock) {
 	SetFontSize(orifontsize);
 }
 
-void UIManager::Update_PlayMenu(float delta_time) {
+void UIManager::Update_PlayMenu(const float& delta_time) {
 	//メニュー表示フラグtrue
 	is_menu_ = true;
 
@@ -418,7 +418,7 @@ void UIManager::Draw_GameLevel() {
 	Draw_Button(static_cast<int>(BUTTONNAME::game_hard_));
 }
 
-void UIManager::Draw_Button(int buttonname) {
+void UIManager::Draw_Button(const int& buttonname) {
 	DrawRotaGraph(button_[buttonname].pos_.x, button_[buttonname].pos_.y, button_[buttonname].graph_ext_, 0, button_[buttonname].graph_hdl_, true);
 }
 
@@ -433,11 +433,11 @@ void UIManager::Draw_MidEndConf() {
 		button_[static_cast<int>(BUTTONNAME::gamemidend_no_)].graph_ext_, 0, button_[static_cast<int>(BUTTONNAME::gamemidend_no_)].graph_hdl_, true);
 }
 
-void UIManager::Draw_PlayGuid_Button(tnl::Vector2i pos) {
+void UIManager::Draw_PlayGuid_Button(const tnl::Vector2i& pos) {
 	DrawRotaGraph(pos.x, pos.y, button_[static_cast<int>(BUTTONNAME::gameguid_draw_)].graph_ext_, 0, button_[static_cast<int>(BUTTONNAME::gameguid_draw_)].graph_hdl_, true);
 }
 
-bool UIManager::IsCursor_Button(int buttonname) {
+bool UIManager::IsCursor_Button(const int& buttonname) {
 	//マウスカーソルが被っていれば true を返す
 	if (tnl::IsIntersectPointRect(static_cast<int>(tnl::Input::GetMousePosition().x), static_cast<int>(tnl::Input::GetMousePosition().y),
 		button_[buttonname].pos_.x, button_[buttonname].pos_.y, button_[buttonname].size_.x, button_[buttonname].size_.y)) {

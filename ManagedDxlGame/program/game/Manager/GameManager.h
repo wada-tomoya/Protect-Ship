@@ -21,16 +21,22 @@ private:
 	//何もしない
 	bool seqRunScene(const float delta_time);
 
+	GameManager() = default;
 	GameManager(SceneBace* startscene);
 
 	//α値のマックス
 	const float alpha_max_ = 255.0f;
 
 public:
+	//staticクラスにアクセスする関数
+	//引数１：初期シーン
 	static GameManager* GetInstance_GameManager(SceneBace* startscene = nullptr);
 	//各シーンのUpdateとDraw実行
-	void Update(float delta_time);
+	//引数１：時間
+	void Update(const float& delta_time);
+	//staticクラス消去
 	static void Destroy();
 	//シーン切り替え
+	//引数１：次のシーン、引数２：トランディションの時間
 	void ChangeScene(SceneBace* nextscene, float delta_time = 0.5f);
 };

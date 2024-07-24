@@ -2,7 +2,7 @@
 #include "../Object/Camera.h"
 #include "../Character/CharacterBase.h"
 
-void AttackManager::Attack_Update( float delta_time, std::list<std::shared_ptr<AttackBase>>& attacks) {
+void AttackManager::Attack_Update( const float& delta_time, std::list<std::shared_ptr<AttackBase>>& attacks) {
 	//NormalAttackの実行と消去
 	auto it = attacks.begin();
 	while (it != attacks.end()) {
@@ -19,7 +19,7 @@ void AttackManager::Attack_Update( float delta_time, std::list<std::shared_ptr<A
 	}
 }
 
-void AttackManager::Attack_Draw(std::shared_ptr<Camera>& camera, std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& normalatk) {
+void AttackManager::Attack_Draw(const std::shared_ptr<Camera>& camera, const std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& normalatk) {
 	dxe::DirectXRenderBegin();
 
 	//パーティクル描画
@@ -45,8 +45,8 @@ void AttackManager::Attack_Draw(std::shared_ptr<Camera>& camera, std::list<std::
 	//}
 }
 
-void AttackManager::NormalAttack_Create(tnl::Vector3 spawn_pos, tnl::Quaternion dir_angle, float speed, float power, int Penetration,
-	std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& normalatk, const tnl::Vector3& atk_map_center, const float& atk_map_rad, int texturenum, float size_scale) {
+void AttackManager::NormalAttack_Create(const tnl::Vector3& spawn_pos, const tnl::Quaternion& dir_angle, const float& speed, const float& power, const int& Penetration,
+	std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& normalatk, const tnl::Vector3& atk_map_center, const float& atk_map_rad, const int& texturenum, const float& size_scale) {
 	//複製メッシュ生成
 	auto inst = normalatk.mesh_pool_->CreateInstMesh();
 
@@ -64,8 +64,8 @@ void AttackManager::NormalAttack_Create(tnl::Vector3 spawn_pos, tnl::Quaternion 
 		clone_hit_ptcl, clone_move_ptcl, speed, power, Penetration));
 }
 
-void AttackManager::BombAttack_Create(tnl::Vector3 spawn_pos, tnl::Quaternion dir_angle, tnl::Vector3 target_pos,
-	std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& bombatk, const tnl::Vector3& atk_map_center, const float& atk_map_rad, int texturenum){
+void AttackManager::BombAttack_Create(const tnl::Vector3& spawn_pos, const tnl::Quaternion& dir_angle, const tnl::Vector3& target_pos,
+	std::list<std::shared_ptr<AttackBase>>& attacks, const ATTACK& bombatk, const tnl::Vector3& atk_map_center, const float& atk_map_rad, const int& texturenum){
 	//複製メッシュ生成
 	auto inst = bombatk.mesh_pool_->CreateInstMesh();
 	//テクスチャ設定

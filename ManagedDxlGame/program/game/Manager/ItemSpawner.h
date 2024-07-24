@@ -4,6 +4,7 @@
 
 class Camera;
 
+//アイテム構造体
 struct Item {
 	//複製元モデル
 	int origine_mesh_ = 0;
@@ -31,24 +32,28 @@ protected:
 	
 	//アイテム複製
 	//引数１複製元モデル、引数２生成座標
-	int ItemDupe(int origine_hdl, tnl::Vector3& pos);
+	int ItemDupe(const int& origine_hdl, const tnl::Vector3& pos);
+
+	//アイテム実行
+	//引数１：時間
+	void ItemUpdate(const float& delta_time);
+	//描画関数
+	//引数１：カメラインスタンス
+	void ItemDraw(const Shared<dxe::Camera>& camera);
+
+	//アイテム生成
+	//引数１：アイテムの種類、引数２：生成座標
+	void CreateItem(const Item& type, const tnl::Vector3& pos);
+
+	//アイテム抽選
+	//引数１：noenの確率、引数２：赤の確率、引数３：青の確率、引数４：緑の確率、引数５：爆弾の確率
+	Item Item_Lottery(const int& none, const int& probred, const int& probblue, const int& probgreen, const int& probbomb);
 
 public:
 	ItemSpawner();
 	~ItemSpawner();
 
-	//アイテム実行
-	void ItemUpdate(float delta_time);
-	//描画関数
-	void ItemDraw(Shared<dxe::Camera> camera);
-
-	//アイテム生成
-	//引数１アイテムの種類、引数２生成座標
-	void CreateItem(Item type, tnl::Vector3 pos);
-
-	//アイテム抽選
-	//引数１noenの確率、引数２赤の確率、引数３青の確率、引数４緑の確率、引数５爆弾の確率
-	Item Item_Lottery(int none, int probred, int probblue, int probgreen, int probbomb);
+//ゲッター、セッター
 
 	//リストゲッター
 	std::list<std::shared_ptr<ItemBase>>& Getter_Items() { return items_; };

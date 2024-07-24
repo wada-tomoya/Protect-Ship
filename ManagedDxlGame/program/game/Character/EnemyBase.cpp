@@ -19,13 +19,13 @@ EnemyBase::~EnemyBase(){
 
 }
 
-void EnemyBase::Update(float delat_time){
+void EnemyBase::Update(const float& delat_time){
 
 	//移動前座標設定
 	prev_pos_ = MV1GetPosition(duplication_model_);
 }
 
-void EnemyBase::Draw(std::shared_ptr<Camera> camera){
+void EnemyBase::Draw(const std::shared_ptr<Camera>& camera){
 	//描画
 	MV1DrawModel(duplication_model_);
 
@@ -58,7 +58,7 @@ float EnemyBase::Distance_target() {
 	return distance_target_ = static_cast<float>(sqrt(pow(MV1GetPosition(duplication_model_).x - target_pos_.x, 2) + pow(MV1GetPosition(duplication_model_).z - target_pos_.z, 2)));
 }
 
-void EnemyBase::Movedir_update(float delta_time, float movedir_update_interval){	
+void EnemyBase::Movedir_update(const float& delta_time, const float& movedir_update_interval){	
 	//movedir_update_intervalごとに進行方向更新
 	movedir_update_count_ += delta_time;
 	if (movedir_update_count_ >= movedir_update_interval) {
@@ -69,7 +69,7 @@ void EnemyBase::Movedir_update(float delta_time, float movedir_update_interval){
 	}
 }
 
-void EnemyBase::PlyaerAttack_Recieve(float damage){
+void EnemyBase::PlyaerAttack_Recieve(const float& damage){
 	//プレイヤーの攻撃が当たった時のse再生
 	PlaySoundMem(hit_se_hdl_, DX_PLAYTYPE_BACK);
 	//ダメージ反映
@@ -78,7 +78,7 @@ void EnemyBase::PlyaerAttack_Recieve(float damage){
 	is_HitRecieve_ = true;
 }
 
-void EnemyBase::Anim_Change(int animtype){
+void EnemyBase::Anim_Change(const int& animtype){
 	//アニメーションの種類変更
 	anim_attachi_index_ = MV1AttachAnim(duplication_model_, animtype, -1, false);
 	//アニメーションの再生時間設定
@@ -87,7 +87,7 @@ void EnemyBase::Anim_Change(int animtype){
 	anim_count_ = 0.0f;
 }
 
-void EnemyBase::AnimPlay(float delta_time){
+void EnemyBase::AnimPlay(const float& delta_time){
 	//アニメーション終了フラグをfalse
 	is_anim_end_ = false;
 	//アニメーション再生

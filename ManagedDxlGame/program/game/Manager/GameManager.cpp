@@ -18,7 +18,7 @@ void GameManager::Destroy() {
 	delete GetInstance_GameManager();
 }
 
-void GameManager::Update(float delta_time) {
+void GameManager::Update(const float& delta_time) {
 	//nowscene_‚É“ü‚Á‚Ä‚¢‚éƒV[ƒ“‚ÌUpdate‚ÆDraw‚ðŽÀs
 	if (nowscene_) {
 		nowscene_->Update(delta_time);

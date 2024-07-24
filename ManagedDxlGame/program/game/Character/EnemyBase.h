@@ -71,6 +71,9 @@ protected:
 	int anim_attachi_index_ = 0;
 	//アタッチされているアニメーションの再生時間、アニメーションの再生カウント
 	float anim_totaltime_ = 0.0f, anim_count_ = 0.0f;
+
+	//アイテム生成フラグ
+	bool is_itemspawn_ = true;
 	
 public:
 	//コンストラクタ
@@ -78,9 +81,11 @@ public:
 	~EnemyBase();
 
 	//実行関数
-	virtual void Update(float delat_time);
+	//引数１：時間
+	virtual void Update(const float& delat_time);
 	//描画関数
-	virtual void Draw(std::shared_ptr<Camera> camera);
+	//引数１：カメラインスタンス
+	virtual void Draw(const std::shared_ptr<Camera>& camera);
 
 	//死亡（消去）
 	void Delete() { is_alive_ = false; };
@@ -89,14 +94,19 @@ public:
 	//ターゲットとの距離を計算
 	float Distance_target();
 	//移動方向更新
-	void Movedir_update(float delta_time, float movedir_update_interval = 0.0f);
+	//引数１：時間、移動方向更新間隔
+	void Movedir_update(const float& delta_time, const float& movedir_update_interval = 0.0f);
 	//プレイヤーの攻撃が当たった時
-	virtual void PlyaerAttack_Recieve(float damage);
+	//引数１：受けるダメージ
+	virtual void PlyaerAttack_Recieve(const float& damage);
 	//アニメーションの変更
-	//引数１・アニメーションのタイプ
-	void Anim_Change(int animtype);
+	//引数１：アニメーションのタイプ
+	void Anim_Change(const int& animtype);
 	//アニメーション再生
-	void AnimPlay(float delta_time);
+	//引数１：時間
+	void AnimPlay(const float& delta_time);
+
+//ゲッター、セッター
 
 	//is_alive_のゲッター　
 	bool Getter_is_alive()const { return is_alive_; };
@@ -111,7 +121,7 @@ public:
 		return pos; 
 	};
 	//hpのセッター
-	void Setter_hp(float damage) { hp_ += damage; };
+	void Setter_hp(const float& damage) { hp_ += damage; };
 	//hpのゲッター
 	float Getter_hp()const { return hp_; };
 	//複製されたモデルハンドルのゲッター
@@ -120,8 +130,10 @@ public:
 	float Getter_colli_rad()const { return colli_rad_; };
 	//弾との当たり判定用の球の中心座標のゲッター
 	tnl::Vector3 Getter_colli_center()const { return colli_center_; };
-	//プレイヤーとの当たり判定用サイズ
+	//プレイヤーとの当たり判定用サイズゲッター
 	tnl::Vector3 Getter_colli_size()const { return colli_size_; };
-
+	//攻撃力のゲッター
 	float Getter_attack_power()const { return attack_power_; };
+	//アイテム生成フラグのゲッター
+	bool Getter_is_itemspawn()const { return is_itemspawn_; };
 };

@@ -62,7 +62,11 @@ public:
 	Play_Map();
 	~Play_Map();
 	//マップ表示
-	void Map_Draw(std::shared_ptr<Camera> camera);
+	//引数１：カメラインスタンス
+	void Map_Draw(const std::shared_ptr<Camera>& camera);
+
+//ゲッター、セッター
+
 	//プレイヤーの移動限界の中心座標のゲッター
 	tnl::Vector3 Getter_Playmap_Center()const {
 		return player_move_center;

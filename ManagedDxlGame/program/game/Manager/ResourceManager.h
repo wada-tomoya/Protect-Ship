@@ -11,9 +11,8 @@ private:
 
 public:
 	//画像を読み込む関数
-	int LoadGraph_(std::string graph_name);
-	//画像を削除する関数
-	void DeleteGraph_(std::string graph_name);
+	//引数１：画像の名前
+	int LoadGraph_(const std::string& graph_name);
 
 //-----------------------------------------------------------------------------------------------
  
@@ -35,7 +34,8 @@ private:
 
 public:
 	//アニメーションとマップチップを読み込む関数
-	std::shared_ptr<std::vector<int>> LoadAnim_(std::string animation_name);
+	//引数１：アニメーション画像の名前
+	std::shared_ptr<std::vector<int>> LoadAnim_(const std::string& animation_name);
 
 //------------------------------------------------------------------------------------------------
 
@@ -48,7 +48,8 @@ private:
 	
 public:
 	//テクスチャを読み込む関数
-	Shared<dxe::Texture > LoadTexture_(std::string texture_name);
+	//引数１：テクスチャの名前
+	Shared<dxe::Texture > LoadTexture_(const std::string& texture_name);
 
 //-----------------------------------------------------------------------------------------------
 
@@ -61,7 +62,8 @@ private:
 
 public:
 	//音を読み込む関数
-	int LoadSound_(std::string sound_name);
+	//引数１：音の名前
+	int LoadSound_(const std::string& sound_name);
 
 //-----------------------------------------------------------------------------------------------
 
@@ -79,7 +81,8 @@ private:
 
 public:
 	//モデルを読み込む関数
-	int LoadMV1Model_(std::string model_name);
+	//引数１：モデルの名前
+	int LoadMV1Model_(const std::string& model_name);
 
 //-----------------------------------------------------------------------------------------------
 
@@ -92,16 +95,19 @@ private:
 
 public:
 	//パーティクルを読み込む関数
-	Shared<dxe::Particle> LoadPtcl_(std::string ptcl_name);
+	//引数１：パーティクルの名前
+	Shared<dxe::Particle> LoadPtcl_(const std::string& ptcl_name);
 
 //-----------------------------------------------------------------------------------------------
 
 private:
 	//コンストラクタ
 	ResourceManager();
+	//デストラクタ
+	~ResourceManager();
 
 public:
-	//クラスのインスタンス
+	//staticクラスにアクセスする関数
 	static ResourceManager* GetInstance_ResourceManager();
 	//staticクラスのdelete
 	static void Destroy();

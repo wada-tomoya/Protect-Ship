@@ -1,10 +1,9 @@
 #include "AttackBase.h"
 #include "../../Object/Camera.h"
 
-AttackBase::AttackBase(std::shared_ptr<dxe::InstMesh>& inst_mesh,
-	std::shared_ptr<dxe::Particle>& hit_ptcl, std::shared_ptr<dxe::Particle>& move_ptcl,
-	const tnl::Quaternion dir_angle, const tnl::Vector3 map_center, const float map_rad,
-	float bullet_rad, const tnl::Vector3& spawn_pos) {
+AttackBase::AttackBase(const std::shared_ptr<dxe::InstMesh>& inst_mesh, const std::shared_ptr<dxe::Particle>& hit_ptcl, 
+	const std::shared_ptr<dxe::Particle>& move_ptcl, const tnl::Quaternion& dir_angle, const tnl::Vector3& map_center,
+	const float& map_rad, const float& bullet_rad, const tnl::Vector3& spawn_pos) {
 	//複製されたメッシュ
 	inst_mesh_ = inst_mesh;
 	//爆破時のパーティクル
@@ -35,7 +34,7 @@ AttackBase::~AttackBase() {
 	move_ptcl_.reset();
 }
 
-void AttackBase::Draw_Ptcl(std::shared_ptr<Camera>& camera) {
+void AttackBase::Draw_Ptcl(const std::shared_ptr<Camera>& camera) {
 	//ヒット時のパーティクル描画
 	hit_ptcl_->render(camera);
 

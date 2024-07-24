@@ -10,14 +10,16 @@ class Collision {
 private:
 
 public:
-	Collision();
+	Collision() = default;
 	//プレイヤーの攻撃と敵の当たり判定
-	//引数（攻撃のlist、敵のlist）
-	void Attack_Enemy_HitCheck(std::list<Shared<AttackBase>>& atk_list, std::list<Shared<EnemyBase>>& ene_list);
+	//引数１：攻撃のリスト、２：敵のリスト）
+	void Attack_Enemy_HitCheck(const std::list<Shared<AttackBase>>& atk_list, const std::list<Shared<EnemyBase>>& ene_list);
 
 	//プレイヤーと敵の当たり判定
-	void Player_Enemy_HitChack(std::shared_ptr<Player>& player, std::list<Shared<EnemyBase>>& ene_list);
+	//引数１：プレイヤーインスタンス、２：敵リスト
+	void Player_Enemy_HitChack(const std::shared_ptr<Player>& player, const std::list<Shared<EnemyBase>>& ene_list);
 
 	//プレイヤーとアイテムの当たり判定
-	void Player_Item_HitChack(std::shared_ptr<Player>& player, std::list<std::shared_ptr<ItemBase>>& item_list);
+	//引数１：プレイヤーインスタンス、２：アイテムリスト
+	void Player_Item_HitChack(const std::shared_ptr<Player>& player, const std::list<std::shared_ptr<ItemBase>>& item_list);
 };

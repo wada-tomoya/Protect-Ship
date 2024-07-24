@@ -4,11 +4,7 @@
 #include "../Character/Player.h"
 #include "../Manager/ItemSpawner.h"
 
-Collision::Collision() {
-	
-}
-
-void Collision::Attack_Enemy_HitCheck(std::list<Shared<AttackBase>>& atk_list, std::list<Shared<EnemyBase>>& ene_list) {
+void Collision::Attack_Enemy_HitCheck(const std::list<Shared<AttackBase>>& atk_list, const std::list<Shared<EnemyBase>>& ene_list) {
 	for (auto atk_ : atk_list) {
 		for (auto ene_ : ene_list) {
 			//攻撃の当たり判定がtrueならば敵との当たり判定を計算する
@@ -25,7 +21,7 @@ void Collision::Attack_Enemy_HitCheck(std::list<Shared<AttackBase>>& atk_list, s
 	}
 }
 
-void Collision::Player_Enemy_HitChack(std::shared_ptr<Player>& player, std::list<Shared<EnemyBase>>& ene_list){
+void Collision::Player_Enemy_HitChack(const std::shared_ptr<Player>& player, const std::list<Shared<EnemyBase>>& ene_list){
 	for (auto ene_ : ene_list) {
 		//プレイヤーの当たり判定フラグがtrueの時のみ
 		if (tnl::IsIntersectAABB(player->GetterPos(), player->Getter_colli_size_(), ene_->Getter_colli_center(), ene_->Getter_colli_size())
@@ -36,7 +32,7 @@ void Collision::Player_Enemy_HitChack(std::shared_ptr<Player>& player, std::list
 	}
 }
 
-void Collision::Player_Item_HitChack(std::shared_ptr<Player>& player, std::list<std::shared_ptr<ItemBase>>& item_list){
+void Collision::Player_Item_HitChack(const std::shared_ptr<Player>& player, const std::list<std::shared_ptr<ItemBase>>& item_list){
 	for (auto item_ : item_list) {
 		if (tnl::IsIntersectAABB(player->GetterPos(), player->Getter_colli_size_(), item_->Getter_pos(), item_->Getter_size())) {
 			//アイテムのプレイヤーと当たった時の処理

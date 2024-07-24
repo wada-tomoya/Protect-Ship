@@ -24,7 +24,8 @@ struct ATTACK {
 
 class CharacterBase {
 protected:
-	
+//プレイヤー関係--------------------------------------------------------------------------
+
 	//移動速度
 	float speed_ = 0;
 	//計算元移動速度
@@ -65,7 +66,7 @@ protected:
 	//敵との当たり判定用のサイズ
 	tnl::Vector3 colli_size_{ 0,0,0 };
 
-	//攻撃関係--------------------------------------------------------------------------
+//攻撃関係--------------------------------------------------------------------------
 
 	//通常攻撃
 	ATTACK noratk_;
@@ -113,22 +114,28 @@ protected:
 
 public:
 
-
 	//実行関数
-	virtual void Update(float delat_time) {};
+	//引数１：時間
+	virtual void Update(const float& delat_time) {};
 	//画像表示関数
-	virtual void Draw(float delat_time, std::shared_ptr<Camera> camera) {};
+	//引数１：時間、２：カメラインスタンス
+	virtual void Draw(const float& delat_time, const std::shared_ptr<Camera>& camera) {};
 	//アニメーション関数
-	virtual void Anim_Play(std::shared_ptr<std::vector<int>> animhdl, float delta_time);
+	//引数１：アニメーション画像ハンドル、２：時間
+	virtual void Anim_Play(const std::shared_ptr<std::vector<int>>& animhdl, const float& delta_time);
 	//meshテクスチャ　アニメーション関数
-	virtual void Texture_Anim_Play(int mesharray_index, float delta_time);
+	//引数：アニメション配列要素数、２：時間
+	virtual void Texture_Anim_Play(const int& mesharray_index, const float& delta_time);
+	
+//ゲッターセッター-------------------------------------------------------------------------------
+
 	//プレイヤーの座標のゲッター
 	tnl::Vector3 GetterPos()const { return pos_; };
 	//敵との当たり判定用のサイズのゲッター
 	tnl::Vector3 Getter_colli_size_()const { return colli_size_; };
-
 	//攻撃listのゲッター
 	std::list<std::shared_ptr<AttackBase>>& Getter_Aattack_list() { return attacks_; };
 	//爆弾ストックのゲッター
 	const int& Getter_BombStock()const { return bombstock_; };
+
 };

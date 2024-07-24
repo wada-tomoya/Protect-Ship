@@ -1,9 +1,9 @@
 #include "BombAttack.h"
 #include "math.h"
 
-BombAttack::BombAttack(const tnl::Vector3 map_center, const float map_rad, tnl::Vector3 target_pos, const tnl::Vector3& spawn_pos,
-	const tnl::Quaternion dir_angle, std::shared_ptr<dxe::InstMesh> inst_mesh, float bullet_rad,
-	std::shared_ptr<dxe::Particle> hit_ptcl, std::shared_ptr<dxe::Particle> move_ptcl, int hit_se) :
+BombAttack::BombAttack(const tnl::Vector3& map_center, const float& map_rad, const tnl::Vector3& target_pos, const tnl::Vector3& spawn_pos,
+	const tnl::Quaternion& dir_angle, const std::shared_ptr<dxe::InstMesh>& inst_mesh, const float& bullet_rad,
+	const std::shared_ptr<dxe::Particle>& hit_ptcl, const std::shared_ptr<dxe::Particle>& move_ptcl, const int& hit_se) :
 	AttackBase(inst_mesh, hit_ptcl, move_ptcl, dir_angle, map_center, map_rad, bullet_rad, spawn_pos){
 	
 	//ヒット時のse読み込み
@@ -25,7 +25,7 @@ BombAttack::~BombAttack(){
 	DeleteSoundMem(hit_se_hdl_);
 }
 
-void BombAttack::Update(float delta_time){
+void BombAttack::Update(const float& delta_time){
 	//シーケンス実行
 	tnl_sequence_.update(delta_time);
 }

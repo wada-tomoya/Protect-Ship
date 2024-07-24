@@ -39,13 +39,18 @@ protected:
 	ITEMTYPE itemtype_ = ITEMTYPE::None;
 
 public:
-	ItemBase(int mv1model);
+	ItemBase() = default;
+
+	//引数１：複製モデル
+	ItemBase(const int& mv1model);
 	~ItemBase();
 
 	//実行関数
-	virtual void Update(float delta_time);
+	//引数１：時間
+	virtual void Update(const float& delta_time);
 	//描画関数
-	virtual void Draw(Shared<dxe::Camera> camera) {
+	//引数１：カメラインスタンス
+	virtual void Draw(const Shared<dxe::Camera>& camera) {
 		MV1DrawModel(mv1model_);
 	};
 
@@ -53,6 +58,8 @@ public:
 	void Delete() { is_alive_ = false; };
 	//プレイヤーと当たった時
 	void PlyarHit();
+
+//ゲッター、セッター
 
 	//座標のゲッター
 	tnl::Vector3 Getter_pos()const { return pos_; };

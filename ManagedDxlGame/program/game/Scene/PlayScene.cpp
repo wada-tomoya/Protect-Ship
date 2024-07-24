@@ -8,7 +8,7 @@
 #include "../Manager/UIManager.h"
 #include "TitleScene.h"
 
-PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
+PlayScene::PlayScene(const FINALCLASS_NAME& class_name) : SceneBace(class_name) {
 	srand(time(0));
 
 	//オブジェクトインスタンス
@@ -37,12 +37,12 @@ PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 	ui_->UI_init_PlayScene(protectobject_->Getter_Hp(), player_->Getter_statusup_itemlist_());
 
 	//敵のステータス変更タイミング
-	const float changetiming_easy_[]{ 25.0f,45.0f };
+	const float changetiming_easy_[]{ 15.0f,30.0f,45.0f };
 	const float changetiming_normal_[]{ 30.0f,60.0f,75.0f,90.0f,105.0f };
-	const float changetiming_hard_[]{30.0f,60.0f,90.0f,120.0f,135.0f,150.0f,165.0f};
+	const float changetiming_hard_[]{30.0f,60.0f,75.0f,90.0f,105.0f,120.0f,135.0f,150.0f,165.0f};
 	//ゲームレベルごとのステータス変更
 	switch (scenename_) {
-	case ENDCLASS_NAME::play_easy:
+	case FINALCLASS_NAME::play_easy:
 		//敵の初期値設定
 		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
 		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 20.0f;
@@ -70,10 +70,10 @@ PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 		//ゲーム制限時間変更
 		gametime_ = 61.0f;
 		break;
-	case ENDCLASS_NAME::play_normal:
+	case FINALCLASS_NAME::play_normal:
 		//敵の初期値設定
 		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
-		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 20.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 25.0f;
 		enemy_speed_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
 		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 7.0f;
 		enemy_hp_[static_cast<int>(ENEMYTYPE::chase)] = 30.0f;
@@ -82,13 +82,13 @@ PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 		enemy_hp_[static_cast<int>(ENEMYTYPE::big)] = 200.0f;
 		enemy_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.5f;
 		//タイミングでの変化値設定
-		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.13f;
-		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 10.0f;
-		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.2f;
-		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 1.0f;
-		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 10.2f;
-		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.3f;
-		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 2.0f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.15f;
+		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 15.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.3f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 1.2f;
+		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 15.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.5f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 3.0f;
 		change_hp_[static_cast<int>(ENEMYTYPE::big)] = 70.0f;
 		change_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.2f;
 		//敵のステータス変更タイミング
@@ -98,10 +98,10 @@ PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 		//ゲーム制限時間変更
 		gametime_ = 121.0f;
 		break;
-	case ENDCLASS_NAME::play_hard:
+	case FINALCLASS_NAME::play_hard:
 		//敵の初期値設定
 		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 1.0f;
-		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 40.0f;
+		enemy_hp_[static_cast<int>(ENEMYTYPE::normal)] = 25.0f;
 		enemy_speed_[static_cast<int>(ENEMYTYPE::normal)] = 1.5f;
 		enemy_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 7.0f;
 		enemy_hp_[static_cast<int>(ENEMYTYPE::chase)] = 30.0f;
@@ -110,15 +110,15 @@ PlayScene::PlayScene(ENDCLASS_NAME class_name) : SceneBace(class_name) {
 		enemy_hp_[static_cast<int>(ENEMYTYPE::big)] = 300.0f;
 		enemy_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.5f;
 		//タイミングでの変化値設定
-		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.12f;
-		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 10.0f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.09f;
+		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 12.0f;
 		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.2f;
 		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 0.5f;
-		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 20.2f;
-		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.3f;
-		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 1.5f;
+		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 20.0f;
+		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.6f;
+		change_spawninterval_[static_cast<int>(ENEMYTYPE::big)] = 1.0f;
 		change_hp_[static_cast<int>(ENEMYTYPE::big)] = 80.0f;
-		change_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.4f;
+		change_speed_[static_cast<int>(ENEMYTYPE::big)] = 0.5f;
 		//敵のステータス変更タイミング
 		status_change_timing_.insert(status_change_timing_.end(), std::begin(changetiming_hard_), std::end(changetiming_hard_));
 		//変更回数上限設定
@@ -143,7 +143,7 @@ PlayScene::~PlayScene() {
 	DeleteSoundMem(gameover_bgm_);
 }
 
-void PlayScene::Update(float delta_time) {
+void PlayScene::Update(const float& delta_time) {
 	//カメラ実行						
 	camera_->Update(player_->GetterPos());
 
@@ -154,7 +154,7 @@ void PlayScene::Update(float delta_time) {
 	ui_->UI_Update_PlayScene(delta_time, protectobject_->Getter_Hp());
 }
 
-void PlayScene::Draw(float delta_time) {
+void PlayScene::Draw(const float& delta_time) {
 	//プレイシーンのマップ描画
 	map_->Map_Draw(camera_);
 	//攻撃の描画
@@ -196,7 +196,7 @@ void PlayScene::Draw(float delta_time) {
 		break;
 	}
 
-	DrawFpsIndicator({ 10, DXE_WINDOW_HEIGHT - 10, 0 }, delta_time);
+	//DrawFpsIndicator({ 10, DXE_WINDOW_HEIGHT - 10, 0 }, delta_time);
 
 	//プレイヤーと一緒に点滅
 	if (player_->Getter_is_flash_()) {
@@ -302,8 +302,11 @@ bool PlayScene::Seq_Gameover(float delta_time) {
 		//bgm停止
 		StopSoundMem(gameover_bgm_);
 
-		GameManager* mgr = GameManager::GetInstance_GameManager();
-		mgr->ChangeScene(new (TitleScene)(ENDCLASS_NAME::title));
+		/*GameManager* mgr = GameManager::GetInstance_GameManager();
+		mgr->ChangeScene(new (TitleScene)(ENDCLASS_NAME::title));*/
+
+		//シーン遷移
+		GameManager::GetInstance_GameManager()->ChangeScene(new(TitleScene)(FINALCLASS_NAME::title));
 
 		is_scene_change_ = true;
 	}
@@ -324,8 +327,11 @@ bool PlayScene::Seq_GameClear(float delta_time) {
 		//bgm停止
 		StopSoundMem(gameclear_bgm_);
 
-		GameManager* mgr = GameManager::GetInstance_GameManager();
-		mgr->ChangeScene(new (TitleScene)(ENDCLASS_NAME::title));
+		/*GameManager* mgr = GameManager::GetInstance_GameManager();
+		mgr->ChangeScene(new (TitleScene)(ENDCLASS_NAME::title));*/
+
+		//シーン遷移
+		GameManager::GetInstance_GameManager()->ChangeScene(new(TitleScene)(FINALCLASS_NAME::title));
 
 		is_scene_change_ = true;
 	}

@@ -9,6 +9,13 @@ private:
 	
 
 public:
-	ItemGreen(int& mv1model);
+	ItemGreen() = default;
+
+	//引数１：複製モデル
+	ItemGreen(const int& mv1model);
 	~ItemGreen();
+
+	//実行関数
+	//引数１：時間
+	void Update(const float& delta_time)override;
 };

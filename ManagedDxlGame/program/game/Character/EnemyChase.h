@@ -40,12 +40,18 @@ private:
 	ANIMTYPE animtype_ = Idle;
 
 public:
-	//コンストラクタ
-	EnemyChase(std::weak_ptr<CharacterBase> player, int duplication_mesh, Shared<dxe::InstMesh> shadow_mesh, float speed, float hp, float colli_rad, tnl::Vector3 colli_size);
+	EnemyChase() = default;
+
+	//引数１：ターゲット、２：複製メッシュ、３：影メッシュ、
+	// ４：移動速度、５：体力、６：たまとの当たり判定用の半径、７：プレイヤーとの当たり判定用のサイズ
+	EnemyChase(std::weak_ptr<CharacterBase> player, const int& duplication_mesh, const Shared<dxe::InstMesh>& shadow_mesh,
+		const float& speed, const float& hp, const float& colli_rad, const tnl::Vector3& colli_size);
 	~EnemyChase();
 
 	//実行関数
-	void Update(float delta_time) override;
+	//引数１：時間
+	void Update(const float& delta_time) override;
 	//描画関数
-	void Draw(std::shared_ptr<Camera> camera) override;
+	//引数１：カメラインスタンス
+	void Draw(const std::shared_ptr<Camera>& camera) override;
 };

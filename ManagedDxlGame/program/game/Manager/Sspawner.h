@@ -86,28 +86,37 @@ private:
 	int itemprob_[5]{50,10,10,10,20};
 
 public:
-	//引数（プレイエリアの中心、プレイエリアの半径、ターゲット（船）、ターゲット（プレイヤー））
-	Spawner(tnl::Vector3 map_center, float map_rad, std::shared_ptr<ProtectObject>& target_protectobj, std::shared_ptr<Player>& target_player);
+	Spawner() = default;
+
+	//引数１：プレイエリアの中心、２：プレイエリアの半径、３：ターゲット（船）、４：ターゲット（プレイヤー））
+	Spawner(const tnl::Vector3& map_center, const float& map_rad, const std::shared_ptr<ProtectObject>& target_protectobj, const std::shared_ptr<Player>& target_player);
 	~Spawner();
 	
 	//実行
-	void Update(float delta_time);
+	//引数１：時間
+	void Update(const float& delta_time);
 	//表示
-	void Draw(std::shared_ptr<Camera> camera);
+	//引数１：カメラインスタンス
+	void Draw(const std::shared_ptr<Camera>& camera);
 	
 	//敵生成
-	void Enemy_Spawn(std::weak_ptr<ProtectObject> protectobject, std::weak_ptr<Player> player, float delta_time);
+	//引数：１船インスタンス、２：プレイヤーインスタンス、３：時間
+	void Enemy_Spawn(std::weak_ptr<ProtectObject> protectobject, std::weak_ptr<Player> player, const float& delta_time);
 	
 	//通常敵スポン間隔、スポン時のステータス変更
-	//引数１：敵の種類、　引数２：変更値スポンインターバル、　引数３：変更値hp、　引数４：変更値スピード
-	void Enemy_SpawnStatusChange(ENEMYTYPE enemytype, float sub_spawn_interval, float add_hp, float add_speed);
+	//引数１：敵の種類、　引数２：減算値スポンインターバル、　引数３：加算値hp、　引数４：加算値スピード
+	void Enemy_SpawnStatusChange(const ENEMYTYPE& enemytype, const float& sub_spawn_interval, const float& add_hp, const float& add_speed);
 	
 	//敵複製、初期位置に移動、サイズ変更
-	int EnemyDupe(int model_hdl, DxLib::VECTOR scale);	
+	//引数１：複製元モデル、２：サイズスケール
+	int EnemyDupe(const int& model_hdl, const DxLib::VECTOR& scale);	
 	
 	//影複製
-	Shared<dxe::InstMesh> ShadowDupe(int enedupe);
+	//引数１：複製元影モデル
+	Shared<dxe::InstMesh> ShadowDupe(const int& enedupe);
 	 
+//ゲッター、セッター
+
 	//listのゲッター
 	std::list< std::shared_ptr<EnemyBase>>& Getter_enemy_list() { return enemys_; };
 };

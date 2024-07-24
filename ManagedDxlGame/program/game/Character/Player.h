@@ -9,6 +9,8 @@ class Camera;
 //引数（マップの移動限界の中心、移動限界の半径）
 class Player : public CharacterBase, public AttackManager{
 private:
+//プレイヤー関係-------------------------------------------------------------------------------------
+
 	//当たり判定用暑さ
 	const float colli_thickness_ = 8.0f;
 	//当たり判定の状態フラグ（true当たり判定有効、 false当たり判定無効）
@@ -42,6 +44,8 @@ private:
 	Shared<dxe::Mesh> mesh_right_[player_mesh_index_];
 	Shared<dxe::Mesh> mesh_back_[player_mesh_index_];
 	
+//影関係-------------------------------------------------------------------------------------
+
 	//影のメッシュ
 	Shared<dxe::Mesh> shadow_mesh_ = nullptr;
 	//影のテクスチャ
@@ -63,7 +67,6 @@ private:
 	tnl::Vector3 cursor_pos_{ 0,0,0 };
 	//カーソルを90度傾けるよう
 	tnl::Quaternion cursor_down_ = tnl::Quaternion::RotationAxis({ 1,0,0 }, tnl::ToRadian(90));
-
 	//マウスカーソルのレイと地面の当たった座標
 	tnl::Vector3 ground_hit_pos_{ 0,0,0 };
 	//ground_hit_pos_のパーティクル
@@ -90,15 +93,17 @@ private:
 		//上がり幅
 		float speed_attack_up_ = 5.0f;
 		float interval_down_ = 0.07f;
-		float power_up_ = 8.0f;
+		float power_up_ = 10.0f;
 		int penetration_up_ = 1;
 		float size_scale_up_ = 0.25f;
 		float speed_player_up_ = 1.5f;
 		//緑を取得している場合の攻撃力の減り幅
-		float power_down_ = 1.5f;
+		float power_down_ = 1.7f;
 	};
 	ATTACKSTATUS itemupstatus_;
 	const float little_up_ = 0.2f;
+
+//-------------------------------------------------------------------------------------
 
 	//マップの地面のメッシュ
 	std::weak_ptr<dxe::Mesh> ground_;
@@ -106,35 +111,46 @@ private:
 	std::weak_ptr<Camera> camera_;
 
 public:
-	Player(tnl::Vector3 map_center, float map_rad, std::weak_ptr<dxe::Mesh> ground, std::weak_ptr<Camera> camera);
+	Player() = default;
+
+	//引数１：マップの中心座標、２：マップの半径、３：地面のメッシュ、４：カメラインスタンス
+	Player(const tnl::Vector3& map_center, const float& map_rad, std::weak_ptr<dxe::Mesh> ground, std::weak_ptr<Camera> camera);
 	~Player();
 	//実行関数
-	void Update(float delta_time) override;
+	//引数１：時間
+	void Update(const float& delta_time) override;
 	//プレイヤーの描画関数
-	void Draw(float delta_time, std::shared_ptr<Camera> camera) override;
+	//引数１：時間、２：カメラインスタンス
+	void Draw(const float& delta_time, const std::shared_ptr<Camera>& camera) override;
 	//攻撃の描画
-	void AttackDraw(std::shared_ptr<Camera> camera);
+	//引数１：カメラインスタンス
+	void AttackDraw(const std::shared_ptr<Camera>& camera);
 
 	//プレイヤー点滅
-	void Flashing(float delta_tim, float flash_interval);
+	//引数１：時間、２：点滅間隔
+	void Flashing(const float& delta_tim, const float& flash_interval);
 	//移動　
-	//引数（delta_time, 移動出来るマップの中心、半径）
-	void Move(float delta_time);
+	//引数１：時間
+	void Move(const float& delta_time);
 	//画面の中心からマウスカーソルの方向へのベクトルを正規化した値
 	tnl::Vector3 Cursor_Move_Norm_();
 	//画面中心からマウスカーソルへの角度（度数法）
 	float Angle_Center_Mouse();
 	//攻撃
-	void Attack_Create(float delta_time);
+	//引数１：時間
+	void Attack_Create(const float& delta_time);
 	//敵と接触した時の処理
 	void Enemy_Hit();
 	//アイテムと接触した時の処理
-	void Item_Hit(ITEMTYPE itemtype);
+	//引数１：アイテムの種類
+	void Item_Hit(const ITEMTYPE& itemtype);
 	//list内のアイテムを元に攻撃ステータス設定
 	void AttackStatus_Set();
 
+//ゲッター、セッター
+
 	//ステータスupアイテムのセッター
-	void Setter_Item(ITEMTYPE& itemtype);
+	void Setter_Item(const ITEMTYPE& itemtype);
 	//無敵状態フラグのゲッター
 	bool Getter_is_colli()const { return is_colli_; };
 	//描画フラグのゲッター

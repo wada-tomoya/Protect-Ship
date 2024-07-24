@@ -26,15 +26,20 @@ private:
 	int str_len_ = 0, str_wid_ = 0;
 
 public:
-	TitleScene(ENDCLASS_NAME classname);
+	TitleScene() = default;
+
+	//引数１：シーンクラス名
+	TitleScene(const FINALCLASS_NAME& classname);
 	~TitleScene();
 
 	//実行関数
-	void Update(float delta_time) override;
+	//引数１：時間
+	void Update(const float& delta_time) override;
 	//表示関数
-	void Draw(float delta_time) override;
+	//引数１：時間
+	void Draw(const float& delta_time) override;
 
 	//中央揃え関数
-	//引数（表示する文字、文字のｘ座標）
-	void Centered(std::string str, int& x_pos);
+	//引数１：表示する文字、２：文字のｘ座標
+	void Centered(const std::string& str, int& x_pos);
 };

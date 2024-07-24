@@ -2,9 +2,6 @@
 #include "../../../dxlib_ext/dxlib_ext.h"
 #include "AttackBase.h"
 
-//引数（マップの中心、マップの半径、生成する座標、進行方向の角度、複製されたメッシュ, 
-// 弾の半径、敵に当たった時のパーティクル、移動時のパーティクル、
-//移動速度上がり幅、攻撃上がり幅、貫通力上がり幅）
 class NormalAttack : public AttackBase{
 private:	
 	//回転角度
@@ -20,14 +17,19 @@ private:
 	bool SEQ_Death(const float delta_time);
 	
 public:		 
-	NormalAttack(const tnl::Vector3 map_center, const float map_rad,const tnl::Vector3& spawn_pos,
-		const tnl::Quaternion dir_angle, std::shared_ptr<dxe::InstMesh>& inst_mesh, float bullet_rad,
-		std::shared_ptr<dxe::Particle>& hit_ptcl, std::shared_ptr<dxe::Particle>& move_ptcl,
-		float speed, float power, int Penetration_);
+	NormalAttack() = default;
+
+	//引数１：マップの中心、２：マップの半径、４：生成座標、５：進行方向の角度、
+	//６：複製されたメッシュ、７：攻撃の半径、８：攻撃ヒット時のパーティクル、
+	//９：攻撃移動時のパーティクル、１０：移動速度、１１：攻撃力、１２：貫通力
+	NormalAttack(const tnl::Vector3& map_center, const float& map_rad, const tnl::Vector3& spawn_pos, const tnl::Quaternion& dir_angle,
+		const std::shared_ptr<dxe::InstMesh>& inst_mesh, const float& bullet_rad, const std::shared_ptr<dxe::Particle>& hit_ptcl, 
+		const std::shared_ptr<dxe::Particle>& move_ptcl, const float& speed, const float& power, const int& Penetration_);
 	~NormalAttack();
 
 	//実行関数
-	void Update(float delta_time) override;
+	//引数１：時間
+	void Update(const float& delta_time) override;
 	//敵に当たった時の処理
 	void Enemy_Hit() override;
 };

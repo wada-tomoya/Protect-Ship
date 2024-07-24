@@ -2,7 +2,7 @@
 #include "../Object/Camera.h"
 #include "../Manager/ResourceManager.h"
 
-Player::Player(tnl::Vector3 map_center, float map_rad, std::weak_ptr<dxe::Mesh> ground, std::weak_ptr<Camera> camera){
+Player::Player(const tnl::Vector3& map_center, const float& map_rad, std::weak_ptr<dxe::Mesh> ground, std::weak_ptr<Camera> camera){
 	//移動速度
 	speed_ = 4;
 	ori_speed_ = speed_;
@@ -166,7 +166,7 @@ Player::~Player(){
 	DeleteSoundMem(bomatk_.hit_se_hdl_);
 }
 
-void Player::Update(float delta_time) {
+void Player::Update(const float& delta_time) {
 	//無敵状態のカウントダウン
 	if (invincible_ > 0.0f) {
 		invincible_ -= delta_time;
@@ -221,7 +221,7 @@ void Player::Update(float delta_time) {
 	Attack_Update(delta_time, attacks_);
 }
 
-void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
+void Player::Draw(const float& delta_time, const std::shared_ptr<Camera>& camera) {
 	//影描画
 	shadow_mesh_->render(camera);
 	//カーソル描画
@@ -260,12 +260,12 @@ void Player::Draw(float delta_time, std::shared_ptr<Camera> camera) {
 	dxe::DirectXRenderEnd();
 }
 
-void Player::AttackDraw(std::shared_ptr<Camera> camera) {
+void Player::AttackDraw(const std::shared_ptr<Camera>& camera) {
 	//各攻撃の描画
 	Attack_Draw(camera, attacks_, noratk_);
 }
 
-void Player::Flashing(float delta_tim, float flash_interval){
+void Player::Flashing(const float& delta_tim, const float& flash_interval){
 	flash_count_ += delta_tim;
 	if (flash_count_ <= flash_interval) {
 		//プレイヤーを消す
@@ -280,7 +280,7 @@ void Player::Flashing(float delta_tim, float flash_interval){
 	}
 }
 
-void Player::Move(float delta_time) {
+void Player::Move(const float& delta_time) {
 	//移動前座標を設定
 	prev_pos_ = pos_;
 
@@ -368,7 +368,7 @@ float Player::Angle_Center_Mouse() {
 	return angle_;
 }
 
-void Player::Attack_Create(float delta_time) {
+void Player::Attack_Create(const float& delta_time) {
 	//通常攻撃　左クリック
 	if (tnl::Input::IsMouseDown(eMouse::LEFT)) {
 		if (is_normalattack_) {
@@ -468,7 +468,7 @@ void Player::AttackStatus_Set(){
 	attack_addnum_ = greencount;
 }
 
-void Player::Setter_Item(ITEMTYPE& itemtype){
+void Player::Setter_Item(const ITEMTYPE& itemtype){
 	//要素を追加
 	statusup_itemlist_.emplace_back(itemtype);
 
@@ -478,7 +478,7 @@ void Player::Setter_Item(ITEMTYPE& itemtype){
 	}
 }
 
-void Player::Item_Hit(ITEMTYPE itemtype) {
+void Player::Item_Hit(const ITEMTYPE& itemtype) {
 	if (itemtype == ITEMTYPE::Bomb) {
 		//爆弾追加
 		bombstock_++;

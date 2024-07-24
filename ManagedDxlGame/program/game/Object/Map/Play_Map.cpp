@@ -60,7 +60,7 @@ Play_Map::~Play_Map() {
 	}
 }
 
-void Play_Map::Map_Draw(std::shared_ptr<Camera> camera) {
+void Play_Map::Map_Draw(const std::shared_ptr<Camera>& camera) {
 	//’n–Ê•`‰æ
 	ground_mesh_->render(camera);
 	//•¡»‚µ‚½–Ø‚ğ•`‰æ

@@ -17,17 +17,19 @@ void gameStart() {
     SetMouseDispFlag(false);
 
     //staticマネージャークラスインスタンス
-	GameManager::GetInstance_GameManager(new TitleScene(ENDCLASS_NAME::title));
+	GameManager::GetInstance_GameManager(new TitleScene(FINALCLASS_NAME::title));
 	ResourceManager::GetInstance_ResourceManager();
 
 	//フォントの変更
 	ChangeFont("コーポレート・ロゴ（ラウンド）ver3 Bold", DX_CHARSET_DEFAULT);
+    //文字に枠線を付ける
     ChangeFontType(DX_FONTTYPE_EDGE);
 }
 
 //------------------------------------------------------------------------------------------------------------
 // 毎フレーム実行されます
 void gameMain(float delta_time) {
+    //シーン実行
 	GameManager::GetInstance_GameManager()->Update(delta_time);
 
 }

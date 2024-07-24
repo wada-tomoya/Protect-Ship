@@ -1,6 +1,6 @@
 #include "CharacterBase.h"
 
-void CharacterBase::Anim_Play(std::shared_ptr<std::vector<int>> animhdl, float delta_time) {
+void CharacterBase::Anim_Play(const std::shared_ptr<std::vector<int>>& animhdl, const float& delta_time) {
 	//list‚ÌƒTƒCƒY
 	int hdlsize_ = static_cast<int>(animhdl->size());
 
@@ -13,7 +13,7 @@ void CharacterBase::Anim_Play(std::shared_ptr<std::vector<int>> animhdl, float d
 	}
 }
 
-void CharacterBase::Texture_Anim_Play(int mesharray_index, float delta_time) {
+void CharacterBase::Texture_Anim_Play(const int& mesharray_index, const float& delta_time) {
 	if (is_move_) {
 		anim_time_ += delta_time;
 		for (; anim_time_ > anim_speed_;) {

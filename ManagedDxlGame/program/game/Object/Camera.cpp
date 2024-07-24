@@ -4,7 +4,7 @@ Camera::Camera() : dxe::Camera(DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT) {
 
 }
 
-void Camera::Update(tnl::Vector3 target_pos) {
+void Camera::Update(const tnl::Vector3& target_pos) {
     //ターゲットを追尾
     target_ = target_pos;
     //座標更新

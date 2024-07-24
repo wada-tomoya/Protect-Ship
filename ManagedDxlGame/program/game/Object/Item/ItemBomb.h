@@ -9,9 +9,13 @@ private:
 
 
 public:
-	ItemBomb(int& mv1model);
+	ItemBomb() = default;
+
+	//引数１：複製モデル
+	ItemBomb(const int& mv1model);
 	~ItemBomb();
 
 	//実行関数
-	void Update(float delta_time)override;
+	//引数１：時間
+	void Update(const float& delta_time)override;
 };

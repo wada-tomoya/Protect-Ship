@@ -8,7 +8,7 @@
 #include "../Object/ProtectObject.h"
 #include "../Character/Player.h"
 
-Spawner::Spawner(tnl::Vector3 map_center, float map_rad, std::shared_ptr<ProtectObject>& target_protectobj, std::shared_ptr<Player>& target_player) {
+Spawner::Spawner(const tnl::Vector3& map_center, const float& map_rad, const std::shared_ptr<ProtectObject>& target_protectobj, const std::shared_ptr<Player>& target_player) {
 	//ターゲット情報
 	target_player_ = target_player;
 	target_protectobj_ = target_protectobj;
@@ -51,7 +51,7 @@ Spawner::~Spawner() {
 	MV1DeleteModel(enemy_chase_.model_hdl_);
 }
 
-void Spawner::Update(float delta_time) {
+void Spawner::Update(const float& delta_time) {
 	auto protectobj = target_protectobj_.lock();
 	if (protectobj == nullptr) { return; }
 	auto player = target_player_.lock();
@@ -68,9 +68,12 @@ void Spawner::Update(float delta_time) {
 
 		//is_alive_がfalseならば消去（敵死亡）
 		if (!(*it)->Getter_is_alive()) {
-			//アイテム生成
-			CreateItem(Item_Lottery(itemprob_[0],itemprob_[1], itemprob_[2], itemprob_[3], itemprob_[4]), (*it)->Getter_pos());
-
+			//アイテム生成フラグがtrueならばアイテム生成
+			if ((*it)->Getter_is_itemspawn()) {
+				//アイテム生成
+				CreateItem(Item_Lottery(itemprob_[0], itemprob_[1], itemprob_[2], itemprob_[3], itemprob_[4]), (*it)->Getter_pos());
+			}
+			//敵消去
 			it = enemys_.erase(it);
 			duplicate_count_--;
 			continue;
@@ -82,7 +85,7 @@ void Spawner::Update(float delta_time) {
 	ItemUpdate(delta_time);
 }
 
-void Spawner::Draw(std::shared_ptr<Camera> camera) {
+void Spawner::Draw(const std::shared_ptr<Camera>& camera) {
 	dxe::DirectXRenderBegin();
 
 	//影描画
@@ -102,7 +105,7 @@ void Spawner::Draw(std::shared_ptr<Camera> camera) {
 	ItemDraw(camera);
 }
 
-void Spawner::Enemy_Spawn(std::weak_ptr<ProtectObject> protectobject, std::weak_ptr<Player> player, float delta_time) {
+void Spawner::Enemy_Spawn(std::weak_ptr<ProtectObject> protectobject, std::weak_ptr<Player> player, const float& delta_time) {
 	//normal_enemy_スポン
 	normal_enemy_.spawn_count_ += delta_time;
 	if (normal_enemy_.spawn_count_ > normal_enemy_.spawn_interval_) {
@@ -152,7 +155,7 @@ void Spawner::Enemy_Spawn(std::weak_ptr<ProtectObject> protectobject, std::weak_
 	}
 }
 
-void Spawner::Enemy_SpawnStatusChange(ENEMYTYPE enemytype, float sub_spawn_interval, float add_hp, float add_speed) {
+void Spawner::Enemy_SpawnStatusChange(const ENEMYTYPE& enemytype, const float& sub_spawn_interval, const float& add_hp, const float& add_speed) {
 	switch (enemytype){
 	case ENEMYTYPE::normal:
 		//スポンインターバル減算
@@ -194,7 +197,7 @@ void Spawner::Enemy_SpawnStatusChange(ENEMYTYPE enemytype, float sub_spawn_inter
 	}	
 }
 
-int Spawner::EnemyDupe(int model_hdl, DxLib::VECTOR scale) {
+int Spawner::EnemyDupe(const int& model_hdl, const DxLib::VECTOR& scale) {
 	//ランダムな角度（生成方向）
 	rad_ = rand() % 360;
 	float x = cos(rad_) * map_rad_;
@@ -209,7 +212,7 @@ int Spawner::EnemyDupe(int model_hdl, DxLib::VECTOR scale) {
 	return ene;
 }
 
-Shared<dxe::InstMesh> Spawner::ShadowDupe(int enedupe) {
+Shared<dxe::InstMesh> Spawner::ShadowDupe(const int& enedupe) {
 	auto shadow = shadow_mesh_pool_->CreateInstMesh();
 	shadow->setPosition({ MV1GetPosition(enedupe).x, shadow_pos_y_, MV1GetPosition(enedupe).z });
 	shadow->setRotation(shadow_down_);

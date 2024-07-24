@@ -1,12 +1,16 @@
 #include "ItemGreen.h"
 #include "../../Object/Camera.h"
 
-ItemGreen::ItemGreen(int& mv1model) : ItemBase(mv1model){
+ItemGreen::ItemGreen(const int& mv1model) : ItemBase(mv1model){
 	//É^ÉCÉvê›íË
 	itemtype_ = ITEMTYPE::Green;
 }
 
 ItemGreen::~ItemGreen(){
 
+}
+
+void ItemGreen::Update(const float& delta_time){
+	__super::Update(delta_time);
 }
 

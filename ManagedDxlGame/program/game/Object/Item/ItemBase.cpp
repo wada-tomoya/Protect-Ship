@@ -2,7 +2,7 @@
 #include "../../Object/Camera.h"
 #include "../../Manager/ResourceManager.h"
 
-ItemBase::ItemBase(int mv1model){
+ItemBase::ItemBase(const int& mv1model){
 	//モデル
 	mv1model_ = mv1model;
 	//サイズ変更
@@ -17,7 +17,7 @@ ItemBase::~ItemBase() {
 	MV1DeleteModel(mv1model_);
 }
 
-void ItemBase::Update(float delta_time){
+void ItemBase::Update(const float& delta_time){
 	//死亡カウント
 	death_count_ += delta_time;
 	if (death_count_ >= death_time_) {

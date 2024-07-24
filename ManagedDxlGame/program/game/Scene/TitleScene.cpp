@@ -3,7 +3,7 @@
 #include "PlayScene.h"
 #include "../Manager/UIManager.h"
 
-TitleScene::TitleScene(ENDCLASS_NAME classname) : SceneBace(classname) {
+TitleScene::TitleScene(const FINALCLASS_NAME& classname) : SceneBace(classname) {
 
 	//uiインスタンス
 	ui_ = std::make_shared<UIManager>();
@@ -30,7 +30,7 @@ TitleScene::~TitleScene() {
 	DeleteSoundMem(click_se_);
 }
 
-void TitleScene::Update(float delta_time) {
+void TitleScene::Update(const float& delta_time) {
 	//タイトルシーンui実行
 	ui_->UI_Update_TitleScene(delta_time);
 
@@ -45,7 +45,7 @@ void TitleScene::Update(float delta_time) {
 			//シーン移動
 			if (!is_scene_change_) {
 				GameManager* mgr = GameManager::GetInstance_GameManager();
-				mgr->ChangeScene(new (PlayScene)(ENDCLASS_NAME::play_easy));
+				mgr->ChangeScene(new (PlayScene)(FINALCLASS_NAME::play_easy));
 
 				is_scene_change_ = true;
 			}
@@ -61,7 +61,7 @@ void TitleScene::Update(float delta_time) {
 			//シーン移動
 			if (!is_scene_change_) {
 				GameManager* mgr = GameManager::GetInstance_GameManager();
-				mgr->ChangeScene(new (PlayScene)(ENDCLASS_NAME::play_normal));
+				mgr->ChangeScene(new (PlayScene)(FINALCLASS_NAME::play_normal));
 
 				is_scene_change_ = true;
 			}
@@ -77,7 +77,7 @@ void TitleScene::Update(float delta_time) {
 			//シーン移動
 			if (!is_scene_change_) {
 				GameManager* mgr = GameManager::GetInstance_GameManager();
-				mgr->ChangeScene(new (PlayScene)(ENDCLASS_NAME::play_hard));
+				mgr->ChangeScene(new (PlayScene)(FINALCLASS_NAME::play_hard));
 
 				is_scene_change_ = true;
 			}
@@ -85,7 +85,7 @@ void TitleScene::Update(float delta_time) {
 	}
 }
 
-void TitleScene::Draw(float delta_time) {
+void TitleScene::Draw(const float& delta_time) {
 	//背景表示
 	DrawExtendGraph(0, 0, DXE_WINDOW_WIDTH, DXE_WINDOW_HEIGHT, background_hdl, false);
 
@@ -105,7 +105,7 @@ void TitleScene::Draw(float delta_time) {
 	MouseDraw(false);
 }
 
-void TitleScene::Centered(std::string str, int& x_pos) {
+void TitleScene::Centered(const std::string& str, int& x_pos) {
 	str_len_ = static_cast<int>(strlen(str.c_str()));
 	str_wid_ = GetDrawStringWidth(str.c_str(), str_len_);
 	x_pos = static_cast<float>((DXE_WINDOW_WIDTH / 2) - (str_wid_ / 2));

@@ -3,8 +3,8 @@
 #include "../Manager/ResourceManager.h"
 #include "../Object/ProtectObject.h"
 
-Enemy::Enemy(std::weak_ptr<ProtectObject> protectobject, int duplication_mesh, Shared<dxe::InstMesh> shadow_mesh,
-	float speed, float hp, float colli_rad, tnl::Vector3 colli_size){
+Enemy::Enemy(std::weak_ptr<ProtectObject> protectobject, const int& duplication_mesh, const Shared<dxe::InstMesh>& shadow_mesh,
+	const float& speed, const float& hp, const float& colli_rad, const tnl::Vector3& colli_size){
 	//ターゲット
 	target_ = protectobject;
 	auto target = target_.lock();
@@ -52,7 +52,7 @@ Enemy::~Enemy() {
 	
 }
 
-void Enemy::Update(float delta_time) {
+void Enemy::Update(const float& delta_time) {
 	auto target = target_.lock();
 	if (!target) {return;}
 
@@ -75,7 +75,7 @@ void Enemy::Update(float delta_time) {
 	AnimPlay(delta_time);
 }
 
-void Enemy::Draw(std::shared_ptr<Camera> camera) {
+void Enemy::Draw(const std::shared_ptr<Camera>& camera) {
 	//ベースクラス記載の描画処理
 	__super::Draw(camera);
 
@@ -88,6 +88,9 @@ bool Enemy::SEQ_Move(const float delta_time) {
 	if (tnl_sequence_.isStart()) {
 		//アニメーションをWalkに変更
 		Anim_Change(Walk);
+
+		//死亡した場合アイテムをドロップする
+		is_itemspawn_ = true;
 	}
 
 	//移動
@@ -123,6 +126,9 @@ bool Enemy::SEQ_Attack(const float delta_time) {
 	if (tnl_sequence_.isStart()) {
 		//アニメーションをAttack_1に変更
 		Anim_Change(Attack_1);
+
+		//死亡した場合アイテムをドロップしない
+		is_itemspawn_ = false;
 	}
 
 	attack_count_ += delta_time;

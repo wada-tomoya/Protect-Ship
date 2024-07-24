@@ -78,10 +78,15 @@ private:
 	const tnl::Vector2i esc_guid_pos_ = { DXE_WINDOW_WIDTH - 150, 15 };
 
 public:
-	PlayScene(ENDCLASS_NAME class_name);
+	PlayScene() = default;
+
+	//引数１：シーンクラス名
+	PlayScene(const FINALCLASS_NAME& class_name);
 	~PlayScene();
 	//実行関数
-	void Update(float delta_time) override;
+	//引数１：時間
+	void Update(const float& delta_time) override;
 	//表示関数
-	void Draw(float delta_time) override;
+	//引数１：時間
+	void Draw(const float& delta_time) override;
 };

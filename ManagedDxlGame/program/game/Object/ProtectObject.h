@@ -31,9 +31,14 @@ public:
 	ProtectObject();
 	~ProtectObject();
 	//実行関数
-	void Update(float delta_time);
+	//引数１：時間
+	void Update(const float& delta_time);
 	//表示関数
-	void Draw(std::shared_ptr<Camera> camera);
+	//引数１：カメラインスタンス
+	void Draw(const std::shared_ptr<Camera>& camera);
+
+//ゲッター、セッター
+
 	//座標ゲッター
 	tnl::Vector3 GetterPos()const { return pos_; };
 	//hpのゲッター
