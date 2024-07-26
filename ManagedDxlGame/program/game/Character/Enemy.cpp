@@ -51,10 +51,6 @@ void Enemy::Update(const float& delta_time) {
 
 	//ターゲット座標更新
 	target_pos_ = target->GetterPos();
-	//進行方向更新
-	Movedir_update(delta_time);
-	//進行方向を向く
-	MV1SetRotationXYZ(duplication_model_, { 0, Rotate_front(), 0 });
 
 	//当たり判定用の座標更新
 	colli_center_ = {Getter_pos().x, Getter_pos().y + colli_rad_, Getter_pos().z};
@@ -84,6 +80,13 @@ bool Enemy::SEQ_Move(const float delta_time) {
 	MV1SetPosition(duplication_model_,
 		{Getter_pos().x + (move_dir_.x * speed_), Getter_pos().y, Getter_pos().z + (move_dir_.z * speed_)});
 
+	//進行方向更新
+	Movedir_update(delta_time, movedir_update_interval_);
+	if (Getter_is_movedirchange()) {
+		//進行方向を向く
+		MV1SetRotationXYZ(duplication_model_, { 0, Rotate_front(), 0 });
+	}
+	
 	//シーケンス移動条件
 	//体力が0以下の場合
 	if (hp_ <= 0) {

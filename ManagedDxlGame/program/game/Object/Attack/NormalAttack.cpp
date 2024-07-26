@@ -19,7 +19,7 @@ NormalAttack::NormalAttack(const tnl::Vector3& map_center, const float& map_rad,
 	penetration_ = penetration;
 
 	//ノックバック値設定
-	knockback_value_ = 1.0f;
+	knockback_value_ = 2.0f;
 }
 
 NormalAttack::~NormalAttack(){

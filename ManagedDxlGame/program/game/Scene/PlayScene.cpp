@@ -112,7 +112,7 @@ PlayScene::PlayScene(const FINALCLASS_NAME& class_name) : SceneBace(class_name) 
 		//タイミングでの変化値設定
 		change_spawninterval_[static_cast<int>(ENEMYTYPE::normal)] = 0.09f;
 		change_hp_[static_cast<int>(ENEMYTYPE::normal)] = 12.0f;
-		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.2f;
+		change_speed_[static_cast<int>(ENEMYTYPE::normal)] = 0.3f;
 		change_spawninterval_[static_cast<int>(ENEMYTYPE::chase)] = 0.5f;
 		change_hp_[static_cast<int>(ENEMYTYPE::chase)] = 20.0f;
 		change_speed_[static_cast<int>(ENEMYTYPE::chase)] = 0.6f;
@@ -198,11 +198,8 @@ void PlayScene::Draw(const float& delta_time) {
 
 	//DrawFpsIndicator({ 10, DXE_WINDOW_HEIGHT - 10, 0 }, delta_time);
 
-	//プレイヤーと一緒に点滅
-	if (player_->Getter_is_flash_()) {
-		//マウス描画
-		MouseDraw();
-	}
+	//マウス描画、プレイヤーと一緒に点滅
+	MouseDraw(player_->Getter_is_flash_());
 }
 
 bool PlayScene::Seq_Explanation(float delat_time) {
@@ -302,9 +299,6 @@ bool PlayScene::Seq_Gameover(float delta_time) {
 		//bgm停止
 		StopSoundMem(gameover_bgm_);
 
-		/*GameManager* mgr = GameManager::GetInstance_GameManager();
-		mgr->ChangeScene(new (TitleScene)(ENDCLASS_NAME::title));*/
-
 		//シーン遷移
 		GameManager::GetInstance_GameManager()->ChangeScene(new(TitleScene)(FINALCLASS_NAME::title));
 
@@ -326,9 +320,6 @@ bool PlayScene::Seq_GameClear(float delta_time) {
 	if (!is_scene_change_ && tnl::Input::IsMouseTrigger(eMouseTrigger::IN_LEFT)) {
 		//bgm停止
 		StopSoundMem(gameclear_bgm_);
-
-		/*GameManager* mgr = GameManager::GetInstance_GameManager();
-		mgr->ChangeScene(new (TitleScene)(ENDCLASS_NAME::title));*/
 
 		//シーン遷移
 		GameManager::GetInstance_GameManager()->ChangeScene(new(TitleScene)(FINALCLASS_NAME::title));

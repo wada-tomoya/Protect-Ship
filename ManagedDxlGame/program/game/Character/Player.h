@@ -129,6 +129,10 @@ public:
 	//プレイヤー点滅
 	//引数１：時間、２：点滅間隔
 	void Flashing(const float& delta_tim, const float& flash_interval);
+	//プレイヤー明るさ調整
+	//引数１：明るい→true、暗い→false
+	void PlayerLighting(const bool& lighting);
+
 	//移動　
 	//引数１：時間
 	void Move(const float& delta_time);

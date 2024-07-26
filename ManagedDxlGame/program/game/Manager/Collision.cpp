@@ -5,8 +5,8 @@
 #include "../Manager/ItemSpawner.h"
 
 void Collision::Attack_Enemy_HitCheck(const std::list<Shared<AttackBase>>& atk_list, const std::list<Shared<EnemyBase>>& ene_list) {
-	for (auto atk_ : atk_list) {
-		for (auto ene_ : ene_list) {
+	for (auto& atk_ : atk_list) {
+		for (auto& ene_ : ene_list) {
 			//一度当たった敵には当たらない（アドレスで判断する）
 			bool continue_loop_ = true;
 			for (auto hitene : atk_->Getter_hiteneaddress()) {
@@ -31,7 +31,7 @@ void Collision::Attack_Enemy_HitCheck(const std::list<Shared<AttackBase>>& atk_l
 }
 
 void Collision::Player_Enemy_HitChack(const std::shared_ptr<Player>& player, const std::list<Shared<EnemyBase>>& ene_list){
-	for (auto ene_ : ene_list) {
+	for (auto& ene_ : ene_list) {
 		//プレイヤーの当たり判定フラグがtrueの時のみ
 		if (tnl::IsIntersectAABB(player->GetterPos(), player->Getter_colli_size_(), ene_->Getter_colli_center(), ene_->Getter_colli_size())
 			&& player->Getter_is_colli()) {
@@ -42,7 +42,7 @@ void Collision::Player_Enemy_HitChack(const std::shared_ptr<Player>& player, con
 }
 
 void Collision::Player_Item_HitChack(const std::shared_ptr<Player>& player, const std::list<std::shared_ptr<ItemBase>>& item_list){
-	for (auto item_ : item_list) {
+	for (auto& item_ : item_list) {
 		if (tnl::IsIntersectAABB(player->GetterPos(), player->Getter_colli_size_(), item_->Getter_pos(), item_->Getter_size())) {
 			//アイテムのプレイヤーと当たった時の処理
 			item_->PlyarHit();

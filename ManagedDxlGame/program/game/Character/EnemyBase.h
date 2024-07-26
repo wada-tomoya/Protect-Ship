@@ -43,7 +43,7 @@ protected:
 	float movedir_update_interval_ = 0.5f;
 	float movedir_update_count_ = 0.0f;
 	//進行方向変更フラグ
-	bool is_movedir_ = true;
+	bool is_movedirchange_ = true;
 
 	//攻撃に移るターゲットとの距離
 	float trans_attack_distance_ = 50.0f;
@@ -107,7 +107,7 @@ public:
 	float Distance_target();
 	//移動方向更新
 	//引数１：時間、移動方向更新間隔
-	void Movedir_update(const float& delta_time, const float& movedir_update_interval = 0.0f);
+	void Movedir_update(const float& delta_time, const float& movedir_update_interval = 0.1f);
 	//プレイヤーの攻撃が当たった時
 	//引数１：受けるダメージ、２：受けた攻撃の座標、ノックバック値
 	virtual void PlyaerAttack_Recieve(const float& damage, const tnl::Vector3& atkpos, const float& knockback_value);
@@ -148,4 +148,6 @@ public:
 	float Getter_attack_power()const { return attack_power_; };
 	//アイテム生成フラグのゲッター
 	bool Getter_is_itemspawn()const { return is_itemspawn_; };
+	//進行方向変更フラグのゲッター
+	bool Getter_is_movedirchange()const { return is_movedirchange_; };
 };

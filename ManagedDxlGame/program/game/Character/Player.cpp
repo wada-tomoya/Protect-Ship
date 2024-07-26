@@ -116,7 +116,6 @@ Player::Player(const tnl::Vector3& map_center, const float& map_rad, std::weak_p
 	bomatk_.hit_se_hdl_ = ResourceManager::GetInstance_ResourceManager()->LoadSound_("Explosion");
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
-
 	//影生成
 	shadow_mesh_ = dxe::Mesh::CreatePlaneMV({ size_.x,size_.x,0 }, 10,10);
 	//影のテクスチャをロード
@@ -179,8 +178,11 @@ void Player::Update(const float& delta_time) {
 	else {
 		//invincible_が0以下なら当たり判定有効
 		is_colli_ = true;
-		//プレイヤー表示
+		//プレイヤー明るく表示
+		//PlayerLighting(true);
+
 		is_flash_ = true;
+
 	}
 	
 	//移動
@@ -227,7 +229,7 @@ void Player::Draw(const float& delta_time, const std::shared_ptr<Camera>& camera
 	//カーソル描画
 	cursor_mesh_->render(camera);
 	
-	if (is_flash_) {		
+	if (is_flash_) {
 		//プレイヤーの向き
 		switch (chara_dir_) {
 			//前向き
@@ -268,16 +270,36 @@ void Player::AttackDraw(const std::shared_ptr<Camera>& camera) {
 void Player::Flashing(const float& delta_tim, const float& flash_interval){
 	flash_count_ += delta_tim;
 	if (flash_count_ <= flash_interval) {
-		//プレイヤーを消す
+		//プレイヤーを暗くする
+		//PlayerLighting(false);
+
 		is_flash_ = false;
 	}
 	else if (flash_count_ <= (flash_interval * 2)) {
-		//プレイヤー表示
+		//プレイヤー明るく表示
+		//PlayerLighting(true);
 		is_flash_ = true;
 	}
-	else if (flash_count_ <= (flash_interval * 3)) {
+	else {
 		flash_count_ = 0.0f;
 	}
+}
+
+void Player::PlayerLighting(const bool& lighting){
+	for (auto& player : mesh_front_) {
+		player->setDefaultLightEnable(lighting);
+	}
+	for (auto& player : mesh_back_) {
+		player->setDefaultLightEnable(lighting);
+	}
+	for (auto& player : mesh_left_) {
+		player->setDefaultLightEnable(lighting);
+	}
+	for (auto& player : mesh_right_) {
+		player->setDefaultLightEnable(lighting);
+	}
+	//明るさの状態
+	//is_flash_ = lighting;
 }
 
 void Player::Move(const float& delta_time) {

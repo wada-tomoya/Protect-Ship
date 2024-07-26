@@ -148,6 +148,7 @@ int ResourceManager::LoadSound_(const std::string& sound_name) {
 		if (sound_csv_[y][0].getString().c_str() == sound_name) {
 			int sound = LoadSoundMem(sound_csv_[y][1].getString().c_str());
 
+
 			//map‚É“Ç‚İ‚ñ‚¾‰¹‚ğ•Û‘¶
 			sound_map_.insert(std::make_pair(sound_name, sound));
 

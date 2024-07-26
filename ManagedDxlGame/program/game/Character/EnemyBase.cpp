@@ -43,9 +43,10 @@ void EnemyBase::Update(const float& delta_time){
 		knockback_value_ -= delta_time;
 	}
 	else {
+		//ノックバック値を0に維持
 		knockback_value_ = 0;
-		//向きを進行方向を向くようにする
-		is_movedir_ = true;
+		//進行方向フラグをtrueに維持
+		is_movedirchange_ = true;
 	}
 
 	//アニメーション再生
@@ -86,16 +87,13 @@ float EnemyBase::Distance_target() {
 }
 
 void EnemyBase::Movedir_update(const float& delta_time, const float& movedir_update_interval){	
-	//進行方向変更フラグがtrueならば
-	if (is_movedir_) {
-		//movedir_update_intervalごとに進行方向更新
-		movedir_update_count_ += delta_time;
-		if (movedir_update_count_ >= movedir_update_interval) {
-			movedir_update_count_ = 0.0f;
+	//movedir_update_intervalごとに進行方向更新
+	movedir_update_count_ += delta_time;
+	if (movedir_update_count_ >= movedir_update_interval) {
+		movedir_update_count_ = 0.0f;
 
-			//進行方向更新
-			move_dir_ = tnl::Vector3::Normalize(target_pos_ - Getter_pos());
-		}
+		//進行方向更新
+		move_dir_ = tnl::Vector3::Normalize(target_pos_ - Getter_pos());
 	}
 }
 
@@ -106,8 +104,9 @@ void EnemyBase::PlyaerAttack_Recieve(const float& damage, const tnl::Vector3& at
 	Setter_hp(damage);
 	//ダメージフラグtrue
 	is_HitRecieve_ = true;
-	//ダメージを受けた時向きを変えない
-	is_movedir_ = false;
+	//進行方向更新フラグをfalseにする
+	is_movedirchange_ = false;
+
 	//ノックバック値設定
 	knockback_value_ = knockback_value;
 	//ノックバック方向設定

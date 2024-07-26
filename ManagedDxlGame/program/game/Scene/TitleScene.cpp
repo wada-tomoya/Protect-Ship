@@ -102,7 +102,7 @@ void TitleScene::Draw(const float& delta_time) {
 	ui_->Draw_TitleUI();
 
 	//ƒ}ƒEƒX•`‰æ
-	MouseDraw(false);
+	MouseDraw(true, false);
 }
 
 void TitleScene::Centered(const std::string& str, int& x_pos) {
