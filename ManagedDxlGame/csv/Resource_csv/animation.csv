@@ -1,0 +1,6 @@
+,画像パス,画像総数,x方向枚数,y方向枚数,x方向サイズ,y方向サイズ
+PLAYER_LEFT,graphics/Animation/Character/player_left.png,3,3,1,32,32
+PLAYER_RIGHT,graphics/Animation/Character/player_right.png,3,3,1,48,48
+ENEMY_GHOST_RIGHT,graphics/Animation/Character/enemy_ghost_right.png,3,3,1,32,32
+MAPCHIP,graphics/MapChip/map_block.png,45,5,9,48,48
+PROTECT_OBJECT,graphics/Animation/Object/protectobject.png,3,3,1,64,64
